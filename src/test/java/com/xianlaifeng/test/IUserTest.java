@@ -10,13 +10,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-mybatis.xml","classpath:spring-redis.xml"})
 public class IUserTest {
 
-    @Autowired
+    @Resource
     private UserDAO userDAO;
 
     @Test
