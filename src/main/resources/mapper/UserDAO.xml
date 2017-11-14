@@ -2,10 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 设置为IUserDao接口方法提供sql语句配置 -->
-<mapper namespace="com.xianlaifeng.DAO.UserDAO">
+<mapper namespace="com.xianlaifeng.user.dao.UserDAO">
 
-    <select id="getAllUser" resultType="com.xianlaifeng.model.T_B_User">
-        SELECT * FROM t_b_user
+    <sql id='TABLE_NAME'>xlf_user</sql>
+
+    <select id="getUser" resultType="com.xianlaifeng.user.entity.XLF_User" parameterType="com.xianlaifeng.user.entity.XLF_User">
+        SELECT * FROM <include refid="TABLE_NAME" />
+        <where>
+            <if test="id!=null and id!=0">
+                and id=#{id}
+            </if>
+            <if test="user_name!=null">
+                and user_name=#{user_name}
+            </if>
+            <if test="user_sex!=null and user_sex!=0">
+                and user_sex=#{user_sex}
+            </if>
+            <if test="user_role!=null and user_role!=0">
+                and user_role=#{user_role}
+            </if>
+            <if test="user_phone!=null">
+                and user_phone like '%${user_phone}%'
+            </if>
+            <if test="user_qq!=null">
+                and user_qq like '%${user_qq}%'
+            </if>
+        </where>
     </select>
 
 

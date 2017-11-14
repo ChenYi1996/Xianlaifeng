@@ -1,13 +1,13 @@
-package com.xianlaifeng.model;
+package com.xianlaifeng.user.entity;
 
 public class XLF_OAuth {
 
     private int id;
-    private String user_id;
+    private int user_id;
     private String oau_method;
     private String oau_id;
 
-    public XLF_OAuth(int id, String user_id, String oau_method, String oau_id) {
+    public XLF_OAuth(int id, int user_id, String oau_method, String oau_id) {
         this.id = id;
         this.user_id = user_id;
         this.oau_method = oau_method;
@@ -31,11 +31,11 @@ public class XLF_OAuth {
         this.id = id;
     }
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 

@@ -1,4 +1,4 @@
-package com.xianlaifeng.model;
+package com.xianlaifeng.utils;
 import java.util.Map;
 
 public class AjaxJSON {

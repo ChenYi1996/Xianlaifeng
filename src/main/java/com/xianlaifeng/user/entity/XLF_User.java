@@ -1,24 +1,28 @@
-package com.xianlaifeng.model;
+package com.xianlaifeng.user.entity;
 
 //用户信息实体类
-public class T_B_User {
+public class XLF_User {
 
-    private String id;
+    private int id;
     private String user_name; //用户名
-    private int user_sex;  //
-    private int user_role; //用户角色（企业发布，兼职学生）
+    private int user_sex;  // 1:male 2:female
+    private int user_role; //用户角色（企业发布，兼职学生）1:公司代理人 2：学生
     private String user_company; //用户公司（企业用户）
     private String user_birthday;
     private int user_high;
-    private String user_school_id; //用户学校
+    private int user_school_id; //用户学校
     private String user_qq;   //用户QQ
-    private int user_phone;  //用户电话
+    private String user_phone;  //用户电话
     private String user_details; //用户简历
 
-    public T_B_User() {
+    public XLF_User() {
     }
 
-    public T_B_User(String id, String user_name, int user_sex, int user_role, String user_company, String user_birthday, int user_high, String user_school_id, String user_qq, int user_phone, String user_details) {
+    public XLF_User(int id) {
+        this.id = id;
+    }
+
+    public XLF_User(int id, String user_name, int user_sex, int user_role, String user_company, String user_birthday, int user_high, int user_school_id, String user_qq, String user_phone, String user_details) {
         this.id = id;
         this.user_name = user_name;
         this.user_sex = user_sex;
@@ -33,11 +37,11 @@ public class T_B_User {
     }
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -90,11 +94,11 @@ public class T_B_User {
         this.user_high = user_high;
     }
 
-    public String getUser_school_id() {
+    public int getUser_school_id() {
         return user_school_id;
     }
 
-    public void setUser_school_id(String user_school_id) {
+    public void setUser_school_id(int user_school_id) {
         this.user_school_id = user_school_id;
     }
 
@@ -106,11 +110,11 @@ public class T_B_User {
         this.user_qq = user_qq;
     }
 
-    public int getUser_phone() {
+    public String getUser_phone() {
         return user_phone;
     }
 
-    public void setUser_phone(int user_phone) {
+    public void setUser_phone(String user_phone) {
         this.user_phone = user_phone;
     }
 

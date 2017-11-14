@@ -1,13 +1,12 @@
 package com.xianlaifeng.test;
 
 
-import com.xianlaifeng.DAO.OAuthDAO;
-import com.xianlaifeng.DAO.UserDAO;
-import com.xianlaifeng.model.T_B_User;
-import com.xianlaifeng.model.XLF_OAuth;
+import com.xianlaifeng.user.dao.OAuthDAO;
+import com.xianlaifeng.user.dao.UserDAO;
+import com.xianlaifeng.user.entity.XLF_OAuth;
+import com.xianlaifeng.user.entity.XLF_User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -25,22 +24,21 @@ public class IUserTest {
     @Resource
     private OAuthDAO oAuthDAO;
 
-    @Test
-    public void testFindAll(){
-        List<T_B_User> userList = userDAO.getAllUser();
-        for(T_B_User u:userList){
-            System.out.print(u);
-        }
-    }
 
     @Test
     public void testifExist(){
-        System.out.println(oAuthDAO.ifExist(new XLF_OAuth("WeChat","CCC")));
+        List<XLF_OAuth> l = oAuthDAO.ifExist(new XLF_OAuth("WeChat","CCC"));
+        System.out.println(l);
     }
 
     @Test
     public void insert(){
         oAuthDAO.insertOAuth(new XLF_OAuth("WeChat","CCC"));
+    }
+
+    @Test
+    public void getXLFUser(){
+        System.out.println(userDAO.getUser(new XLF_User(1)));
     }
 
 }

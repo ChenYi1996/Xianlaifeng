@@ -1,7 +1,11 @@
-package com.xianlaifeng.controller;
+package com.xianlaifeng.user.controller;
 
-import com.xianlaifeng.model.AjaxJSON;
-import com.xianlaifeng.service.UserService;
+
+import com.xianlaifeng.user.entity.XLF_OAuth;
+import com.xianlaifeng.user.entity.XLF_User;
+import com.xianlaifeng.user.service.RedisService;
+import com.xianlaifeng.user.service.UserService;
+import com.xianlaifeng.utils.AjaxJSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,12 +23,14 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private RedisService redisService;
 
-    @RequestMapping(value="/getAllUser.do" ,produces="application/json" ,method = RequestMethod.GET)
+    @RequestMapping(value="/testUrl.do" ,produces="application/json" ,method = RequestMethod.GET)
     @ResponseBody
     public Object getAllUser(@RequestParam Map<String,Object> params){
-        System.out.println(userService.findAllUser());
-        return userService.findAllUser();
+        System.out.println("test success!");
+        return "test success!";
     }
 
 
@@ -35,7 +41,7 @@ public class UserController {
         AjaxJSON res = new AjaxJSON();
         try{
             if(trd_session != null){
-                String result = userService.checkWeChatLogin(trd_session);
+                String result = redisService.checkWeChatLogin(trd_session);
                 res.setMsg(result.equals("Logined")?"Login":"no Login");
                 res.setSuccess(result.equals("Logined")?true:false);
             }
@@ -48,6 +54,25 @@ public class UserController {
                 res.setObj(map);
             }
 
+        }catch (Exception e){
+            res.setSuccess(false);
+            res.setMsg(e.getMessage());
+        }
+        return res;
+    }
+
+
+    @RequestMapping(value="/getWeChatUserInfo.do",produces="application/json" ,method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJSON getWeChatUserInfo(@RequestParam Map<String,Object> params){
+        String trd_session = (String)params.get("trd_session");
+        AjaxJSON res = new AjaxJSON();
+        try {
+            String openid = redisService.getOpenid(trd_session);
+            XLF_User u = (XLF_User)userService.getUserInfo(new XLF_OAuth("wechat",openid));
+            res.setObj(u);
+            res.setSuccess(u==null?false:true);
+            res.setMsg(u==null?"用户首次登陆微信端":"success");
         }catch (Exception e){
             res.setSuccess(false);
             res.setMsg(e.getMessage());

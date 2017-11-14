@@ -1,10 +1,12 @@
-package com.xianlaifeng.service.impl;
+package com.xianlaifeng.user.service.impl;
 
-import com.xianlaifeng.DAO.OAuthDAO;
-import com.xianlaifeng.DAO.UserDAO;
-import com.xianlaifeng.model.T_B_User;
-import com.xianlaifeng.model.XLF_OAuth;
-import com.xianlaifeng.service.UserService;
+
+import com.xianlaifeng.user.service.RedisService;
+import com.xianlaifeng.user.service.UserService;
+import com.xianlaifeng.user.dao.OAuthDAO;
+import com.xianlaifeng.user.dao.UserDAO;
+import com.xianlaifeng.user.entity.XLF_OAuth;
+import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.utils.DesUtil;
 import com.xianlaifeng.utils.RequestUtils;
 import net.sf.json.JSONObject;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -33,19 +34,10 @@ public class UserServiceImpl implements UserService{
     private OAuthDAO oAuthDAO;
 
 
+
     @Resource
     private RedisTemplate redisTemplate;
 
-    public List<T_B_User> findAllUser() {
-        return userDAO.getAllUser();
-    }
-
-
-    public String checkWeChatLogin(String trd_session) {
-
-        return redisTemplate.opsForHash().entries("wechat:"+trd_session).isEmpty()?"noLogin":"Logined";
-
-    }
 
     public String WeChatLogin(String code) {
         String app_url = url.replace("APPID",appid).replace("SECRET",app_se).replace("JSCODE",code);
@@ -60,7 +52,7 @@ public class UserServiceImpl implements UserService{
             Map<String,String> map = new HashMap<String, String>();
             map.put("openid",openid);
             map.put("session_key",session_key);
-            if(oAuthDAO.ifExist(new XLF_OAuth("wechat",openid)) == null){
+            if(oAuthDAO.ifExist(new XLF_OAuth("wechat",openid)).size() == 0){
                 oAuthDAO.insertOAuth(new XLF_OAuth("wechat",openid));
             }
             redisTemplate.opsForHash().putAll("wechat:"+trd_sessionid,map);
@@ -68,4 +60,10 @@ public class UserServiceImpl implements UserService{
             return trd_sessionid;
         }
     }
+
+    public Object getUserInfo(XLF_OAuth oau) {
+        XLF_OAuth oa = oAuthDAO.ifExist(oau).get(0);
+        return oa.getUser_id() == 0?null:userDAO.getUser(new XLF_User(oa.getUser_id()));
+    }
+
 }
