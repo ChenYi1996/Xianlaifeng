@@ -6,29 +6,74 @@
 
     <sql id='TABLE_NAME'>xlf_user</sql>
 
-    <select id="getUser" resultType="com.xianlaifeng.user.entity.XLF_User" parameterType="com.xianlaifeng.user.entity.XLF_User">
-        SELECT * FROM <include refid="TABLE_NAME" />
+    <sql id='LEFT_TABLE_NAME'>xlf_school</sql>
+
+    <select id="getUser" resultType="java.util.Map" parameterType="com.xianlaifeng.user.entity.XLF_User">
+        SELECT
+        u.id,u.user_name,u.user_sex,u.user_role,u.user_company,u.user_age,u.user_high,u.user_school_id,u.user_details,u.user_phone,s.name AS school_name
+        FROM <include refid="TABLE_NAME" /> AS u LEFT JOIN <include refid="LEFT_TABLE_NAME" /> s
+        ON u.user_school_id = s.id
         <where>
             <if test="id!=null and id!=0">
-                and id=#{id}
+                and u.id=#{id}
             </if>
             <if test="user_name!=null">
-                and user_name=#{user_name}
+                and u.user_name=#{user_name}
             </if>
             <if test="user_sex!=null and user_sex!=0">
-                and user_sex=#{user_sex}
+                and u.user_sex=#{user_sex}
             </if>
             <if test="user_role!=null and user_role!=0">
-                and user_role=#{user_role}
+                and u.user_role=#{user_role}
             </if>
             <if test="user_phone!=null">
-                and user_phone like '%${user_phone}%'
-            </if>
-            <if test="user_qq!=null">
-                and user_qq like '%${user_qq}%'
+                and u.user_phone like '%${user_phone}%'
             </if>
         </where>
     </select>
+
+    <insert id="insertAndGetId"  parameterType="com.xianlaifeng.user.entity.XLF_User" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO <include refid="TABLE_NAME" />
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+          <if test='user_name != null and user_name != "" '>
+              user_name,
+          </if>
+          user_sex,
+          user_role,
+          <if test='user_company != null and user_company != "" '>
+              user_company,
+          </if>
+          user_age,
+          user_high,
+          user_school_id,
+          <if test='user_phone != null and user_phone != "" '>
+              user_phone,
+          </if>
+          <if test='user_details != null and user_details != "" '>
+              user_details,
+          </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+          <if test='user_name != null and user_name != "" '>
+              #{user_name},
+          </if>
+          #{user_sex},
+          #{user_role},
+          <if test='user_company != null and user_company != "" '>
+              #{user_company},
+          </if>
+          #{user_age},
+          #{user_high},
+          #{user_school_id},
+          <if test='user_phone != null and user_phone != "" '>
+              #{user_phone},
+          </if>
+          <if test='user_details != null and user_details != "" '>
+             #{user_details},
+          </if>
+        </trim>
+    </insert>
 
 
 </mapper>

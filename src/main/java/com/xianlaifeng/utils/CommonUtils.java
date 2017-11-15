@@ -1,5 +1,7 @@
 package com.xianlaifeng.utils;
 
+import org.springframework.cglib.beans.BeanMap;
+
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -51,7 +53,6 @@ public class CommonUtils {
 
 
         Field[] fields = object.getClass().getDeclaredFields();
-//        Object[] valueObjs=new Object[fields.length];
         Map<String, Object> paraMap = new HashMap<String, Object>();
         for (int i = 0; i < fields.length; i++) {
             try {
@@ -85,4 +86,23 @@ public class CommonUtils {
         //System.out.println(paraMap);
         return paraMap;
     }
+
+
+    public static Map<String, Object> objectToMap(Object obj){
+        Map<String, Object> map = new HashMap<String, Object>();
+        Class<?> clazz = obj.getClass();
+        try {
+            System.out.println(clazz);
+            for(Field field : clazz.getDeclaredFields()) {
+                field.setAccessible(true);
+                String fieldName = field.getName();
+                Object value = field.get(obj);
+                map.put(fieldName, value);
+            }
+
+        }catch(IllegalAccessException e){
+            return null;
+        }
+        return map;
+     }
 }

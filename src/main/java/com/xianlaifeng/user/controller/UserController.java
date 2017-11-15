@@ -3,6 +3,7 @@ package com.xianlaifeng.user.controller;
 
 import com.xianlaifeng.user.entity.XLF_OAuth;
 import com.xianlaifeng.user.entity.XLF_User;
+import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.RedisService;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.AjaxJSON;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,12 +28,8 @@ public class UserController {
     @Resource
     private RedisService redisService;
 
-    @RequestMapping(value="/testUrl.do" ,produces="application/json" ,method = RequestMethod.GET)
-    @ResponseBody
-    public Object getAllUser(@RequestParam Map<String,Object> params){
-        System.out.println("test success!");
-        return "test success!";
-    }
+    @Resource
+    private HttpServletRequest request;
 
 
     @RequestMapping(value="/WeChatlogin.do",produces="application/json" ,method = RequestMethod.GET)
@@ -42,7 +40,7 @@ public class UserController {
         try{
             if(trd_session != null){
                 String result = redisService.checkWeChatLogin(trd_session);
-                res.setMsg(result.equals("Logined")?"Login":"no Login");
+                res.setMsg(result.equals("Logined")?"Login":"noLogin");
                 res.setSuccess(result.equals("Logined")?true:false);
             }
             else{
@@ -68,8 +66,9 @@ public class UserController {
         String trd_session = (String)params.get("trd_session");
         AjaxJSON res = new AjaxJSON();
         try {
-            String openid = redisService.getOpenid(trd_session);
-            XLF_User u = (XLF_User)userService.getUserInfo(new XLF_OAuth("wechat",openid));
+            String openid =(String)request.getAttribute("openid");
+            //System.out.println(openid);
+            XLF_User u = (XLF_User)userService.getWechatUserInfo(new XLF_Wechat(openid));
             res.setObj(u);
             res.setSuccess(u==null?false:true);
             res.setMsg(u==null?"用户首次登陆微信端":"success");

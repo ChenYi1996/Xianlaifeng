@@ -15,6 +15,9 @@
             <if test="openid!=null">
                 and openid=#{openid}
             </if>
+            <if test="nickName!=null">
+                and nickName=#{nickName}
+            </if>
             <if test="gender!=null and gender!=0">
                 and gender=#{gender}
             </if>
@@ -29,6 +32,21 @@
             </if>
         </where>
     </select>
+
+    <update id="updateWechat" parameterType="com.xianlaifeng.user.entity.XLF_User">
+        UPDATE <include refid="TABLE_NAME" />
+        <trim prefix="set" suffixOverrides=",">
+            <if test="openid!=null">openid=#{openid},</if>
+            <if test="avatarUrl!=null">avatarUrl=#{avatarUrl},</if>
+            <if test="nickName!=null">nickName=#{nickName},</if>
+            <if test="gender!=null and gender!=0">gender=#{gender},</if>
+            <if test="country!=null">country=#{country},</if>
+            <if test="province!=null">province=#{province},</if>
+            <if test="city!=null">city=#{city},</if>
+            <if test="user_id!=null and user_id!=0">user_id=#{user_id},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
 
 
 </mapper>

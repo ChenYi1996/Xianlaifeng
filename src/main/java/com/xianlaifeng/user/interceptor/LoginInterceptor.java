@@ -1,7 +1,9 @@
 package com.xianlaifeng.user.interceptor;
 
+import com.xianlaifeng.user.service.RedisService;
 import com.xianlaifeng.utils.AjaxJSON;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,17 +13,22 @@ import java.io.PrintWriter;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
+    @Autowired
+    private RedisService redisService;
+
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String trd_session = httpServletRequest.getParameter("trd_session");
-        if(trd_session == null){
-            AjaxJSON ajs = new AjaxJSON();
+        AjaxJSON ajs = new AjaxJSON();
+        String openid = trd_session == null?null:redisService.getOpenid(trd_session);
+        if(openid == null){
             ajs.setSuccess(false);
-            ajs.setMsg("no Login");
+            ajs.setMsg("noLogin");
             PrintWriter out = httpServletResponse.getWriter();
             out.print(JSONObject.fromObject(ajs));
             return false;
         }
         else {
+            httpServletRequest.setAttribute("openid",openid);
             return true;
         }
     }

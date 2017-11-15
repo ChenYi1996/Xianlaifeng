@@ -14,7 +14,7 @@ public class RedisServiceImpl implements RedisService{
 
 
     public String getOpenid(String trd_session) {
-        return  (String) redisTemplate.opsForHash().get(trd_session,"openid");
+        return  (String) redisTemplate.opsForHash().get("wechat:"+trd_session,"openid");
     }
 
     public String checkWeChatLogin(String trd_session) {

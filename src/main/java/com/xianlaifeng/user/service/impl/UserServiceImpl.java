@@ -19,7 +19,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.xml.registry.infomodel.User;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -71,9 +73,24 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    public Object getUserInfo(XLF_OAuth oau) {
-        XLF_OAuth oa = oAuthDAO.ifExist(oau).get(0);
-        return oa.getUser_id() == 0?null:userDAO.getUser(new XLF_User(oa.getUser_id()));
+    public Object getWechatUserInfo(XLF_Wechat we) {
+        XLF_Wechat xw = wechatDAO.ifExist(we).get(0);
+        Map<String, Object> u_info  = null;
+        //如果该微信账号已经存在用户简介信息，直接返回
+        if (xw.getUser_id() != 0){
+            u_info = userDAO.getUser(new XLF_User(xw.getUser_id())).get(0);
+        }else {
+            //若不存在，即为首次用微信登录，创建用户信息并返回
+            XLF_User xu = new XLF_User();
+            xu.setUser_school_id(2567);
+            xu.setUser_role(1);
+            xu.setUser_sex(1);
+            userDAO.insertAndGetId(xu);
+            wechatDAO.updateWechat(new XLF_Wechat(xw.getId(),null,null,null,0,null,null,null,xu.getId()));
+            u_info = CommonUtils.objectToMap(xu);
+            u_info.put("school_name","------");
+        }
+        return u_info;
     }
 
 }
