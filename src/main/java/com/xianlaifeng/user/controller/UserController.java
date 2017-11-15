@@ -80,4 +80,19 @@ public class UserController {
     }
 
 
+    @RequestMapping(value="/updateWeChatUserInfo.do",produces="application/json" ,method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJSON updateWeChatUserInfo(@RequestParam Map<String,Object> params){
+        String trd_session = (String)params.get("trd_session");
+        AjaxJSON res = new AjaxJSON();
+        try {
+            String openid =(String)request.getAttribute("openid");
+        }catch (Exception e){
+            res.setSuccess(false);
+            res.setMsg(e.getMessage());
+        }
+        return res;
+    }
+
+
 }
