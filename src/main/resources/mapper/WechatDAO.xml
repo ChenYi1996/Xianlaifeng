@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.xianlaifeng.user.dao.WechatDAO">
+
+    <sql id='TABLE_NAME'>xlf_wechat</sql>
+
+    <select id="ifExist" resultType="com.xianlaifeng.user.entity.XLF_User" parameterType="com.xianlaifeng.user.entity.XLF_User">
+        SELECT * FROM <include refid="TABLE_NAME" />
+        <where>
+            <if test="id!=null and id!=0">
+                and id=#{id}
+            </if>
+            <if test="openid!=null">
+                and openid=#{openid}
+            </if>
+            <if test="gender!=null and gender!=0">
+                and gender=#{gender}
+            </if>
+            <if test="country!=null">
+                and country=#{country}
+            </if>
+            <if test="province!=null">
+                and province = #{province}
+            </if>
+            <if test="city!=null">
+                and city = #{city}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

@@ -2,9 +2,11 @@ package com.xianlaifeng.user.service.impl;
 
 import com.xianlaifeng.user.service.RedisService;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+@Service("redisService")
 public class RedisServiceImpl implements RedisService{
 
     @Resource

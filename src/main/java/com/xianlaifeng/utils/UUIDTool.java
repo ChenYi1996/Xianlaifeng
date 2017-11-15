@@ -17,5 +17,12 @@ public class UUIDTool {
 
     }
 
+    public static String getUUID(String name){
+        UUID uuid=UUID.nameUUIDFromBytes(name.getBytes());
+        String str = uuid.toString();
+        String uuidStr=str.replace("-", "");
+        return uuidStr;
+    }
+
 
 }

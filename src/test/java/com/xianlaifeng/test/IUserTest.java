@@ -1,10 +1,14 @@
 package com.xianlaifeng.test;
 
 
+import com.xianlaifeng.sys.dao.CommonDAO;
 import com.xianlaifeng.user.dao.OAuthDAO;
 import com.xianlaifeng.user.dao.UserDAO;
+import com.xianlaifeng.user.dao.WechatDAO;
 import com.xianlaifeng.user.entity.XLF_OAuth;
 import com.xianlaifeng.user.entity.XLF_User;
+import com.xianlaifeng.user.entity.XLF_Wechat;
+import com.xianlaifeng.utils.CommonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +28,12 @@ public class IUserTest {
     @Resource
     private OAuthDAO oAuthDAO;
 
+    @Resource
+    private WechatDAO wechatDAO;
+
+    @Resource
+    private CommonDAO commonDAO;
+
 
     @Test
     public void testifExist(){
@@ -39,6 +49,12 @@ public class IUserTest {
     @Test
     public void getXLFUser(){
         System.out.println(userDAO.getUser(new XLF_User(1)));
+    }
+
+
+    @Test
+    public void testinsert(){
+        commonDAO.add(CommonUtils.add(new XLF_Wechat("AAA")));
     }
 
 }
