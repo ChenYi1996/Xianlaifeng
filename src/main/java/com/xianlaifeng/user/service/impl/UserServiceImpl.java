@@ -5,12 +5,9 @@ import com.xianlaifeng.sys.dao.CommonDAO;
 import com.xianlaifeng.user.dao.WechatDAO;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.UserService;
-import com.xianlaifeng.user.dao.OAuthDAO;
 import com.xianlaifeng.user.dao.UserDAO;
-import com.xianlaifeng.user.entity.XLF_OAuth;
 import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.utils.CommonUtils;
-import com.xianlaifeng.utils.DesUtil;
 import com.xianlaifeng.utils.RequestUtils;
 import com.xianlaifeng.utils.UUIDTool;
 import net.sf.json.JSONObject;
@@ -19,9 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.xml.registry.infomodel.User;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -35,9 +30,6 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserDAO userDAO;
-
-    @Autowired
-    private OAuthDAO oAuthDAO;
 
     @Autowired
     private WechatDAO wechatDAO;

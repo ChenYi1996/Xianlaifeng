@@ -1,6 +1,5 @@
 package com.xianlaifeng.user.dao;
 
-import com.xianlaifeng.user.entity.XLF_OAuth;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 
 import java.util.List;

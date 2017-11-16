@@ -6,7 +6,7 @@
 
     <sql id='TABLE_NAME'>xlf_wechat</sql>
 
-    <select id="ifExist" resultType="com.xianlaifeng.user.entity.XLF_User" parameterType="com.xianlaifeng.user.entity.XLF_User">
+    <select id="ifExist" resultType="com.xianlaifeng.user.entity.XLF_Wechat" parameterType="com.xianlaifeng.user.entity.XLF_Wechat">
         SELECT * FROM <include refid="TABLE_NAME" />
         <where>
             <if test="id!=null and id!=0">
@@ -33,7 +33,7 @@
         </where>
     </select>
 
-    <update id="updateWechat" parameterType="com.xianlaifeng.user.entity.XLF_User">
+    <update id="updateWechat" parameterType="com.xianlaifeng.user.entity.XLF_Wechat">
         UPDATE <include refid="TABLE_NAME" />
         <trim prefix="set" suffixOverrides=",">
             <if test="openid!=null">openid=#{openid},</if>

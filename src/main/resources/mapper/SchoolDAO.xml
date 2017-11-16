@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.xianlaifeng.user.dao.SchoolDAO">
+
+    <sql id='TABLE_NAME'>xlf_school</sql>
+
+
+    <select id="getSchool" resultType="com.xianlaifeng.user.entity.XLF_School"  parameterType="com.xianlaifeng.user.entity.XLF_School">
+        SELECT
+        *
+        FROM <include refid="TABLE_NAME" />
+        <where>
+            <if test="id!=0">
+                and id=#{id}
+            </if>
+            <if test="school_name!=null and school_name!=''">
+                and school_name like '%${school_name}%'
+            </if>
+            <if test="school_place!=null and school_place!=''">
+                and school_place = #{school_place}
+            </if>
+            <if test="school_properties!=null and school_properties!=''">
+                and school_properties = #{school_properties}
+            </if>
+        </where>
+    </select>
+
+</mapper>
