@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 兼职信息表
  */
-public class xlfPartTimeJob {
+public class XlfPartTimeJob {
 
     private int jobId;
     private String jobName;
@@ -24,10 +24,10 @@ public class xlfPartTimeJob {
     private int userId;
     private String delFlag;
 
-    public xlfPartTimeJob() {
+    public XlfPartTimeJob() {
     }
 
-    public xlfPartTimeJob(int jobId, String jobName, int limitNumber, String jobType, BigDecimal wage, String calculateMoneyType, String calculateMoneyDate, String workArea, Date releaseTime, String workDate, String workTime, String jobContent, String auditStatus, int userId, String delFlag) {
+    public XlfPartTimeJob(int jobId, String jobName, int limitNumber, String jobType, BigDecimal wage, String calculateMoneyType, String calculateMoneyDate, String workArea, Date releaseTime, String workDate, String workTime, String jobContent, String auditStatus, int userId, String delFlag) {
         this.jobId = jobId;
         this.jobName = jobName;
         this.limitNumber = limitNumber;
@@ -167,7 +167,7 @@ public class xlfPartTimeJob {
 
     @Override
     public String toString() {
-        return "xlfPartTimeJob{" +
+        return "XlfPartTimeJob{" +
                 "jobId=" + jobId +
                 ", jobName='" + jobName + '\'' +
                 ", limitNumber=" + limitNumber +
