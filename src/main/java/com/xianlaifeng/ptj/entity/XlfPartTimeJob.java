@@ -15,7 +15,7 @@ public class XlfPartTimeJob {
     private BigDecimal wage;
     private String calculateMoneyType;
     private String calculateMoneyDate;
-    private String workArea;
+    private String workStreet;
     private Date releaseTime;
     private String workDate;
     private String workTime;
@@ -23,11 +23,12 @@ public class XlfPartTimeJob {
     private String auditStatus;
     private int userId;
     private String delFlag;
+    private int areaId;
 
     public XlfPartTimeJob() {
     }
 
-    public XlfPartTimeJob(int jobId, String jobName, int limitNumber, String jobType, BigDecimal wage, String calculateMoneyType, String calculateMoneyDate, String workArea, Date releaseTime, String workDate, String workTime, String jobContent, String auditStatus, int userId, String delFlag) {
+    public XlfPartTimeJob(int jobId, String jobName, int limitNumber, String jobType, BigDecimal wage, String calculateMoneyType, String calculateMoneyDate, String workStreet, Date releaseTime, String workDate, String workTime, String jobContent, String auditStatus, int userId, String delFlag) {
         this.jobId = jobId;
         this.jobName = jobName;
         this.limitNumber = limitNumber;
@@ -35,7 +36,7 @@ public class XlfPartTimeJob {
         this.wage = wage;
         this.calculateMoneyType = calculateMoneyType;
         this.calculateMoneyDate = calculateMoneyDate;
-        this.workArea = workArea;
+        this.workStreet = workStreet;
         this.releaseTime = releaseTime;
         this.workDate = workDate;
         this.workTime = workTime;
@@ -43,6 +44,25 @@ public class XlfPartTimeJob {
         this.auditStatus = auditStatus;
         this.userId = userId;
         this.delFlag = delFlag;
+    }
+
+    public XlfPartTimeJob(int jobId, String jobName, int limitNumber, String jobType, BigDecimal wage, String calculateMoneyType, String calculateMoneyDate, String workStreet, Date releaseTime, String workDate, String workTime, String jobContent, String auditStatus, int userId, String delFlag, int areaId) {
+        this.jobId = jobId;
+        this.jobName = jobName;
+        this.limitNumber = limitNumber;
+        this.jobType = jobType;
+        this.wage = wage;
+        this.calculateMoneyType = calculateMoneyType;
+        this.calculateMoneyDate = calculateMoneyDate;
+        this.workStreet = workStreet;
+        this.releaseTime = releaseTime;
+        this.workDate = workDate;
+        this.workTime = workTime;
+        this.jobContent = jobContent;
+        this.auditStatus = auditStatus;
+        this.userId = userId;
+        this.delFlag = delFlag;
+        this.areaId = areaId;
     }
 
     public void setJobId(int jobId) {
@@ -73,8 +93,8 @@ public class XlfPartTimeJob {
         this.calculateMoneyDate = calculateMoneyDate;
     }
 
-    public void setWorkArea(String workArea) {
-        this.workArea = workArea;
+    public void setWorkStreet(String workStreet) {
+        this.workStreet = workStreet;
     }
 
     public void setReleaseTime(Date releaseTime) {
@@ -105,6 +125,14 @@ public class XlfPartTimeJob {
         this.delFlag = delFlag;
     }
 
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
+    }
+
+    public int getAreaId() {
+        return areaId;
+    }
+
     public int getJobId() {
         return jobId;
     }
@@ -133,8 +161,8 @@ public class XlfPartTimeJob {
         return calculateMoneyDate;
     }
 
-    public String getWorkArea() {
-        return workArea;
+    public String getWorkStreet() {
+        return workStreet;
     }
 
     public Date getReleaseTime() {
@@ -175,7 +203,7 @@ public class XlfPartTimeJob {
                 ", wage=" + wage +
                 ", calculateMoneyType='" + calculateMoneyType + '\'' +
                 ", calculateMoneyDate='" + calculateMoneyDate + '\'' +
-                ", workArea='" + workArea + '\'' +
+                ", workStreet='" + workStreet + '\'' +
                 ", releaseTime=" + releaseTime +
                 ", workDate='" + workDate + '\'' +
                 ", workTime='" + workTime + '\'' +
@@ -183,6 +211,7 @@ public class XlfPartTimeJob {
                 ", auditStatus='" + auditStatus + '\'' +
                 ", userId=" + userId +
                 ", delFlag='" + delFlag + '\'' +
+                ", areaId=" + areaId +
                 '}';
     }
 }

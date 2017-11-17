@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xianlaifeng.ptj.dao.xlfPartTimeJobDAO">
+
+    <sql id="Base_Column_List">
+      job_id,job_name,limit_number,job_type,wage,calculate_money_type,calculate_money_date,
+      work_street,release_time,work_date,work_time,job_content,audit_status,del_fLag，user_id，area_id
+    </sql>
+
+    <select id="findAllList" >
+        select
+        <include refid="Base_Column_List"/>
+        from xlf_part_time_job
+    </select>
+
+    <insert  id="add" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
+        insert into xlf_part_time_job
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jobName != null">
+                job_name,
+            </if>
+            <if test="limitNumber != null">
+                limit_number,
+            </if>
+            <if test="jobType != null">
+                job_type,
+            </if>
+            <if test="wage != null">
+                wage,
+            </if>
+            <if test="calculateMoneyType != null">
+                calculate_money_type,
+            </if>
+            <if test="calculateMoneyDate != null">
+                calculate_money_date
+            </if>
+            <if test="workStreet != null">
+                work_street,
+            </if>
+            <if test="releaseTime != null">
+                release_time,
+            </if>
+            <if test="workDate != null">
+                work_date,
+            </if>
+            <if test="workTime != null">
+                work_time,
+            </if>
+            <if test="jobContent != null">
+                job_content,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="("  suffix=")" suffixOverrides="values,">
+            <if test="jobName != null">
+                jobName,
+            </if>
+            <if test="limitNumber != null">
+                limitNumber,
+            </if>
+            <if test="jobType != null">
+                jobType,
+            </if>
+            <if test="wage != null">
+                wage,
+            </if>
+            <if test="calculateMoneyType != null">
+                calculateMoneyType,
+            </if>
+            <if test="calculateMoneyDate != null">
+                calculateMoneyDate,
+            </if>
+            <if test="workStreet != null">
+                workStreet,
+            </if>
+            <if test="releaseTime != null">
+                releaseTime,
+            </if>
+            <if test="workDate != null">
+                workDate,
+            </if>
+            <if test="workTime != null">
+                workTime,
+            </if>
+            <if test="jobContent != null">
+                jobContent,
+            </if>
+            <if test="auditStatus != null">
+                auditStatus,
+            </if>
+            <if test="userId != null">
+                userId,
+            </if>
+            <if test="areaId != null">
+                areaId,
+            </if>
+            <if test="delFlag != null">
+                delFlag,
+            </if>
+        </trim>
+    </insert>
+</mapper>
