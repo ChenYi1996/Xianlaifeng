@@ -2,6 +2,7 @@ package com.xianlaifeng.user.service.impl;
 
 
 import com.xianlaifeng.sys.dao.CommonDAO;
+import com.xianlaifeng.user.dao.SchoolDAO;
 import com.xianlaifeng.user.dao.WechatDAO;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.UserService;
@@ -85,4 +86,13 @@ public class UserServiceImpl implements UserService{
         return u_info;
     }
 
+
+    public void updateWechatUserInfo(XLF_User user) {
+        userDAO.updateUserInfo(user);
+    }
+
+    public Object updateWechat(XLF_Wechat wechat) {
+        wechatDAO.updateWechat(wechat);
+        return null;
+    }
 }

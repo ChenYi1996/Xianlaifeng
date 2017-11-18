@@ -76,4 +76,19 @@
     </insert>
 
 
+    <update id="updateUserInfo" parameterType="com.xianlaifeng.user.entity.XLF_Wechat">
+        UPDATE <include refid="TABLE_NAME" />
+        <trim prefix="set" suffixOverrides=",">
+            <if test="user_name!=null">user_name=#{user_name},</if>
+            <if test="user_sex!=0">user_sex=#{user_sex},</if>
+            <if test="user_role!=0">user_role=#{user_role},</if>
+            <if test="user_age!=0">user_age=#{user_age},</if>
+            <if test="user_high!=0">user_high=#{user_high},</if>
+            <if test="user_school_id!=0">user_school_id=#{user_school_id},</if>
+            <if test="user_phone!=null">user_phone=#{user_phone},</if>
+            <if test="user_details!=null">user_details=#{user_details},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

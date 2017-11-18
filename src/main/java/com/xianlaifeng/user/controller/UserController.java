@@ -1,16 +1,15 @@
 package com.xianlaifeng.user.controller;
 
 
+import com.xianlaifeng.user.entity.XLF_School;
 import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.RedisService;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.AjaxJSON;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +49,6 @@ public class UserController {
                 map.put("trd_session",result.equals("error")?null:result);
                 res.setObj(map);
             }
-
         }catch (Exception e){
             res.setSuccess(false);
             res.setMsg(e.getMessage());
@@ -79,13 +77,35 @@ public class UserController {
     }
 
 
+    //更新用户信息
     @RequestMapping(value="/updateWeChatUserInfo.do",produces="application/json" ,method = RequestMethod.GET)
     @ResponseBody
-    public AjaxJSON updateWeChatUserInfo(@RequestParam Map<String,Object> params){
+    public AjaxJSON updateWeChatUserInfo(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
+        AjaxJSON res = new AjaxJSON();
+        try {
+            XLF_User user = (XLF_User) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_User.class);
+            userService.updateWechatUserInfo(user);
+            res.setSuccess(true);
+        }catch (Exception e){
+            res.setSuccess(false);
+            res.setMsg(e.getMessage());
+        }
+        return res;
+    }
+
+
+    //更新微信信息
+    @RequestMapping(value="/updateWeChat.do",produces="application/json" ,method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJSON updateWeChat(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
         String trd_session = (String)params.get("trd_session");
         AjaxJSON res = new AjaxJSON();
         try {
             String openid =(String)request.getAttribute("openid");
+            XLF_Wechat wechat = (XLF_Wechat) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Wechat.class);
+            wechat.setOpenid(openid);
+            userService.updateWechat(wechat);
+            res.setSuccess(true);
         }catch (Exception e){
             res.setSuccess(false);
             res.setMsg(e.getMessage());
