@@ -2,26 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.xianlaifeng.ptj.dao.xlfPartTimeJobDAO">
+<mapper namespace="com.xianlaifeng.ptj.dao.XlfPartTimeJobDAO">
 
-    <sql id="Base_Column_List">
-      job_id,job_name,limit_number,job_type,wage,calculate_money_type,calculate_money_date,
-      work_street,release_time,work_date,work_time,job_content,audit_status,del_fLag，user_id，area_id
-    </sql>
+    <select id="selectDetails" parameterType="java.lang.String">
+        select p.* ,a.*
+        from xlf_part_time_job AS  p
+        join xlf_area AS  a
+        ON  p.area_id  = a.area_id
+        where p.job_id = #{jobId}
 
-    <select id="findAllList" >
-        select
-        <include refid="Base_Column_List"/>
-        from xlf_part_time_job
     </select>
 
-    <insert  id="add" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
+    <select id="findAllList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
+        select *
+        from xlf_part_time_job
+        <where>
+            end_work_date > now()
+            <if test="jobName != null">
+                and job_Name  like '%${jobName}%'
+            </if>
+            <if test="areaId != null">
+                and area_id = #{areaId}
+            </if>
+            <if test="jobType != null">
+                and job_type = #{jobType}
+            </if>
+            <if test="timeType != null">
+                and time_type like '%${timeType}%'
+            </if>
+        </where>
+        order by releaseTime desc
+    </select>
+
+    <insert id="add" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
         insert into xlf_part_time_job
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="jobName != null">
                 job_name,
             </if>
-            <if test="limitNumber != null">
+            <if test="limitNumber != 0">
                 limit_number,
             </if>
             <if test="jobType != null">
@@ -30,11 +49,14 @@
             <if test="wage != null">
                 wage,
             </if>
+            <if test="wageType != null">
+                wage_type,
+            </if>
             <if test="calculateMoneyType != null">
                 calculate_money_type,
             </if>
             <if test="calculateMoneyDate != null">
-                calculate_money_date
+                calculate_money_date,
             </if>
             <if test="workStreet != null">
                 work_street,
@@ -42,11 +64,11 @@
             <if test="releaseTime != null">
                 release_time,
             </if>
-            <if test="workDate != null">
-                work_date,
+            <if test="startWorkDate != null">
+                start_work_date,
             </if>
-            <if test="workTime != null">
-                work_time,
+            <if test="endWorkDate != null">
+                end_work_date,
             </if>
             <if test="jobContent != null">
                 job_content,
@@ -54,61 +76,70 @@
             <if test="auditStatus != null">
                 audit_status,
             </if>
-            <if test="userId != null">
+            <if test="userId != 0">
                 user_id,
             </if>
-            <if test="areaId != null">
+            <if test="areaId != 0">
                 area_id,
             </if>
             <if test="delFlag != null">
                 del_flag,
             </if>
-        </trim>
-        <trim prefix="("  suffix=")" suffixOverrides="values,">
-            <if test="jobName != null">
-                jobName,
+            <if test="sexDemand != null">
+                sex_demand,
             </if>
-            <if test="limitNumber != null">
-                limitNumber,
+        </trim>
+        <trim prefix="values("  suffix=")" suffixOverrides=",">
+            <if test="jobName != null">
+                #{jobName},
+            </if>
+            <if test="limitNumber != 0">
+                #{limitNumber},
             </if>
             <if test="jobType != null">
-                jobType,
+                #{jobType},
             </if>
             <if test="wage != null">
-                wage,
+                #{wage},
+            </if>
+            <if test="wageType != null">
+                #{wageType},
             </if>
             <if test="calculateMoneyType != null">
-                calculateMoneyType,
+                #{calculateMoneyType},
             </if>
             <if test="calculateMoneyDate != null">
-                calculateMoneyDate,
+                #{calculateMoneyDate},
             </if>
             <if test="workStreet != null">
-                workStreet,
+                #{workStreet},
             </if>
             <if test="releaseTime != null">
-                releaseTime,
+                #{releaseTime},
             </if>
-            <if test="workDate != null">
-                workDate,
+            <if test="startWorkDate != null">
+                #{startWorkDate},
             </if>
-            <if test="workTime != null">
-                workTime,
+            <if test="endWorkDate != null">
+               #{endWorkDate},
             </if>
             <if test="jobContent != null">
-                jobContent,
+                #{jobContent},
             </if>
             <if test="auditStatus != null">
-                auditStatus,
+                #{auditStatus},
             </if>
-            <if test="userId != null">
-                userId,
+            <if test="userId != 0">
+                #{userId},
             </if>
-            <if test="areaId != null">
-                areaId,
+            <if test="areaId != 0">
+                #{areaId},
             </if>
             <if test="delFlag != null">
-                delFlag,
+                #{delFlag},
+            </if>
+            <if test="sexDemand != null">
+                #{sexDemand},
             </if>
         </trim>
     </insert>

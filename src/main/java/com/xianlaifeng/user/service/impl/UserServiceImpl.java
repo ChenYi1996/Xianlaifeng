@@ -5,9 +5,7 @@ import com.xianlaifeng.sys.dao.CommonDAO;
 import com.xianlaifeng.user.dao.WechatDAO;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.UserService;
-import com.xianlaifeng.user.dao.OAuthDAO;
 import com.xianlaifeng.user.dao.UserDAO;
-import com.xianlaifeng.user.entity.XLF_OAuth;
 import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.utils.CommonUtils;
 import com.xianlaifeng.utils.DesUtil;
@@ -36,8 +34,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserDAO userDAO;
 
-    @Autowired
-    private OAuthDAO oAuthDAO;
+//    @Autowired
+//    private OAuthDAO oAuthDAO;
 
     @Autowired
     private WechatDAO wechatDAO;

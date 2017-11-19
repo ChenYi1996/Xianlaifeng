@@ -1,7 +1,6 @@
 package com.xianlaifeng.user.controller;
 
 
-import com.xianlaifeng.user.entity.XLF_OAuth;
 import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.RedisService;

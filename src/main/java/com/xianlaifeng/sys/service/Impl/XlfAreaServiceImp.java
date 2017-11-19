@@ -10,19 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 @Service("XlfAreaService")
-public class XlfAreaServiceImp implements XlfAreaService{
+public class XlfAreaServiceImp implements XlfAreaService {
 
     @Resource
     private XlfAreaDAO xlfAreaDAO;
-    
-    public int add(XlfArea xlfArea) {
-        if(xlfArea == null){
-            return 0;
-        }
-        return  xlfAreaDAO.add(xlfArea);
-    }
 
-    public List<Map<String, Object>> findList(XlfArea xlfArea) {
-        return xlfAreaDAO.findList(xlfArea);
+    public XlfArea selectDetails(XlfArea xlfArea) {
+        return xlfAreaDAO.selectDetails(xlfArea);
     }
 }

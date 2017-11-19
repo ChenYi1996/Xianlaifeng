@@ -2,10 +2,8 @@ package com.xianlaifeng.test;
 
 
 import com.xianlaifeng.sys.dao.CommonDAO;
-import com.xianlaifeng.user.dao.OAuthDAO;
 import com.xianlaifeng.user.dao.UserDAO;
 import com.xianlaifeng.user.dao.WechatDAO;
-import com.xianlaifeng.user.entity.XLF_OAuth;
 import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.user.service.RedisService;
 import com.xianlaifeng.utils.CommonUtils;
@@ -26,8 +24,8 @@ public class IUserTest {
     @Resource
     private UserDAO userDAO;
 
-    @Resource
-    private OAuthDAO oAuthDAO;
+//    @Resource
+//    private OAuthDAO oAuthDAO;
 
     @Resource
     private WechatDAO wechatDAO;
@@ -39,21 +37,21 @@ public class IUserTest {
     private RedisService redisService;
 
 
-    @Test
-    public void testifExist(){
-        List<XLF_OAuth> l = oAuthDAO.ifExist(new XLF_OAuth("WeChat","CCC"));
-        System.out.println(l);
-    }
+//    @Test
+//    public void testifExist(){
+//        List<XLF_OAuth> l = oAuthDAO.ifExist(new XLF_OAuth("WeChat","CCC"));
+//        System.out.println(l);
+//    }
 
-    @Test
-    public void insert(){
-        oAuthDAO.insertOAuth(new XLF_OAuth("WeChat","CCC"));
-    }
+//    @Test
+//    public void insert(){
+//        oAuthDAO.insertOAuth(new XLF_OAuth("WeChat","CCC"));
+//    }
 
-    @Test
-    public void getXLFUser(){
-        System.out.println(userDAO.getUser(new XLF_User(10002)));
-    }
+//    @Test
+//    public void getXLFUser(){
+//        System.out.println(userDAO.getUser(new XLF_User(10002)));
+//    }
 
 
     @Test

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xianlaifeng.sys.dao.XlfAreaDAO">
+
+
+
+    <select id="selectDetails" parameterType="com.xianlaifeng.sys.entity.XlfArea" >
+        select *
+        from xlf_area
+        <where>
+            <if test="areaId != 0">
+                areaId = #{areaId}
+            </if>
+            <if test="province != null">
+               and  province = #{province}
+            </if>
+            <if test="city != null">
+                and city = #{city}
+            </if>
+            <if test="district != null">
+                and district = #{district}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
