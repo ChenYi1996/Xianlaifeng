@@ -64,11 +64,10 @@ public class UserController {
         AjaxJSON res = new AjaxJSON();
         try {
             String openid =(String)request.getAttribute("openid");
-            //System.out.println(openid);
-            XLF_User u = (XLF_User)userService.getWechatUserInfo(new XLF_Wechat(openid));
-            res.setObj(u);
-            res.setSuccess(u==null?false:true);
-            res.setMsg(u==null?"用户首次登陆微信端":"success");
+            Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
+            res.setObj(u_info);
+            res.setSuccess(u_info==null?false:true);
+            res.setMsg(u_info==null?"用户首次登陆微信端":"success");
         }catch (Exception e){
             res.setSuccess(false);
             res.setMsg(e.getMessage());
