@@ -12,4 +12,6 @@ public interface UserDAO {
 
     public int insertAndGetId(XLF_User u);
 
+    public void updateUserInfo(XLF_User u);
+
 }

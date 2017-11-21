@@ -45,7 +45,14 @@
             <if test="city!=null">city=#{city},</if>
             <if test="user_id!=null and user_id!=0">user_id=#{user_id},</if>
         </trim>
-        WHERE id = #{id}
+        <where>
+            <if test="id!=0">
+                and id=#{id}
+            </if>
+            <if test="openid!=null">
+                and openid=#{openid}
+            </if>
+        </where>
     </update>
 
 

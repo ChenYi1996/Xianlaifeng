@@ -121,4 +121,7 @@ public class XLF_Wechat {
                 ", user_id=" + user_id +
                 '}';
     }
+
+
+
 }
