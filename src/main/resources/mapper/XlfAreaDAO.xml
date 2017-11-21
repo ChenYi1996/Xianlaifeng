@@ -6,22 +6,22 @@
 
 
 
-    <select id="selectDetails" parameterType="com.xianlaifeng.sys.entity.XlfArea" >
+    <select id="selectDetails"  resultType="java.util.Map" parameterType="com.xianlaifeng.sys.entity.XlfArea" >
         select *
-        from xlf_area
+        from xlf_area x
         <where>
-            <if test="areaId != 0">
-                areaId = #{areaId}
-            </if>
-            <if test="province != null">
-               and  province = #{province}
-            </if>
-            <if test="city != null">
-                and city = #{city}
-            </if>
-            <if test="district != null">
-                and district = #{district}
-            </if>
+             <if test="areaId != 0 and areaId != null">
+                x.area_id = #{areaId}
+             </if>
+             <if test="province != null ">
+                and  x.province = #{province}
+             </if>
+             <if test="city != null ">
+                 and x.city = #{city}
+             </if>
+            <if test="district != null " >
+                 and x.district = #{district}
+             </if>
         </where>
     </select>
 

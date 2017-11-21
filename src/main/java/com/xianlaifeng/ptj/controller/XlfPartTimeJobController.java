@@ -1,16 +1,16 @@
 package com.xianlaifeng.ptj.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.ptj.entity.XlfPartTimeJob;
-import com.xianlaifeng.ptj.service.XlfPartTimeJobService;
+import com.xianlaifeng.ptj.service.Impl.XlfPartTimeJobServiceImpl;
 import com.xianlaifeng.sys.entity.XlfArea;
-import com.xianlaifeng.sys.service.XlfAreaService;
+import com.xianlaifeng.sys.service.Impl.XlfAreaServiceImpl;
 import com.xianlaifeng.utils.AjaxJSON;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -18,10 +18,10 @@ import java.util.Map;
 public class XlfPartTimeJobController {
 
     @Resource
-    private XlfPartTimeJobService xlfPartTimeJobService;
+    private XlfPartTimeJobServiceImpl xlfPartTimeJobServiceImpl;
 
     @Resource
-    private XlfAreaService xlfAreaService;
+    private XlfAreaServiceImpl xlfAreaServiceImpl;
 
     /**
      添加兼职信息
@@ -34,10 +34,10 @@ public class XlfPartTimeJobController {
             XlfPartTimeJob xlfPartTimeJob = (XlfPartTimeJob) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XlfPartTimeJob.class);
             //查询areaId 添加到兼职信息
             XlfArea xlfArea = (XlfArea) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XlfArea.class);
-            xlfArea = xlfAreaService.selectDetails(xlfArea);
-            xlfPartTimeJob.setAreaId(xlfArea.getAreaId());
+//            xlfArea = xlfAreaService.selectDetails(xlfArea);
+//            xlfPartTimeJob.setAreaId(xlfArea.getAreaId());
             //添加兼职信息
-            int result = xlfPartTimeJobService.add(xlfPartTimeJob);
+            int result = xlfPartTimeJobServiceImpl.add(xlfPartTimeJob);
             json.setSuccess(true);
             json.setMsg("添加成功");
             return json;
@@ -45,7 +45,6 @@ public class XlfPartTimeJobController {
         }catch(Exception e) {
             json.setSuccess(false);
             json.setMsg("添加失败");
-            e.printStackTrace();
         }
         return  json;
     }
@@ -61,18 +60,13 @@ public class XlfPartTimeJobController {
             String pageNum = (String)param.get("pageNum");
             String pageSize = (String)param.get("pageSize");
             XlfPartTimeJob xlfPartTimeJob=(XlfPartTimeJob)JSONObject.toBean(JSONObject.fromObject(ajax.getObj()),XlfPartTimeJob.class);
-            XlfArea xlfArea = (XlfArea)JSONObject.toBean(JSONObject.fromObject(ajax.getObj()),XlfArea.class);
-            if(xlfArea != null) {
-                xlfArea = xlfAreaService.selectDetails(xlfArea);
-                xlfPartTimeJob.setAreaId(xlfArea.getAreaId());
-            }
-            List<Map<String,Object>> list=xlfPartTimeJobService.findList(xlfPartTimeJob);
-            json.setObj(list);
+            PageInfo<XlfPartTimeJob> pageInfos=xlfPartTimeJobServiceImpl.findList(xlfPartTimeJob,
+                    Integer.valueOf(pageNum==null?"0":pageNum),Integer.valueOf(pageNum==null?"0":pageSize));
+            json.setObj(pageInfos.getList());
             json.setSuccess(true);
         }catch(Exception e){
             json.setSuccess(false);
             json.setMsg("查询失败");
-            e.printStackTrace();
         }
         return json;
     }
@@ -82,14 +76,14 @@ public class XlfPartTimeJobController {
     public AjaxJSON details(@RequestParam Map<String,Object>param,@RequestBody AjaxJSON ajax){
         AjaxJSON json=new AjaxJSON();
         try{
-            XlfPartTimeJob xlfPartTimeJob=xlfPartTimeJobService.selectDetails((String)param.get("jobId"));
+            XlfPartTimeJob xlfPartTimeJob=xlfPartTimeJobServiceImpl.selectDetails((String)param.get("jobId"));
             json.setObj(xlfPartTimeJob);
             json.setSuccess(true);
         }catch(Exception e){
             json.setSuccess(false);
             json.setMsg("查询失败");
-            e.printStackTrace();
         }
         return json;
     }
+
 }

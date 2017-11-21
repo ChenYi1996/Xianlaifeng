@@ -7,7 +7,7 @@ import java.util.Map;
 
 
 public interface XlfPartTimeJobDAO {
-    List<Map<String, Object>> findList(XlfPartTimeJob xlfPartTimeJob);
+    List<XlfPartTimeJob> findList(XlfPartTimeJob xlfPartTimeJob);
     
     int add(XlfPartTimeJob xlfPartTimeJob);
 

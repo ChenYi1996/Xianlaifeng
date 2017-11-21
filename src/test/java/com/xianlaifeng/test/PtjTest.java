@@ -44,7 +44,7 @@ public class PtjTest {
 //        xlfPartTimeJob.setTimeType("2");
 //
 //        int result=xlfPartTimeJobDAO.add(xlfPartTimeJob);
-        System.out.println("--------------------"+result);
+//        System.out.println("--------------------"+result);
     }
 
 }

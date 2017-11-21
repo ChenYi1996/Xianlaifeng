@@ -1,8 +1,11 @@
 package com.xianlaifeng.ptj.service.Impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.ptj.dao.XlfPartTimeJobDAO;
 import com.xianlaifeng.ptj.entity.XlfPartTimeJob;
 import com.xianlaifeng.ptj.service.XlfPartTimeJobService;
+import com.xianlaifeng.user.entity.XLF_School;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,8 +24,11 @@ public class XlfPartTimeJobServiceImpl implements XlfPartTimeJobService{
         return xlfPartTimeJobDAO.add(xlfPartTimeJob);
     }
 
-    public List<Map<String, Object>> findList(XlfPartTimeJob xlfPartTimeJob) {
-        return xlfPartTimeJobDAO.findList(xlfPartTimeJob);
+    public PageInfo<XlfPartTimeJob> findList(XlfPartTimeJob xlfPartTimeJob,int pageNum,int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        PageInfo<XlfPartTimeJob> p_list = new PageInfo<XlfPartTimeJob>(xlfPartTimeJobDAO.findList(xlfPartTimeJob));
+        return p_list;
+
     }
 
     public XlfPartTimeJob selectDetails(String jobId) {
@@ -31,5 +37,7 @@ public class XlfPartTimeJobServiceImpl implements XlfPartTimeJobService{
         }
         return xlfPartTimeJobDAO.selectDetails(jobId);
     }
+
+
 
 }

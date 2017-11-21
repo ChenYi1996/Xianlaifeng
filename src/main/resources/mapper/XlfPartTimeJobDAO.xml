@@ -13,21 +13,21 @@
 
     </select>
 
-    <select id="findAllList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
+    <select id="findAllList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob" resultType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
         select *
         from xlf_part_time_job
         <where>
             end_work_date > now()
-            <if test="jobName != null">
+            <if test="jobName != null and jobName != ''">
                 and job_Name  like '%${jobName}%'
             </if>
-            <if test="areaId != null">
+            <if test="areaId != 0  ">
                 and area_id = #{areaId}
             </if>
-            <if test="jobType != null">
+            <if test="jobType != null and jobType != ''">
                 and job_type = #{jobType}
             </if>
-            <if test="timeType != null">
+            <if test="timeType != null and jobType != ''">
                 and time_type like '%${timeType}%'
             </if>
         </where>
