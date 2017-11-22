@@ -11,9 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-mybatis.xml","classpath:spring-redis.xml"})
@@ -45,6 +43,27 @@ public class PtjTest {
 //
 //        int result=xlfPartTimeJobDAO.add(xlfPartTimeJob);
 //        System.out.println("--------------------"+result);
+    }
+
+    @Test
+    public void selectDetailsTest(){
+        List<Map<String,Object>> list =xlfPartTimeJobDAO.selectDetails("3");
+        System.out.println();
+    }
+
+    @Test
+    public void findListTest(){
+        XlfPartTimeJob xlfPartTimeJob = new XlfPartTimeJob();
+        String string ="1,2";
+
+        List<Integer> in = new ArrayList<Integer>();
+        for(int i=0; i<Arrays.asList(string.split(",")).size();i++){
+            in.add(Integer.valueOf(Arrays.asList(string.split(",")).get(i)));
+        }
+        xlfPartTimeJob.setAreaIds(in);
+        List<XlfPartTimeJob> ss =xlfPartTimeJobDAO.findList(xlfPartTimeJob);
+
+        System.out.println();
     }
 
 }

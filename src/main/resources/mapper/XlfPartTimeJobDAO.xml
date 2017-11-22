@@ -3,26 +3,49 @@
 
 
 <mapper namespace="com.xianlaifeng.ptj.dao.XlfPartTimeJobDAO">
-
-    <select id="selectDetails" parameterType="java.lang.String">
-        select p.* ,a.*
+    <resultMap id="BaseResultMap" type="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
+        <id  column="job_id" property="jobId" jdbcType="INTEGER"/>
+        <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
+        <result column="limit_number" property="limitNumber" jdbcType="INTEGER"/>
+        <result column="sex_demand" property="sexDemand" jdbcType="VARCHAR"/>
+        <result column="job_type" property="jobType" jdbcType="VARCHAR"/>
+        <result column="wage" property="wage" jdbcType="DECIMAL"/>
+        <result column="wage_type" property="wageType" jdbcType="VARCHAR"/>
+        <result column="work_street" property="workStreet" jdbcType="VARCHAR"/>
+        <result column="calculate_money_type" property="calculateMoneyType" jdbcType="VARCHAR"/>
+        <result column="calculate_money_date" property="calculateMoneyDate" jdbcType="VARCHAR"/>
+        <result column="time_type" property="workStreet" jdbcType="VARCHAR"/>
+        <result column="release_time" property="releaseTime" jdbcType="TIMESTAMP"/>
+        <result column="end_work_date" property="endWorkDate" jdbcType="TIMESTAMP"/>
+        <result column="start_work_date" property="startWorkDate" jdbcType="TIMESTAMP"/>
+        <result column="job_content" property="jobContent" jdbcType="VARCHAR"/>
+        <result column="audit_status" property="auditStatus" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectDetails" parameterType="java.lang.String" resultType="java.util.Map">
+        select
+        p.* ,a.area_id,a.city,a.province,a.district
         from xlf_part_time_job AS  p
-        join xlf_area AS  a
+        left join xlf_area AS  a
         ON  p.area_id  = a.area_id
         where p.job_id = #{jobId}
 
     </select>
 
-    <select id="findAllList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob" resultType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
+    <select id="findList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob" resultMap="BaseResultMap">
         select *
         from xlf_part_time_job
         <where>
-            end_work_date > now()
             <if test="jobName != null and jobName != ''">
                 and job_Name  like '%${jobName}%'
             </if>
-            <if test="areaId != 0  ">
-                and area_id = #{areaId}
+            <if test="areaIds != null and areaIds.size != 0 ">
+                and area_id  in
+                <foreach item="item" index="index" collection="areaIds" open="(" separator="," close=")">
+                      ${item}
+                </foreach>
             </if>
             <if test="jobType != null and jobType != ''">
                 and job_type = #{jobType}
@@ -30,8 +53,9 @@
             <if test="timeType != null and jobType != ''">
                 and time_type like '%${timeType}%'
             </if>
+
         </where>
-        order by releaseTime desc
+        order by release_time desc
     </select>
 
     <insert id="add" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">

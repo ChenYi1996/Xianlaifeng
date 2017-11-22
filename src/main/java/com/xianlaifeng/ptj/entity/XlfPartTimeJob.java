@@ -4,6 +4,7 @@ import com.xianlaifeng.sys.entity.XlfArea;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 兼职信息表
@@ -30,7 +31,12 @@ public class XlfPartTimeJob {
     private String timeType;
     private String sexDemand;
 
-    private XlfArea xlfArea;
+    private List<Integer> areaIds;
+
+
+    public List<Integer> getAreaIds() {
+        return areaIds;
+    }
 
     public int getJobId() {
         return jobId;
@@ -108,9 +114,6 @@ public class XlfPartTimeJob {
         return sexDemand;
     }
 
-    public XlfArea getXlfArea() {
-        return xlfArea;
-    }
 
     public void setJobId(int jobId) {
         this.jobId = jobId;
@@ -184,11 +187,12 @@ public class XlfPartTimeJob {
         this.sexDemand = sexDemand;
     }
 
-    public void setXlfArea(XlfArea xlfArea) {
-        this.xlfArea = xlfArea;
-    }
 
     public void setWageType(String wageType) {
         this.wageType = wageType;
+    }
+
+    public void setAreaIds(List<Integer> areaIds) {
+        this.areaIds = areaIds;
     }
 }

@@ -11,5 +11,5 @@ public interface XlfPartTimeJobDAO {
     
     int add(XlfPartTimeJob xlfPartTimeJob);
 
-    XlfPartTimeJob selectDetails(String jobId);
+    List<Map<String,Object>> selectDetails(String jobId);
 }

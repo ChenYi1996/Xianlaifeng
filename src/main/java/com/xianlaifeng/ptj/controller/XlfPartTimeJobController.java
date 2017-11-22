@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -59,7 +62,17 @@ public class XlfPartTimeJobController {
         try{
             String pageNum = (String)param.get("pageNum");
             String pageSize = (String)param.get("pageSize");
-            XlfPartTimeJob xlfPartTimeJob=(XlfPartTimeJob)JSONObject.toBean(JSONObject.fromObject(ajax.getObj()),XlfPartTimeJob.class);
+            String areaId = (String) param.get("areaId");
+            String jobType = (String)param.get("jobType");
+            XlfPartTimeJob xlfPartTimeJob =new XlfPartTimeJob();
+            if(null != areaId ){
+                List<Integer> intAreaList = new ArrayList<Integer>();
+                for(int i=0; i<Arrays.asList(areaId.split(",")).size();i++){
+                    intAreaList.add(Integer.valueOf(Arrays.asList(areaId.split(",")).get(i)));
+                }
+
+                xlfPartTimeJob.setAreaIds(intAreaList);
+            }
             PageInfo<XlfPartTimeJob> pageInfos=xlfPartTimeJobServiceImpl.findList(xlfPartTimeJob,
                     Integer.valueOf(pageNum==null?"0":pageNum),Integer.valueOf(pageNum==null?"0":pageSize));
             json.setObj(pageInfos.getList());
@@ -76,8 +89,8 @@ public class XlfPartTimeJobController {
     public AjaxJSON details(@RequestParam Map<String,Object>param,@RequestBody AjaxJSON ajax){
         AjaxJSON json=new AjaxJSON();
         try{
-            XlfPartTimeJob xlfPartTimeJob=xlfPartTimeJobServiceImpl.selectDetails((String)param.get("jobId"));
-            json.setObj(xlfPartTimeJob);
+            List<Map<String,Object>> list=xlfPartTimeJobServiceImpl.selectDetails((String)param.get("jobId"));
+            json.setObj(list.get(0));
             json.setSuccess(true);
         }catch(Exception e){
             json.setSuccess(false);

@@ -31,7 +31,7 @@ public class XlfPartTimeJobServiceImpl implements XlfPartTimeJobService{
 
     }
 
-    public XlfPartTimeJob selectDetails(String jobId) {
+    public List<Map<String,Object>> selectDetails(String jobId) {
         if(jobId == null){
             return null;
         }
