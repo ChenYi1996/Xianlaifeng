@@ -3,27 +3,47 @@
 
 
 <mapper namespace="com.xianlaifeng.sys.dao.XlfAreaDAO">
-
+   <!-- <resultMap id="BaseResultMap" type="com.xianlaifeng.sys.entity.XlfArea">
+        <id column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="district" property="district" jdbcType="VARCHAR"/>
+        <result column="city_first" property="cityFirst" jdbcType="VARCHAR"/>
+        <result column="hot_city" property="hotCity" jdbcType="VARCHAR"/>
+    </resultMap>-->
 
 
     <select id="selectDetails"  resultType="java.util.Map" parameterType="com.xianlaifeng.sys.entity.XlfArea" >
         select *
         from xlf_area x
         <where>
-             <if test="areaId != 0 and areaId != null">
+            <if test="areaId != 0 and areaId != null">
                 x.area_id = #{areaId}
-             </if>
-             <if test="province != null ">
+            </if>
+            <if test="province != null ">
                 and  x.province = #{province}
-             </if>
-             <if test="city != null ">
-                 and x.city = #{city}
-             </if>
+            </if>
+            <if test="city != null ">
+                and x.city = #{city}
+            </if>
             <if test="district != null " >
-                 and x.district = #{district}
-             </if>
+                and x.district = #{district}
+            </if>
         </where>
     </select>
 
+    <select id="selectByCityFirst" resultType="java.util.Map">
+         select * from  xlf_area
+         where area_id in (select max(area_id) from xlf_area
+								group by city)
+
+          order by CONVERT(city_first USING gbk) asc
+
+    </select>
+
+    <select id="selectHotCity" resultType="java.util.Map">
+        select DISTINCT (city) from xlf_area
+        where hot_city = 'Y'
+    </select>
 
 </mapper>

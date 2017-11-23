@@ -18,4 +18,12 @@ public class XlfAreaServiceImpl implements XlfAreaService {
     public List<Map<String,Object>> selectDetails(XlfArea xlfArea) {
         return xlfAreaDAO.selectDetails(xlfArea);
     }
+
+    public List<Map<String, Object>> selectByCityFirst() {
+        return xlfAreaDAO.selectByCityFirst();
+    }
+
+    public List<Map<String, Object>> selectHotCity() {
+        return xlfAreaDAO.selectHotCity();
+    }
 }

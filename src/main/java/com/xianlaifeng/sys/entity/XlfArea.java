@@ -7,14 +7,16 @@ public class XlfArea {
     private String city;
     private String district;
 
-    public XlfArea() {
+    private String CityFirst;
+    private String hotCity;
+
+
+    public void setCityFirst(String cityFirst) {
+        CityFirst = cityFirst;
     }
 
-    public XlfArea(int areaId, String province, String city, String district) {
-        this.areaId = areaId;
-        this.province = province;
-        this.city = city;
-        this.district = district;
+    public void setHotCity(String hotCity) {
+        this.hotCity = hotCity;
     }
 
     public void setAreaId(int areaId) {
@@ -49,13 +51,11 @@ public class XlfArea {
         return district;
     }
 
-    @Override
-    public String toString() {
-        return "XlfArea{" +
-                "areaId=" + areaId +
-                ", province='" + province + '\'' +
-                ", city='" + city + '\'' +
-                ", district='" + district + '\'' +
-                '}';
+    public String getCityFirst() {
+        return CityFirst;
+    }
+
+    public String getHotCity() {
+        return hotCity;
     }
 }

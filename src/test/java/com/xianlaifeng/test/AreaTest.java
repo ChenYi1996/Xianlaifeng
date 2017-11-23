@@ -25,7 +25,12 @@ public class AreaTest {
         xlfArea.setCity("广州市");
         List<Map<String,Object>> list=xlfAreaDAO.selectDetails(xlfArea);
 
+    }
 
-
+    @Test
+    public void selectCityTest(){
+        List<Map<String,Object>> list=xlfAreaDAO.selectHotCity();
+        List<Map<String,Object>> list1 = xlfAreaDAO.selectByCityFirst();
+        System.out.println();
     }
 }

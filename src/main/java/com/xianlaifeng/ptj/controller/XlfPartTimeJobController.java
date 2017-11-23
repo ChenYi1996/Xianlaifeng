@@ -30,7 +30,7 @@ public class XlfPartTimeJobController {
      添加兼职信息
      lbk
      */
-    @RequestMapping(value="add.do",method = {RequestMethod.GET,RequestMethod.POST},produces = "application/json")
+    @RequestMapping(value="/add.do",method = {RequestMethod.GET,RequestMethod.POST},produces = "application/json")
     public AjaxJSON add(@RequestParam Map<String,Object> param,@RequestBody AjaxJSON ajax){
         AjaxJSON json=new AjaxJSON();
         try {
@@ -55,7 +55,7 @@ public class XlfPartTimeJobController {
     /**
      * 兼职列表
      */
-    @RequestMapping(value = "findList.do", produces = "application/json", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/findList.do", produces = "application/json", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public AjaxJSON findList(@RequestParam Map<String, Object> param, @RequestBody AjaxJSON ajax) {
         AjaxJSON json =new AjaxJSON();
@@ -77,7 +77,7 @@ public class XlfPartTimeJobController {
             if(null != jobType){//兼职类型多选
                xlfPartTimeJob.setJobTypes(Arrays.asList(jobType.split(",")));
             }
-            if(null != timeType){
+            if(null != timeType){//时间类型多选
                 xlfPartTimeJob.setTimeTypes(Arrays.asList(timeType.split(",")));
             }
             PageInfo<XlfPartTimeJob> pageInfos=xlfPartTimeJobServiceImpl.findList(xlfPartTimeJob,
@@ -91,7 +91,7 @@ public class XlfPartTimeJobController {
         return json;
     }
 
-    @RequestMapping(value="details.do",produces="application/json",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value="/details.do",produces="application/json",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public AjaxJSON details(@RequestParam Map<String,Object>param,@RequestBody AjaxJSON ajax){
         AjaxJSON json=new AjaxJSON();
