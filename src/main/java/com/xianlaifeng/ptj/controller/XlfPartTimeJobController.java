@@ -64,14 +64,21 @@ public class XlfPartTimeJobController {
             String pageSize = (String)param.get("pageSize");
             String areaId = (String) param.get("areaId");
             String jobType = (String)param.get("jobType");
+            String timeType =(String)param.get("timeType");
             XlfPartTimeJob xlfPartTimeJob =new XlfPartTimeJob();
-            if(null != areaId ){
+            if(null != areaId ){ //区域多选
                 List<Integer> intAreaList = new ArrayList<Integer>();
                 for(int i=0; i<Arrays.asList(areaId.split(",")).size();i++){
                     intAreaList.add(Integer.valueOf(Arrays.asList(areaId.split(",")).get(i)));
                 }
 
                 xlfPartTimeJob.setAreaIds(intAreaList);
+            }
+            if(null != jobType){//兼职类型多选
+               xlfPartTimeJob.setJobTypes(Arrays.asList(jobType.split(",")));
+            }
+            if(null != timeType){
+                xlfPartTimeJob.setTimeTypes(Arrays.asList(timeType.split(",")));
             }
             PageInfo<XlfPartTimeJob> pageInfos=xlfPartTimeJobServiceImpl.findList(xlfPartTimeJob,
                     Integer.valueOf(pageNum==null?"0":pageNum),Integer.valueOf(pageNum==null?"0":pageSize));

@@ -44,16 +44,22 @@
             <if test="areaIds != null and areaIds.size != 0 ">
                 and area_id  in
                 <foreach item="item" index="index" collection="areaIds" open="(" separator="," close=")">
-                      ${item}
+                      #{item}
                 </foreach>
             </if>
-            <if test="jobType != null and jobType != ''">
-                and job_type = #{jobType}
+            <if test="jobTypes != null and jobTypes.size != 0">
+                and job_type  IN 
+                <foreach collection="jobTypes" index="index" item="item" open="(" separator="," close=")">
+                      #{item}
+                </foreach>
             </if>
-            <if test="timeType != null and jobType != ''">
-                and time_type like '%${timeType}%'
+            <if test="timeTypes != null and timeTypes.size != ''">
+                and time_type IN 
+                <foreach collection="timeTypes" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
-
+            
         </where>
         order by release_time desc
     </select>

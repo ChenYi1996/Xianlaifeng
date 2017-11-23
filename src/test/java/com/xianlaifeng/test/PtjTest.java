@@ -55,12 +55,15 @@ public class PtjTest {
     public void findListTest(){
         XlfPartTimeJob xlfPartTimeJob = new XlfPartTimeJob();
         String string ="1,2";
-
+        String jobType="打扫";
+        String timeType="1,2";
         List<Integer> in = new ArrayList<Integer>();
         for(int i=0; i<Arrays.asList(string.split(",")).size();i++){
             in.add(Integer.valueOf(Arrays.asList(string.split(",")).get(i)));
         }
         xlfPartTimeJob.setAreaIds(in);
+        xlfPartTimeJob.setJobTypes(Arrays.asList(jobType.split(",")));
+        xlfPartTimeJob.setTimeTypes(Arrays.asList(timeType.split(",")));
         List<XlfPartTimeJob> ss =xlfPartTimeJobDAO.findList(xlfPartTimeJob);
 
         System.out.println();
