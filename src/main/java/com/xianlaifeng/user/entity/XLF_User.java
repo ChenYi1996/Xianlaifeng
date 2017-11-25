@@ -145,4 +145,13 @@ public class XLF_User {
                 ", user_details='" + user_details + '\'' +
                 '}';
     }
+
+
+    public boolean checkMessage(){
+        if(this.user_phone==null||this.user_name==null||this.user_phone.equals("")||this.user_name.equals("")){
+            return false;
+        }
+        return true;
+    }
+
 }

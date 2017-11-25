@@ -67,7 +67,6 @@ public class UserController {
             Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
             res.setObj(u_info);
             res.setSuccess(u_info==null?false:true);
-            res.setMsg(u_info==null?"用户首次登陆微信端":"success");
         }catch (Exception e){
             res.setSuccess(false);
             res.setMsg(e.getMessage());
@@ -77,7 +76,7 @@ public class UserController {
 
 
     //更新用户信息
-    @RequestMapping(value="/updateWeChatUserInfo.do",produces="application/json" ,method = RequestMethod.GET)
+    @RequestMapping(value="/updateWeChatUserInfo.do",produces="application/json" ,method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public AjaxJSON updateWeChatUserInfo(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
         AjaxJSON res = new AjaxJSON();
@@ -97,7 +96,6 @@ public class UserController {
     @RequestMapping(value="/updateWeChat.do",produces="application/json" ,method = RequestMethod.GET)
     @ResponseBody
     public AjaxJSON updateWeChat(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
-        String trd_session = (String)params.get("trd_session");
         AjaxJSON res = new AjaxJSON();
         try {
             String openid =(String)request.getAttribute("openid");

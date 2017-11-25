@@ -1,7 +1,11 @@
 package com.xianlaifeng.test;
 
 
+import com.xianlaifeng.act.dao.ActivityDAO;
+import com.xianlaifeng.act.entity.XLF_Activity;
+import com.xianlaifeng.act.service.ActivityService;
 import com.xianlaifeng.sys.dao.CommonDAO;
+import com.xianlaifeng.user.dao.SchoolDAO;
 import com.xianlaifeng.user.dao.UserDAO;
 import com.xianlaifeng.user.dao.WechatDAO;
 import com.xianlaifeng.user.entity.XLF_School;
@@ -26,8 +30,6 @@ public class IUserTest {
     @Resource
     private UserDAO userDAO;
 
-//    @Resource
-//    private OAuthDAO oAuthDAO;
 
     @Resource
     private WechatDAO wechatDAO;
@@ -36,24 +38,17 @@ public class IUserTest {
     private CommonDAO commonDAO;
 
     @Resource
+    private SchoolDAO schoolDAO;
+
+    @Resource
+    private ActivityDAO activityDAO;
+
+    @Resource
     private RedisService redisService;
 
+    @Resource
+    private ActivityService activityService;
 
-//    @Test
-//    public void testifExist(){
-//        List<XLF_OAuth> l = oAuthDAO.ifExist(new XLF_OAuth("WeChat","CCC"));
-//        System.out.println(l);
-//    }
-
-//    @Test
-//    public void insert(){
-//        oAuthDAO.insertOAuth(new XLF_OAuth("WeChat","CCC"));
-//    }
-
-//    @Test
-//    public void getXLFUser(){
-//        System.out.println(userDAO.getUser(new XLF_User(10002)));
-//    }
 
     @Test
     public void getXLFUser() {
@@ -63,12 +58,10 @@ public class IUserTest {
     }
 
 
-
     @Test
     public void testinsert() {
-        XLF_User u = new XLF_User(null, 1, 1, null, 0, 0, 2576, null, null);
-        userDAO.insertAndGetId(u);
-        System.out.println(u);
+        XLF_User u = new XLF_User("", 1, 1, null, 0, 0, 2576, null, null);
+        System.out.println(u.checkMessage());
     }
 
 
@@ -87,16 +80,29 @@ public class IUserTest {
         System.out.println(u_info);
     }
 
+    @Test
+    public void getSchool() {
+        XLF_School xlf_school = new XLF_School();
+        xlf_school.setSchool_name("药");
+        xlf_school.setSchool_place("广东");
+        System.out.println(schoolDAO.getSchool(xlf_school));
+    }
 
+    @Test
+    public void printSQL() {
+        String areas = "云城区、新兴县、郁南县、云安县、罗定市";
+        areas.split("、");
+        String city ="云浮市";
+        for(String area:areas.split("、")){
+            System.out.println("insert into xlf_area (province,city,district) values("+"'广东省','"+city+"','"+area+"');");
+        }
+        System.out.println("insert into xlf_area (province,city,district) values("+"'广东省','"+city+"','其他区');");
+    }
 
-//
-//    @Test
-//    public void getSchool() {
-//        XLF_School xlf_school = new XLF_School();
-//        xlf_school.setSchool_name("药");
-//        xlf_school.setSchool_place("广东");
-//        System.out.println(schoolDAO.getSchool(xlf_school));
-//    }
+    @Test
+    public void getActivity(){
+        System.out.println(activityService.getActivityDetails(1));
+    }
+
 
 }
-

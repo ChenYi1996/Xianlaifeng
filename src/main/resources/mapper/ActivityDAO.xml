@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.xianlaifeng.act.dao.ActivityDAO">
+
+    <sql id='TABLE_NAME'>xlf_activity</sql>
+
+    <sql id='LEFT_TABLE_NAME'>xlf_user</sql>
+
+    <select id="getActivityDetails" resultType="java.util.Map"  parameterType="int">
+        SELECT
+        a.*,u.user_name,u.user_phone,u.user_sex
+        FROM <include refid="TABLE_NAME" /> as a
+        LEFT JOIN <include refid="LEFT_TABLE_NAME" /> as u
+        ON a.activityCreateUser = u.id
+        <where>
+          a.id = #{0}
+        </where>
+    </select>
+
+
+    <select id="getActivityShow" resultType="com.xianlaifeng.act.entity.XLF_Activity"  parameterType="com.xianlaifeng.act.entity.XLF_Activity">
+        SELECT
+        id, activityName, activityIfSchool, activityPic, activityProvince, activityCity,  activityDistrict,  activityLocation, activityPerson, activityStartTime,activityStatus
+        FROM <include refid="TABLE_NAME" />
+        <where>
+            <if test="activityName!=null">
+                and activityName like '%${activityName}%'
+            </if>
+            <if test="activityIfSchool !=0 ">
+                and activityIfSchool=#{activityIfSchool}
+            </if>
+            <if test="activityProvince!=null and activityProvince!=''">
+                and activityProvince=#{activityProvince}
+            </if>
+            <if test="activityCity!=null and activityCity!=''">
+                and activityCity=#{activityCity}
+            </if>
+            <if test="activityDistrict!=null and activityDistrict!=''">
+                and activityDistrict=#{activityDistrict}
+            </if>
+            <if test="activityStatus != 3">
+                and activityStatus=#{activityStatus}
+            </if>
+        </where>
+    </select>
+
+</mapper>
