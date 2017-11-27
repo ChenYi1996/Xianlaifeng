@@ -59,8 +59,8 @@ public class CommonUtils {
                 //获得目标类的接入权限
                 boolean isAccess = fields[i].isAccessible();
                 if (!isAccess) fields[i].setAccessible(true);
-                //System.out.println(fields[i].get(object).getClass());
-                //如果属性类型是字符串 加上' '
+
+
                 if(fields[i].getGenericType().toString().equals("class java.lang.String")){
                     paraMap.put(fields[i].getName(), fields[i].get(object)==null?null:"'"+fields[i].get(object)+"'");
 
@@ -69,7 +69,9 @@ public class CommonUtils {
                         "class java.util.Date")){
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
                     paraMap.put(fields[i].getName(), "'"+sdf.format(new Date().getTime())+"'");
-                }else if(fields[i].getName().equals("id")){
+                }
+                //如果属性名为id，即在数据库中自增长，不用插入id字段入数据库，进行空操作
+                else if(fields[i].getName().equals("id")){
 
                 }
                 else {

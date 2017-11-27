@@ -78,6 +78,7 @@ public class ActivityController {
     }
 
 
+    //用户微信端发布活动接口
     @RequestMapping(value="/insertActWechat.do",produces="application/json" ,method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public AjaxJSON insertActWechat(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
@@ -97,6 +98,40 @@ public class ActivityController {
                 activity.setActivityCreateTime(new Date());
                 activityService.insertActivity(activity);
             }
+        }catch (Exception e){
+            res.setSuccess(false);
+            res.setMsg(e.getMessage());
+        }
+        return res;
+    }
+
+
+    //修改活动接口
+    @RequestMapping(value="/updateActWechat.do",produces="application/json" ,method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public AjaxJSON updateActWechat(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
+        AjaxJSON res = new AjaxJSON();
+        try {
+            XLF_Activity activity = (XLF_Activity) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Activity.class);
+            activityService.updateActivity(activity);
+            res.setObj(activityService.getActivityDetails(activity.getId()));
+            res.setSuccess(true);
+        }catch (Exception e){
+            res.setSuccess(false);
+            res.setMsg(e.getMessage());
+        }
+        return res;
+    }
+
+
+    //活动报名接口
+    @RequestMapping(value="/joinAct.do",produces="application/json" ,method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public AjaxJSON joinActivity(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
+        AjaxJSON res = new AjaxJSON();
+        try {
+            String openid =(String)request.getAttribute("openid");
+
         }catch (Exception e){
             res.setSuccess(false);
             res.setMsg(e.getMessage());

@@ -11,5 +11,7 @@ public interface ActivityDAO {
 
     public List<Map<String,Object>> getActivityDetails(int id);
 
+    public void updateActivity(XLF_Activity xlf_activity);
+
 
 }

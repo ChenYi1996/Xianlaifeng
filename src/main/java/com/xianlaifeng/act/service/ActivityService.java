@@ -13,4 +13,6 @@ public interface ActivityService {
 
     public void insertActivity(XLF_Activity activity);
 
+    public void updateActivity(XLF_Activity activity);
+
 }

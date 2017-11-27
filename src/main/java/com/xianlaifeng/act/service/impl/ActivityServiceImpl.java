@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.xianlaifeng.act.dao.ActivityDAO;
 import com.xianlaifeng.act.entity.XLF_Activity;
 import com.xianlaifeng.act.service.ActivityService;
+import com.xianlaifeng.sys.dao.CommonDAO;
+import com.xianlaifeng.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,10 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Autowired
     private ActivityDAO activityDAO;
+
+
+    @Autowired
+    private CommonDAO commonDAO;
 
     public Map<String, Object> getActivityDetails(int id) {
         List<Map<String,Object>> resultList = activityDAO.getActivityDetails(id);
@@ -38,6 +44,10 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     public void insertActivity(XLF_Activity activity) {
+        commonDAO.add(CommonUtils.add(activity));
+    }
 
+    public void updateActivity(XLF_Activity activity) {
+        activityDAO.updateActivity(activity);
     }
 }
