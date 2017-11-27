@@ -124,7 +124,7 @@ public class ActivityController {
     }
 
 
-    //活动报名接口
+    //用户活动报名接口
     @RequestMapping(value="/joinAct.do",produces="application/json" ,method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public AjaxJSON joinActivity(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
