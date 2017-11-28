@@ -1,8 +1,11 @@
 package com.xianlaifeng.act.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.act.entity.XLF_Activity;
+import com.xianlaifeng.act.entity.XLF_Join_Act;
 import com.xianlaifeng.act.service.ActivityService;
+import com.xianlaifeng.act.service.JoinActService;
 import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.UserService;
@@ -29,6 +32,12 @@ public class ActivityController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private JoinActService joinActService;
+
+
+
+    //显示活动具体信息接口
     @RequestMapping(value="/getActDetails.do",produces="application/json" ,method = RequestMethod.GET)
     @ResponseBody
     public AjaxJSON getActDetails(@RequestParam Map<String,Object> params){
@@ -51,6 +60,7 @@ public class ActivityController {
     }
 
 
+    //显示活动列表接口
     @RequestMapping(value="/getActShow.do",produces="application/json" ,method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public AjaxJSON getActShow(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
@@ -62,13 +72,13 @@ public class ActivityController {
             pageNum = pageNum == null?"0":pageNum;
             pageSize = pageSize == null?"0":pageSize;
             XLF_Activity activity = (XLF_Activity) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Activity.class);
-            System.out.println(activity);
             //用户查看过的信息收集
             if(trd_session!=null){
 
             }
-
-            res.setObj(activityService.getActivityShow(activity,Integer.parseInt(pageNum),Integer.parseInt(pageSize)));
+            PageInfo<XLF_Activity> p_list = activityService.getActivityShow(activity,Integer.parseInt(pageNum),Integer.parseInt(pageSize));
+            res.setObj(p_list.getList());
+            res.setTotal(p_list.getTotal());
             res.setSuccess(true);
         }catch (Exception e){
             res.setSuccess(false);
@@ -124,20 +134,6 @@ public class ActivityController {
     }
 
 
-    //用户报名接口
-    @RequestMapping(value="/joinAct.do",produces="application/json" ,method = {RequestMethod.GET,RequestMethod.POST})
-    @ResponseBody
-    public AjaxJSON joinActivity(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
-        AjaxJSON res = new AjaxJSON();
-        try {
-            String openid =(String)request.getAttribute("openid");
-
-        }catch (Exception e){
-            res.setSuccess(false);
-            res.setMsg(e.getMessage());
-        }
-        return res;
-    }
 
 
 

@@ -1,6 +1,7 @@
 package com.xianlaifeng.act.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.act.dao.ActivityDAO;
 import com.xianlaifeng.act.entity.XLF_Activity;
 import com.xianlaifeng.act.service.ActivityService;
@@ -38,9 +39,10 @@ public class ActivityServiceImpl implements ActivityService {
         }
     }
 
-    public Object getActivityShow(XLF_Activity activity, int pageNum, int pageSize) {
+    public PageInfo<XLF_Activity> getActivityShow(XLF_Activity activity, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        return activityDAO.getActivityShow(activity);
+        PageInfo<XLF_Activity> p_list = new PageInfo<XLF_Activity>(activityDAO.getActivityShow(activity));
+        return p_list;
     }
 
     public void insertActivity(XLF_Activity activity) {

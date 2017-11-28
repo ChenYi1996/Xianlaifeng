@@ -6,11 +6,13 @@ import com.xianlaifeng.ptj.dao.XlfPartTimeJobDAO;
 import com.xianlaifeng.ptj.entity.XlfPartTimeJob;
 import com.xianlaifeng.ptj.service.XlfPartTimeJobService;
 import com.xianlaifeng.user.entity.XLF_School;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
+@Service("XlfPartTimeJobServiceImpl")
 public class XlfPartTimeJobServiceImpl implements XlfPartTimeJobService{
 
 

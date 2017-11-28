@@ -1,5 +1,6 @@
 package com.xianlaifeng.act.service;
 
+import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.act.entity.XLF_Activity;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface ActivityService {
 
     public Map<String, Object> getActivityDetails(int id);
 
-    public Object getActivityShow(XLF_Activity activity,int pageNum,int pageSize);
+    public PageInfo<XLF_Activity> getActivityShow(XLF_Activity activity, int pageNum, int pageSize);
 
     public void insertActivity(XLF_Activity activity);
 

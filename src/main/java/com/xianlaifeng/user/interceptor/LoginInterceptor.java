@@ -20,6 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String trd_session = httpServletRequest.getParameter("trd_session");
         AjaxJSON ajs = new AjaxJSON();
         String openid = trd_session == null?null:redisService.getOpenid(trd_session);
+        System.out.println(openid);
         if(openid == null){
             ajs.setSuccess(false);
             ajs.setMsg("noLogin");

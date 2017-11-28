@@ -10,8 +10,8 @@
 
     <select id="getUser" resultType="java.util.Map" parameterType="com.xianlaifeng.user.entity.XLF_User">
         SELECT
-        u.id,u.user_name,u.user_sex,u.user_role,u.user_company,u.user_age,u.user_high,u.user_school_id,u.user_details,u.user_phone,s.name AS school_name
-        FROM <include refid="TABLE_NAME" /> AS u LEFT JOIN <include refid="LEFT_TABLE_NAME" /> s
+        u.id,u.user_name,u.user_sex,u.user_role,u.user_company,u.user_age,u.user_high,u.user_school_id,u.user_details,u.user_phone,s.school_name AS school_name
+        FROM <include refid="TABLE_NAME" /> AS u LEFT JOIN <include refid="LEFT_TABLE_NAME" /> AS s
         ON u.user_school_id = s.id
         <where>
             <if test="id!=null and id!=0">

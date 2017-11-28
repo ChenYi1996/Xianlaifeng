@@ -12,6 +12,7 @@ import com.xianlaifeng.user.entity.XLF_School;
 import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.RedisService;
+import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.CommonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +31,8 @@ public class IUserTest {
     @Resource
     private UserDAO userDAO;
 
+    @Resource
+    private UserService userService;
 
     @Resource
     private WechatDAO wechatDAO;
@@ -52,9 +55,11 @@ public class IUserTest {
 
     @Test
     public void getXLFUser() {
-        XLF_User u = new XLF_User();
-        u.setUser_phone("6488");
-        System.out.println(userDAO.getUser(u));
+        String openid = "oVK4g0Z9EO8Tem1W5DEQJpv2Sqak";
+        XLF_Wechat xw = wechatDAO.ifExist(new XLF_Wechat(openid)).get(0);
+        System.out.println(xw);
+        //Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
+        //System.out.println(u_info);
     }
 
 
@@ -67,7 +72,9 @@ public class IUserTest {
 
     @Test
     public void testRedis() {
-        System.out.println(redisService.getOpenid("iiii"));
+        String trd_session  = "3a6645e0c170306fbdc2b247fa7dddc8";
+        String openid = trd_session == null?null:redisService.getOpenid(trd_session);
+        System.out.println(openid);
     }
 
     @Test
