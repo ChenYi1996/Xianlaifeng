@@ -3,7 +3,6 @@ package com.xianlaifeng.act.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.act.entity.XLF_Activity;
-import com.xianlaifeng.act.entity.XLF_Join_Act;
 import com.xianlaifeng.act.service.ActivityService;
 import com.xianlaifeng.act.service.JoinActService;
 import com.xianlaifeng.user.entity.XLF_User;
@@ -38,7 +37,8 @@ public class ActivityController {
 
 
     //显示活动具体信息接口
-    @RequestMapping(value="/getActDetails.do",produces="application/json" ,method = RequestMethod.GET)
+    @RequestMapping(value="/" +
+            ".do",produces="application/json" ,method = RequestMethod.GET)
     @ResponseBody
     public AjaxJSON getActDetails(@RequestParam Map<String,Object> params){
         String trd_session = (String)params.get("trd_session");

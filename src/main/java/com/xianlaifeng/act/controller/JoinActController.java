@@ -53,8 +53,9 @@ public class JoinActController {
                 XLF_Join_Act join_act = new XLF_Join_Act();
                 join_act.setUserId((Integer) u_info.get("id"));
                 join_act.setActId(Integer.parseInt(actId));
-                joinActService.joinAct(join_act);
-                res.setSuccess(true);
+                String result = joinActService.joinAct(join_act);
+                res.setMsg(result);
+                res.setSuccess(result.equals("success")?true:false);
             }
         }catch (Exception e){
             res.setSuccess(false);

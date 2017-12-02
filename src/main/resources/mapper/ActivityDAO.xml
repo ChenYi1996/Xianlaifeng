@@ -44,6 +44,35 @@
                 and activityStatus=#{activityStatus}
             </if>
         </where>
+        ORDER BY
+        <choose>
+            <when test="activityLatitude!=0.0 and activityLongitude !=0.0">
+                ROUND(
+                6378.138 * 2 * ASIN(
+                SQRT(
+                POW(
+                SIN(
+                (
+                ${activityLatitude} * PI() / 180 - activityLatitude * PI() / 180
+                ) / 2
+                ),
+                2
+                ) + COS(${activityLatitude} * PI() / 180) * COS(activityLatitude * PI() / 180) * POW(
+                SIN(
+                (
+                ${activityLongitude} * PI() / 180 - activityLongitude * PI() / 180
+                ) / 2
+                ),
+                2
+                )
+                )
+                ) * 1000
+                ) ASC
+            </when>
+            <otherwise>
+                activityCreateTime ASC
+            </otherwise>
+        </choose>
     </select>
 
 

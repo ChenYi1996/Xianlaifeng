@@ -1,7 +1,10 @@
 package com.xianlaifeng.test;
 
 
+import com.xianlaifeng.act.dao.ActivityDAO;
+import com.xianlaifeng.act.dao.JoinActDAO;
 import com.xianlaifeng.act.entity.XLF_Activity;
+import com.xianlaifeng.act.entity.XLF_Join_Act;
 import com.xianlaifeng.sys.dao.CommonDAO;
 import com.xianlaifeng.utils.CommonUtils;
 import org.junit.Test;
@@ -16,9 +19,14 @@ import java.util.Date;
 @ContextConfiguration({"classpath:spring-mybatis.xml","classpath:spring-redis.xml"})
 public class ActivityTest {
 
+    @Resource
+    private JoinActDAO joinActDAO;
 
     @Resource
     private CommonDAO commonDAO;
+
+    @Resource
+    private ActivityDAO activityDAO;
 
 
     @Test
@@ -34,7 +42,18 @@ public class ActivityTest {
     @Test
     public void printInit(){
         XLF_Activity activity = new XLF_Activity();
-        System.out.println(activity);
+        activity.setActivityName("");
+        activity.setActivityStatus(1);
+        activity.setActivityLatitude(23.1316);
+        activity.setActivityLongitude(113.3260);
+        System.out.println(activityDAO.getActivityShow(activity));
+    }
+
+    @Test
+    public void testGetMyjoin(){
+        XLF_Join_Act join_act = new XLF_Join_Act();
+        join_act.setUserId(10007);
+        System.out.println(joinActDAO.getMyJoin(join_act));
     }
 
 

@@ -15,6 +15,10 @@ public class XLF_Activity {
     private String activityCity;
     private String activityDistrict;
     private String activityLocation;
+
+    private double activityLatitude;
+    private double activityLongitude;
+
     private int activityPerson;
 
     private Date activityStartTime;
@@ -23,7 +27,7 @@ public class XLF_Activity {
     private int activityCreateUser;
     private int activityStatus;
 
-    public XLF_Activity(int id, String activityName, String activityDetails, int activityIfSchool, String activityPic, String activityProvince, String activityCity, String activityDistrict, String activityLocation, int activityPerson, Date activityStartTime, Date activityCreateTime, int activityCreateUser, int activityStatus) {
+    public XLF_Activity(int id, String activityName, String activityDetails, int activityIfSchool, String activityPic, String activityProvince, String activityCity, String activityDistrict, String activityLocation, Double activityLatitude, Double activityLongitude, int activityPerson, Date activityStartTime, Date activityCreateTime, int activityCreateUser, int activityStatus) {
         this.id = id;
         this.activityName = activityName;
         this.activityDetails = activityDetails;
@@ -33,6 +37,8 @@ public class XLF_Activity {
         this.activityCity = activityCity;
         this.activityDistrict = activityDistrict;
         this.activityLocation = activityLocation;
+        this.activityLatitude = activityLatitude;
+        this.activityLongitude = activityLongitude;
         this.activityPerson = activityPerson;
         this.activityStartTime = activityStartTime;
         this.activityCreateTime = activityCreateTime;
@@ -157,6 +163,23 @@ public class XLF_Activity {
         this.activityStatus = activityStatus;
     }
 
+    public Double getActivityLatitude() {
+        return activityLatitude;
+    }
+
+    public void setActivityLatitude(Double activityLatitude) {
+        this.activityLatitude = activityLatitude;
+    }
+
+    public Double getActivityLongitude() {
+        return activityLongitude;
+    }
+
+    public void setActivityLongitude(Double activityLongitude) {
+        this.activityLongitude = activityLongitude;
+    }
+
+
     @Override
     public String toString() {
         return "XLF_Activity{" +
@@ -169,6 +192,8 @@ public class XLF_Activity {
                 ", activityCity='" + activityCity + '\'' +
                 ", activityDistrict='" + activityDistrict + '\'' +
                 ", activityLocation='" + activityLocation + '\'' +
+                ", activityLatitude=" + activityLatitude +
+                ", activityLongitude=" + activityLongitude +
                 ", activityPerson=" + activityPerson +
                 ", activityStartTime=" + activityStartTime +
                 ", activityCreateTime=" + activityCreateTime +

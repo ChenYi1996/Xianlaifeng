@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.xianlaifeng.act.dao.JoinActDAO">
+
+    <sql id='TABLE_NAME'>xlf_join_act</sql>
+
+    <sql id='LEFT_TABLE_NAME'>xlf_user</sql>
+
+    <sql id='LEFT_TABLE_NAME_ACT'>xlf_activity</sql>
+
+    <select id="getJoinUser" resultType="java.util.Map"  parameterType="int">
+        SELECT
+        a.*,u.user_name,u.user_company,u.user_phone,u.user_sex
+        FROM <include refid="TABLE_NAME" /> as a
+        LEFT JOIN <include refid="LEFT_TABLE_NAME" /> as u
+        ON a.user_id = u.id
+        <where>
+            a.actId = #{0}
+        </where>
+    </select>
+
+
+    <select id="ifExist" resultType="com.xianlaifeng.act.entity.XLF_Join_Act"  parameterType="com.xianlaifeng.act.entity.XLF_Join_Act">
+        SELECT
+       *
+        FROM <include refid="TABLE_NAME" />
+        WHERE
+            actId = #{actId}
+        AND
+            userId = #{userId}
+    </select>
+
+
+    <select id="getMyJoin" resultType="java.util.Map"  parameterType="com.xianlaifeng.act.entity.XLF_Join_Act">
+        SELECT
+        j.*,a.activityName,a.activityPic,a.activityProvince,a.activityCity,a.activityDistrict,a.activityLocation,a.activityStartTime
+        FROM <include refid="TABLE_NAME" /> as j
+        LEFT JOIN <include refid="LEFT_TABLE_NAME_ACT" /> as a
+        ON j.actId = a.id
+        <where>
+            <if test="actId!=0">
+                j.actId = #{actId}
+            </if>
+            <if test="userId!=0">
+                AND j.userId = #{userId}
+            </if>
+            <if test="joinStatus!=3">
+                AND j.joinStatus = #{joinStatus}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+
+</mapper>
