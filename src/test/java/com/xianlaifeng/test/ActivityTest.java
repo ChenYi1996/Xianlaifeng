@@ -44,8 +44,8 @@ public class ActivityTest {
         XLF_Activity activity = new XLF_Activity();
         activity.setActivityName("");
         activity.setActivityStatus(1);
-        activity.setActivityLatitude(23.2157);
-        activity.setActivityLongitude(113.3638);
+        activity.setActivityLatitude(23.0999);
+        activity.setActivityLongitude(113.3851);
         System.out.println(activityDAO.getActivityShow(activity));
     }
 

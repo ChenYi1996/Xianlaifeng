@@ -31,6 +31,7 @@ public class XlfPartTimeJobController {
      lbk
      */
     @RequestMapping(value="/add.do",method = {RequestMethod.GET,RequestMethod.POST},produces = "application/json")
+    @ResponseBody
     public AjaxJSON add(@RequestParam Map<String,Object> param,@RequestBody AjaxJSON ajax){
         AjaxJSON json=new AjaxJSON();
         try {
