@@ -72,6 +72,7 @@ public class ActivityController {
             pageNum = pageNum == null?"0":pageNum;
             pageSize = pageSize == null?"0":pageSize;
             XLF_Activity activity = (XLF_Activity) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Activity.class);
+            System.out.println(activity);
             //用户查看过的信息收集
             if(trd_session!=null){
 
