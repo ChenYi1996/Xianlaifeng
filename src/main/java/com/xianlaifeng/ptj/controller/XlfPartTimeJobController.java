@@ -8,6 +8,9 @@ import com.xianlaifeng.ptj.service.Impl.XlfPtjTypeServiceImpl;
 import com.xianlaifeng.sys.entity.XlfArea;
 import com.xianlaifeng.sys.service.Impl.XlfAreaServiceImpl;
 import com.xianlaifeng.utils.AjaxJSON;
+import net.sf.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -109,7 +112,7 @@ public class XlfPartTimeJobController {
         return json;
     }
 
-    @RequestMapping(value="/getALLPtjType.do",produces="application/json",method=RequestMethod.GET)
+    @RequestMapping(value="/getALLPtjType.do",produces="application/json",method= RequestMethod.GET)
     @ResponseBody
     public AjaxJSON getAllPtjType(@RequestParam Map<String,Object>param){
         AjaxJSON json=new AjaxJSON();
