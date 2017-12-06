@@ -8,7 +8,7 @@
         <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
         <result column="limit_number" property="limitNumber" jdbcType="INTEGER"/>
         <result column="sex_demand" property="sexDemand" jdbcType="VARCHAR"/>
-        <result column="job_type" property="jobType" jdbcType="VARCHAR"/>
+        <result column="job_type_id" property="jobTypeId" jdbcType="INTEGER"/>
         <result column="wage" property="wage" jdbcType="DECIMAL"/>
         <result column="wage_type" property="wageType" jdbcType="VARCHAR"/>
         <result column="work_street" property="workStreet" jdbcType="VARCHAR"/>
@@ -23,6 +23,7 @@
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="area_id" property="areaId" jdbcType="INTEGER"/>
         <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
+        <result column="work_time" property="workTime" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="selectDetails" parameterType="java.lang.String" resultType="java.util.Map">
         select
@@ -47,9 +48,9 @@
                       #{item}
                 </foreach>
             </if>
-            <if test="jobTypes != null and jobTypes.size != 0">
-                and job_type  IN 
-                <foreach collection="jobTypes" index="index" item="item" open="(" separator="," close=")">
+            <if test="jobTypeIds != null and jobTypes.size != 0">
+                and job_type_id  IN
+                <foreach collection="jobTypeIds" index="index" item="item" open="(" separator="," close=")">
                       #{item}
                 </foreach>
             </if>
@@ -73,8 +74,8 @@
             <if test="limitNumber != 0">
                 limit_number,
             </if>
-            <if test="jobType != null">
-                job_type,
+            <if test="jobTypeId != 0">
+                job_type_id,
             </if>
             <if test="wage != null">
                 wage,
@@ -118,6 +119,9 @@
             <if test="sexDemand != null">
                 sex_demand,
             </if>
+            <if test="workTime != null">
+                work_time ,
+            </if>
         </trim>
         <trim prefix="values("  suffix=")" suffixOverrides=",">
             <if test="jobName != null">
@@ -126,8 +130,8 @@
             <if test="limitNumber != 0">
                 #{limitNumber},
             </if>
-            <if test="jobType != null">
-                #{jobType},
+            <if test="jobTypeId !=  0">
+                #{jobTypeId},
             </if>
             <if test="wage != null">
                 #{wage},
@@ -170,6 +174,9 @@
             </if>
             <if test="sexDemand != null">
                 #{sexDemand},
+            </if>
+            <if test="workTime != null">
+                #{workTime},
             </if>
         </trim>
     </insert>

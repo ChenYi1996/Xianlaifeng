@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xianlaifeng.ptj.dao.XlfPtjTypeDAO">
+    <select id ="selectAll" resultType="java.util.Map">
+        select * from xlf_ptj_type
+    </select>
+    <select id ="select" resultType="com.xianlaifeng.ptj.entity.XlfPtjType">
+        select * from xlf_ptj_type
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="jobType != null">
+                and job_type = #{jobType}
+            </if>
+        </where>
+    </select>
+</mapper>

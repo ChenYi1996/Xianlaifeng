@@ -14,7 +14,7 @@ public class XlfPartTimeJob {
     private int jobId;
     private String jobName;
     private int limitNumber;
-    private String jobType;
+    private int jobTypeId;
     private BigDecimal wage;
     private String wageType;
     private String calculateMoneyType;
@@ -30,17 +30,22 @@ public class XlfPartTimeJob {
     private int areaId;
     private String timeType;
     private String sexDemand;
+    private String workTime;
 
     private List<Integer> areaIds;
-    private List<String> jobTypes;
+    private List<String> jobTypeIds;
     private List<String> timeTypes;
+
+    public String getWorkTime() {
+        return workTime;
+    }
 
     public List<String> getTimeTypes() {
         return timeTypes;
     }
 
-    public List<String> getJobTypes() {
-        return jobTypes;
+    public List<String> getJobTypeIds() {
+        return jobTypeIds;
     }
 
     public List<Integer> getAreaIds() {
@@ -63,8 +68,8 @@ public class XlfPartTimeJob {
         return limitNumber;
     }
 
-    public String getJobType() {
-        return jobType;
+    public int getJobTypeId() {
+        return jobTypeId;
     }
 
     public BigDecimal getWage() {
@@ -136,8 +141,8 @@ public class XlfPartTimeJob {
         this.limitNumber = limitNumber;
     }
 
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
+    public void setJobTypeId(int jobTypeId) {
+        this.jobTypeId = jobTypeId;
     }
 
     public void setWage(BigDecimal wage) {
@@ -205,11 +210,15 @@ public class XlfPartTimeJob {
         this.areaIds = areaIds;
     }
 
-    public void setJobTypes(List<String> jobTypes) {
-        this.jobTypes = jobTypes;
+    public void setJobTypeIds(List<String> jobTypes) {
+        this.jobTypeIds = jobTypes;
     }
 
     public void setTimeTypes(List<String> timeTypes) {
         this.timeTypes = timeTypes;
+    }
+
+    public void setWorkTime(String workTime) {
+        this.workTime = workTime;
     }
 }

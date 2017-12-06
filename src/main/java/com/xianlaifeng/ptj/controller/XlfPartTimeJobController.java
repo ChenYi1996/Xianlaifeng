@@ -2,13 +2,12 @@ package com.xianlaifeng.ptj.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.ptj.entity.XlfPartTimeJob;
+import com.xianlaifeng.ptj.entity.XlfPtjType;
 import com.xianlaifeng.ptj.service.Impl.XlfPartTimeJobServiceImpl;
+import com.xianlaifeng.ptj.service.Impl.XlfPtjTypeServiceImpl;
 import com.xianlaifeng.sys.entity.XlfArea;
 import com.xianlaifeng.sys.service.Impl.XlfAreaServiceImpl;
 import com.xianlaifeng.utils.AjaxJSON;
-import net.sf.json.JSONObject;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -25,6 +24,9 @@ public class XlfPartTimeJobController {
 
     @Resource
     private XlfAreaServiceImpl xlfAreaServiceImpl;
+
+    @Resource
+    private XlfPtjTypeServiceImpl xlfPtjTypeServiceImpl;
 
     /**
      添加兼职信息
@@ -64,7 +66,7 @@ public class XlfPartTimeJobController {
             String pageNum = (String)param.get("pageNum");
             String pageSize = (String)param.get("pageSize");
             String areaId = (String) param.get("areaId");
-            String jobType = (String)param.get("jobType");
+            String jobTypeId = (String)param.get("jobTypeId");
             String timeType =(String)param.get("timeType");
             XlfPartTimeJob xlfPartTimeJob =new XlfPartTimeJob();
             if(null != areaId ){ //区域多选
@@ -75,8 +77,8 @@ public class XlfPartTimeJobController {
 
                 xlfPartTimeJob.setAreaIds(intAreaList);
             }
-            if(null != jobType){//兼职类型多选
-               xlfPartTimeJob.setJobTypes(Arrays.asList(jobType.split(",")));
+            if(null != jobTypeId){//兼职类型多选
+               xlfPartTimeJob.setJobTypeIds(Arrays.asList(jobTypeId.split(",")));
             }
             if(null != timeType){//时间类型多选
                 xlfPartTimeJob.setTimeTypes(Arrays.asList(timeType.split(",")));
@@ -100,6 +102,21 @@ public class XlfPartTimeJobController {
             List<Map<String,Object>> list=xlfPartTimeJobServiceImpl.selectDetails((String)param.get("jobId"));
             json.setObj(list.get(0));
             json.setSuccess(true);
+        }catch(Exception e){
+            json.setSuccess(false);
+            json.setMsg("查询失败");
+        }
+        return json;
+    }
+
+    @RequestMapping(value="/getALLPtjType.do",produces="application/json",method=RequestMethod.GET)
+    @ResponseBody
+    public AjaxJSON getAllPtjType(@RequestParam Map<String,Object>param){
+        AjaxJSON json=new AjaxJSON();
+        try{
+          List<Map<String,Object>> typeList=xlfPtjTypeServiceImpl.selectAll();
+          json.setObj(typeList);
+          json.setSuccess(true);
         }catch(Exception e){
             json.setSuccess(false);
             json.setMsg("查询失败");
