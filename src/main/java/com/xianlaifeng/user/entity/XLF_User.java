@@ -13,8 +13,9 @@ public class XLF_User {
     private int user_school_id; //用户学校
     private String user_phone;  //用户电话
     private String user_details; //用户简历
+    private String user_img;  //用户头像
 
-    public XLF_User(String user_name, int user_sex, int user_role, String user_company, int user_age, int user_high, int user_school_id, String user_phone, String user_details) {
+    public XLF_User(String user_name, int user_sex, int user_role, String user_company, int user_age, int user_high, int user_school_id, String user_phone, String user_details,String user_img) {
         this.user_name = user_name;
         this.user_sex = user_sex;
         this.user_role = user_role;
@@ -24,9 +25,10 @@ public class XLF_User {
         this.user_school_id = user_school_id;
         this.user_phone = user_phone;
         this.user_details = user_details;
+        this.user_img = user_img;
     }
 
-    public XLF_User(int id, String user_name, int user_sex, int user_role, String user_company, int user_age, int user_high, int user_school_id, String user_phone, String user_details) {
+    public XLF_User(int id, String user_name, int user_sex, int user_role, String user_company, int user_age, int user_high, int user_school_id, String user_phone, String user_details,String user_img) {
         this.id = id;
         this.user_name = user_name;
         this.user_sex = user_sex;
@@ -37,6 +39,7 @@ public class XLF_User {
         this.user_school_id = user_school_id;
         this.user_phone = user_phone;
         this.user_details = user_details;
+        this.user_img = user_img;
     }
 
     public XLF_User() {
@@ -130,6 +133,14 @@ public class XLF_User {
     }
 
 
+    public String getUser_img() {
+        return user_img;
+    }
+
+    public void setUser_img(String user_img) {
+        this.user_img = user_img;
+    }
+
     @Override
     public String toString() {
         return "XLF_User{" +
@@ -143,9 +154,9 @@ public class XLF_User {
                 ", user_school_id=" + user_school_id +
                 ", user_phone='" + user_phone + '\'' +
                 ", user_details='" + user_details + '\'' +
+                ", user_img='" + user_img + '\'' +
                 '}';
     }
-
 
     public boolean checkMessage(){
         if(this.user_phone==null||this.user_name==null||this.user_phone.equals("")||this.user_name.equals("")){
