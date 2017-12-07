@@ -3,6 +3,7 @@ package com.xianlaifeng.sys.controller;
 
 import com.xianlaifeng.utils.AjaxJSON;
 import com.xianlaifeng.utils.CommonUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +62,7 @@ public class PicController {
                     }
                 }
             }
-            aj.setObj(p_list);
+            aj.setObj(StringUtils.strip(p_list.toString(),"[]"));
             aj.setSuccess(true);
             aj.setTotal((long)p_list.size());
         }catch (Exception e){
