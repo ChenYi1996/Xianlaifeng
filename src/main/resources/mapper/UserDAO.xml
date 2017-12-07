@@ -83,6 +83,7 @@
     <update id="updateUserInfo" parameterType="com.xianlaifeng.user.entity.XLF_Wechat">
         UPDATE <include refid="TABLE_NAME" />
         <trim prefix="set" suffixOverrides=",">
+            <if test="user_img!=null">user_img=#{user_img},</if>
             <if test="user_name!=null">user_name=#{user_name},</if>
             <if test="user_sex!=0">user_sex=#{user_sex},</if>
             <if test="user_role!=0">user_role=#{user_role},</if>
