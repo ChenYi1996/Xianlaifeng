@@ -85,7 +85,7 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="user_img!=null">user_img=#{user_img},</if>
             <if test="user_name!=null">user_name=#{user_name},</if>
-            <if test="user_sex!=0">user_sex=#{user_sex},</if>
+            user_sex=#{user_sex},
             <if test="user_role!=0">user_role=#{user_role},</if>
             <if test="user_age!=0">user_age=#{user_age},</if>
             <if test="user_high!=0">user_high=#{user_high},</if>

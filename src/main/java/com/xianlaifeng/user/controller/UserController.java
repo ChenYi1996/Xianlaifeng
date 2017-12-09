@@ -7,6 +7,7 @@ import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.RedisService;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.AjaxJSON;
+import com.xianlaifeng.utils.CommonUtils;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -85,6 +86,10 @@ public class UserController {
             Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
             XLF_User user = (XLF_User) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_User.class);
             user.setId((Integer)u_info.get("id"));
+
+            //图片处理url处理
+            user.setUser_img(CommonUtils.getFileNameFromHttp(user.getUser_img()));
+
             userService.updateWechatUserInfo(user);
             res.setSuccess(true);
         }catch (Exception e){

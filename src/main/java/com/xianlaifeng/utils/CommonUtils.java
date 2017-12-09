@@ -19,6 +19,14 @@ public class CommonUtils {
         return sb.toString();
     }
 
+
+    public static String getFileNameFromHttp(String url) {
+        if (url==null||!url.contains("/")){
+            return null;
+        }
+        return url.substring(url.lastIndexOf("/")+1);
+    }
+
     public static String covertToUrlList(String files,String url){
         String[] file =  files.split(",");
         List<String> list = new ArrayList<String>();

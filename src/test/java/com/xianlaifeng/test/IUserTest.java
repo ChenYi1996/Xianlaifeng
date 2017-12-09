@@ -110,5 +110,12 @@ public class IUserTest {
         System.out.println(activityService.getActivityDetails(1));
     }
 
+    @Test
+    public void ecHTTP(){
+        String url = "https://www.westorehere.shop/img/xianlaifeng/user/user_924905714ufPD_444.png";
+        String null_url = null;
+        System.out.println(CommonUtils.getFileNameFromHttp(null_url));
+    }
+
 
 }

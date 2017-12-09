@@ -28,6 +28,7 @@ import java.util.Map;
 public class PicController {
 
     public static final String BASE_PATH = "/usr//local//pic//xianlaifeng//";
+    public static final String BASE_HTTP_PATH = "https://www.westorehere.shop/img/xianlaifeng/";
 
 
     //用户上传图片接口，method表示上传到哪个文件夹
@@ -57,7 +58,7 @@ public class PicController {
 
                             File localFile = new File(path);
                             file.transferTo(localFile);
-                            p_list.add(fileName);
+                            p_list.add(BASE_HTTP_PATH + method + "/"+fileName);
                         }
                     }
                 }

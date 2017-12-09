@@ -34,8 +34,9 @@ public class XlfAreaController {
         }
         XlfArea xlfArea=new XlfArea();
         xlfArea.setCity(city);
-        xlfAreaServiceImpl.selectDetails(xlfArea);
-
+        //xlfAreaServiceImpl.selectDetails(xlfArea);
+        json.setObj(xlfAreaServiceImpl.selectDetails(xlfArea));
+        json.setSuccess(true);
         return json;
     }
 
