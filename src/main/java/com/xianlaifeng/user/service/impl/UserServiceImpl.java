@@ -27,8 +27,14 @@ import java.util.concurrent.TimeUnit;
 @Service("userService")
 public class UserServiceImpl implements UserService{
 
+    //初始化redis用户存储时间
     private static final int SESSION_TIME = 20;
-    private static final int INIT_SCHOOL = 2567;
+
+    //初始化用户头像图片
+    private static final String INIT_USER_IMG = "default.jpg";
+
+    //初始化用户学校
+    private static final int INIT_SCHOOL = 2576;
     private static final String appid = "wxa40025bf8ead1e26";
     private static final String app_se= "3d18bab9a9c55408c573200113139f6f";
     private static final String url="https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code";
@@ -68,8 +74,9 @@ public class UserServiceImpl implements UserService{
                 //新建用户信息表
                 XLF_User xu = new XLF_User();
                 xu.setUser_school_id(INIT_SCHOOL);
-                xu.setUser_role(1);
-                xu.setUser_sex(1);
+                xu.setUser_img(INIT_USER_IMG);
+                xu.setUser_role(0);
+                xu.setUser_sex(0);
                 userDAO.insertAndGetId(xu);
                 //插入微信登录表
                 XLF_Wechat we = new XLF_Wechat();
@@ -115,7 +122,8 @@ public class UserServiceImpl implements UserService{
 
     public Object getWechatUserInfo(XLF_Wechat we) {
         XLF_Wechat xw = wechatDAO.ifExist(we).get(0);
-        Map<String, Object> u_info  = userDAO.getUser(new XLF_User(xw.getUser_id())).get(0);
+        List<Map<String, Object>> u_info_list = userDAO.getUser(new XLF_User(xw.getUser_id()));
+        Map<String, Object> u_info  = u_info_list.size()==0?null:u_info_list.get(0);
         return u_info;
     }
 

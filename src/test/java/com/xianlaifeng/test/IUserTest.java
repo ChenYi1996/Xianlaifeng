@@ -58,15 +58,14 @@ public class IUserTest {
         String openid = "oVK4g0Z9EO8Tem1W5DEQJpv2Sqak";
         XLF_Wechat xw = wechatDAO.ifExist(new XLF_Wechat(openid)).get(0);
         System.out.println(xw);
-        //Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
-        //System.out.println(u_info);
+        Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
+        System.out.println(u_info);
     }
 
 
     @Test
     public void testinsert() {
-        XLF_User u = new XLF_User("", 1, 1, null, 0, 0, 2576, null, null);
-        System.out.println(u.checkMessage());
+
     }
 
 

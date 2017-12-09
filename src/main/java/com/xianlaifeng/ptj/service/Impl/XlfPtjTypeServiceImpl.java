@@ -19,7 +19,8 @@ public class XlfPtjTypeServiceImpl implements XlfPtjTypeService{
         return xlfPtjTypeDAO.selectAll();
     }
 
-    public XlfPtjType select (XlfPtjType xlfPtjType){
+
+    public XlfPtjType select(XlfPtjType xlfPtjType){
         if(xlfPtjType == null){
             return null;
         }

@@ -81,7 +81,10 @@ public class UserController {
     public AjaxJSON updateWeChatUserInfo(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
         AjaxJSON res = new AjaxJSON();
         try {
+            String openid =(String)request.getAttribute("openid");
+            Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
             XLF_User user = (XLF_User) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_User.class);
+            user.setId((Integer)u_info.get("id"));
             userService.updateWechatUserInfo(user);
             res.setSuccess(true);
         }catch (Exception e){
@@ -93,7 +96,7 @@ public class UserController {
 
 
     //更新微信信息
-    @RequestMapping(value="/updateWeChat.do",produces="application/json" ,method = RequestMethod.GET)
+    @RequestMapping(value="/updateWeChat.do",produces="application/json" ,method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public AjaxJSON updateWeChat(@RequestParam Map<String,Object> params,@RequestBody AjaxJSON ajax){
         AjaxJSON res = new AjaxJSON();
@@ -103,6 +106,7 @@ public class UserController {
             wechat.setOpenid(openid);
             userService.updateWechat(wechat);
             res.setSuccess(true);
+            res.setMsg("微信信息更新成功");
         }catch (Exception e){
             res.setSuccess(false);
             res.setMsg(e.getMessage());

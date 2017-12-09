@@ -37,8 +37,7 @@ public class ActivityController {
 
 
     //显示活动具体信息接口
-    @RequestMapping(value="/" +
-            ".do",produces="application/json" ,method = RequestMethod.GET)
+    @RequestMapping(value="/getActDetails.do",produces="application/json" ,method = RequestMethod.GET)
     @ResponseBody
     public AjaxJSON getActDetails(@RequestParam Map<String,Object> params){
         String trd_session = (String)params.get("trd_session");
