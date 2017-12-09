@@ -62,7 +62,7 @@ public class PtjTest {
             in.add(Integer.valueOf(Arrays.asList(string.split(",")).get(i)));
         }
         xlfPartTimeJob.setAreaIds(in);
-        xlfPartTimeJob.setJobTypes(Arrays.asList(jobType.split(",")));
+//        xlfPartTimeJob.setJobTypes(Arrays.asList(jobType.split(",")));
         xlfPartTimeJob.setTimeTypes(Arrays.asList(timeType.split(",")));
         List<XlfPartTimeJob> ss =xlfPartTimeJobDAO.findList(xlfPartTimeJob);
 

@@ -61,7 +61,7 @@ public class XlfPartTimeJobController {
     /**
      * 兼职列表
      */
-    @RequestMapping(value = "/findList.do", produces = "application/json", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value="/findList.do",method = {RequestMethod.GET,RequestMethod.POST},produces = "application/json")
     @ResponseBody
     public AjaxJSON findList(@RequestParam Map<String, Object> param, @RequestBody AjaxJSON ajax) {
         AjaxJSON json =new AjaxJSON();
@@ -77,11 +77,14 @@ public class XlfPartTimeJobController {
                 for(int i=0; i<Arrays.asList(areaId.split(",")).size();i++){
                     intAreaList.add(Integer.valueOf(Arrays.asList(areaId.split(",")).get(i)));
                 }
-
                 xlfPartTimeJob.setAreaIds(intAreaList);
             }
             if(null != jobTypeId){//兼职类型多选
-               xlfPartTimeJob.setJobTypeIds(Arrays.asList(jobTypeId.split(",")));
+                List<Integer> intTypeList = new ArrayList<Integer>();
+                for(int i=0; i<Arrays.asList(jobTypeId.split(",")).size();i++){
+                    intTypeList.add(Integer.valueOf(Arrays.asList(jobTypeId.split(",")).get(i)));
+                }
+               xlfPartTimeJob.setJobTypeIds(intTypeList);
             }
             if(null != timeType){//时间类型多选
                 xlfPartTimeJob.setTimeTypes(Arrays.asList(timeType.split(",")));

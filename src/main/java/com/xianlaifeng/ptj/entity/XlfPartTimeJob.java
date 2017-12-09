@@ -33,7 +33,7 @@ public class XlfPartTimeJob {
     private String workTime;
 
     private List<Integer> areaIds;
-    private List<String> jobTypeIds;
+    private List<Integer> jobTypeIds;
     private List<String> timeTypes;
 
     public String getWorkTime() {
@@ -44,7 +44,7 @@ public class XlfPartTimeJob {
         return timeTypes;
     }
 
-    public List<String> getJobTypeIds() {
+    public List<Integer> getJobTypeIds() {
         return jobTypeIds;
     }
 
@@ -210,7 +210,7 @@ public class XlfPartTimeJob {
         this.areaIds = areaIds;
     }
 
-    public void setJobTypeIds(List<String> jobTypes) {
+    public void setJobTypeIds(List<Integer> jobTypes) {
         this.jobTypeIds = jobTypes;
     }
 

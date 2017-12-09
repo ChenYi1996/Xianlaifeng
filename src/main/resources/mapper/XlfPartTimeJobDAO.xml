@@ -48,7 +48,7 @@
                       #{item}
                 </foreach>
             </if>
-            <if test="jobTypeIds != null and jobTypes.size != 0">
+            <if test="jobTypeIds != null and jobTypeIds.size != 0">
                 and job_type_id  IN
                 <foreach collection="jobTypeIds" index="index" item="item" open="(" separator="," close=")">
                       #{item}
