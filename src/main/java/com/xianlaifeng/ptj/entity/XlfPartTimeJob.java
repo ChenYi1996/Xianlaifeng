@@ -35,14 +35,18 @@ public class XlfPartTimeJob {
     private  double latitude;
     private double longitude;
 
+    private String district;
     private int days;
+
 
     private List<Integer> areaIds;
     private List<Integer> jobTypeIds;
     private List<String> timeTypes;
 
 
-
+    public void setDistrict(String district) {
+        this.district = district;
+    }
 
     public void setDays(int days) {
         this.days = days;
@@ -250,5 +254,9 @@ public class XlfPartTimeJob {
 
     public int getDays() {
         return days;
+    }
+
+    public String getDistrict() {
+        return district;
     }
 }

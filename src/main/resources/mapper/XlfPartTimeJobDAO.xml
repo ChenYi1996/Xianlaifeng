@@ -37,9 +37,11 @@
 
     </select>
 
-    <select id="findList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob" resultMap="BaseResultMap">
-        select *
-        from xlf_part_time_job
+    <select id="findList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob" resultType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
+        select p.*,a.district as district
+        from xlf_part_time_job p
+        left join xlf_area a
+        on p.area_id = a.area_id
         <where>
             <if test="jobName != null and jobName != ''">
                 job_Name  like '%${jobName}%' or  job_content like  '%${jobName}%'
