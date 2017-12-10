@@ -24,8 +24,10 @@
         <result column="area_id" property="areaId" jdbcType="INTEGER"/>
         <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
         <result column="work_time" property="workTime" jdbcType="VARCHAR"/>
+        <result column="latitude" property="latitude" jdbcType="DOUBLE"/>
+        <result column="longitude" property="longitude" jdbcType="DOUBLE"/>
     </resultMap>
-    <select id="selectDetails" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="selectDetails" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         p.* ,a.area_id,a.city,a.province,a.district
         from xlf_part_time_job AS  p
@@ -40,29 +42,57 @@
         from xlf_part_time_job
         <where>
             <if test="jobName != null and jobName != ''">
-                and job_Name  like '%${jobName}%'
+                job_Name  like '%${jobName}%' or  job_content like  '%${jobName}%'
             </if>
             <if test="areaIds != null and areaIds.size != 0 ">
                 and area_id  in
                 <foreach item="item" index="index" collection="areaIds" open="(" separator="," close=")">
-                      #{item}
+                    #{item}
                 </foreach>
             </if>
             <if test="jobTypeIds != null and jobTypeIds.size != 0">
                 and job_type_id  IN
                 <foreach collection="jobTypeIds" index="index" item="item" open="(" separator="," close=")">
-                      #{item}
+                    #{item}
                 </foreach>
             </if>
             <if test="timeTypes != null and timeTypes.size != ''">
-                and time_type IN 
+                and time_type IN
                 <foreach collection="timeTypes" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
-            
+
         </where>
-        order by release_time desc
+        order by
+        <choose>
+            <when test="latitude!=0.0 and longitude !=0.0">
+                ROUND(
+                6378.138 * 2 * ASIN(
+                SQRT(
+                POW(
+                SIN(
+                (
+                ${latitude} * PI() / 180 - latitude * PI() / 180
+                ) / 2
+                ),
+                2
+                ) + COS(${latitude} * PI() / 180) * COS(latitude * PI() / 180) * POW(
+                SIN(
+                (
+                ${longitude} * PI() / 180 - longitude * PI() / 180
+                ) / 2
+                ),
+                2
+                )
+                )
+                ) * 1000
+                ) ASC
+            </when>
+            <otherwise>
+                release_time desc
+            </otherwise>
+        </choose>
     </select>
 
     <insert id="add" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
@@ -122,6 +152,12 @@
             <if test="workTime != null">
                 work_time ,
             </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
         </trim>
         <trim prefix="values("  suffix=")" suffixOverrides=",">
             <if test="jobName != null">
@@ -155,7 +191,7 @@
                 #{startWorkDate},
             </if>
             <if test="endWorkDate != null">
-               #{endWorkDate},
+                #{endWorkDate},
             </if>
             <if test="jobContent != null">
                 #{jobContent},
@@ -177,6 +213,12 @@
             </if>
             <if test="workTime != null">
                 #{workTime},
+            </if>
+            <if test="latitude != null">
+                #{latitude},
+            </if>
+            <if test="longitude != null">
+                #{longitude},
             </if>
         </trim>
     </insert>

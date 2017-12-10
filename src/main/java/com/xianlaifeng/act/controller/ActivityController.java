@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.act.entity.XLF_Activity;
 import com.xianlaifeng.act.service.ActivityService;
 import com.xianlaifeng.act.service.JoinActService;
-import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.AjaxJSON;

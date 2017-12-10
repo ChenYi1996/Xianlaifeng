@@ -32,102 +32,21 @@ public class XlfPartTimeJob {
     private String sexDemand;
     private String workTime;
 
+    private  double latitude;
+    private double longitude;
+
+    private int days;
+
     private List<Integer> areaIds;
     private List<Integer> jobTypeIds;
     private List<String> timeTypes;
 
-    public String getWorkTime() {
-        return workTime;
-    }
 
-    public List<String> getTimeTypes() {
-        return timeTypes;
-    }
 
-    public List<Integer> getJobTypeIds() {
-        return jobTypeIds;
-    }
 
-    public List<Integer> getAreaIds() {
-        return areaIds;
+    public void setDays(int days) {
+        this.days = days;
     }
-
-    public int getJobId() {
-        return jobId;
-    }
-
-    public String getWageType() {
-        return wageType;
-    }
-
-    public String getJobName() {
-        return jobName;
-    }
-
-    public int getLimitNumber() {
-        return limitNumber;
-    }
-
-    public int getJobTypeId() {
-        return jobTypeId;
-    }
-
-    public BigDecimal getWage() {
-        return wage;
-    }
-
-    public String getCalculateMoneyType() {
-        return calculateMoneyType;
-    }
-
-    public String getCalculateMoneyDate() {
-        return calculateMoneyDate;
-    }
-
-    public String getWorkStreet() {
-        return workStreet;
-    }
-
-    public Date getReleaseTime() {
-        return releaseTime;
-    }
-
-    public Date getStartWorkDate() {
-        return startWorkDate;
-    }
-
-    public Date getEndWorkDate() {
-        return endWorkDate;
-    }
-
-    public String getJobContent() {
-        return jobContent;
-    }
-
-    public String getAuditStatus() {
-        return auditStatus;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public String getDelFlag() {
-        return delFlag;
-    }
-
-    public int getAreaId() {
-        return areaId;
-    }
-
-    public String getTimeType() {
-        return timeType;
-    }
-
-    public String getSexDemand() {
-        return sexDemand;
-    }
-
 
     public void setJobId(int jobId) {
         this.jobId = jobId;
@@ -147,6 +66,10 @@ public class XlfPartTimeJob {
 
     public void setWage(BigDecimal wage) {
         this.wage = wage;
+    }
+
+    public void setWageType(String wageType) {
+        this.wageType = wageType;
     }
 
     public void setCalculateMoneyType(String calculateMoneyType) {
@@ -201,24 +124,131 @@ public class XlfPartTimeJob {
         this.sexDemand = sexDemand;
     }
 
+    public void setWorkTime(String workTime) {
+        this.workTime = workTime;
+    }
 
-    public void setWageType(String wageType) {
-        this.wageType = wageType;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public void setAreaIds(List<Integer> areaIds) {
         this.areaIds = areaIds;
     }
 
-    public void setJobTypeIds(List<Integer> jobTypes) {
-        this.jobTypeIds = jobTypes;
+    public void setJobTypeIds(List<Integer> jobTypeIds) {
+        this.jobTypeIds = jobTypeIds;
     }
 
     public void setTimeTypes(List<String> timeTypes) {
         this.timeTypes = timeTypes;
     }
 
-    public void setWorkTime(String workTime) {
-        this.workTime = workTime;
+    public int getJobId() {
+        return jobId;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public int getLimitNumber() {
+        return limitNumber;
+    }
+
+    public int getJobTypeId() {
+        return jobTypeId;
+    }
+
+    public BigDecimal getWage() {
+        return wage;
+    }
+
+    public String getWageType() {
+        return wageType;
+    }
+
+    public String getCalculateMoneyType() {
+        return calculateMoneyType;
+    }
+
+    public String getCalculateMoneyDate() {
+        return calculateMoneyDate;
+    }
+
+    public String getWorkStreet() {
+        return workStreet;
+    }
+
+    public Date getReleaseTime() {
+        return releaseTime;
+    }
+
+    public Date getStartWorkDate() {
+        return startWorkDate;
+    }
+
+    public Date getEndWorkDate() {
+        return endWorkDate;
+    }
+
+    public String getJobContent() {
+        return jobContent;
+    }
+
+    public String getAuditStatus() {
+        return auditStatus;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public int getAreaId() {
+        return areaId;
+    }
+
+    public String getTimeType() {
+        return timeType;
+    }
+
+    public String getSexDemand() {
+        return sexDemand;
+    }
+
+    public String getWorkTime() {
+        return workTime;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public List<Integer> getAreaIds() {
+        return areaIds;
+    }
+
+    public List<Integer> getJobTypeIds() {
+        return jobTypeIds;
+    }
+
+    public List<String> getTimeTypes() {
+        return timeTypes;
+    }
+
+    public int getDays() {
+        return days;
     }
 }

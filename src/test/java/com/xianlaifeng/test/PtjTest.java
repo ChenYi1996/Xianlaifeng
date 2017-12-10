@@ -4,6 +4,7 @@ package com.xianlaifeng.test;
 import com.xianlaifeng.ptj.dao.XlfPartTimeJobDAO;
 import com.xianlaifeng.ptj.entity.XlfPartTimeJob;
 
+import com.xianlaifeng.utils.TimeUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -11,6 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,7 +50,7 @@ public class PtjTest {
 
     @Test
     public void selectDetailsTest(){
-        List<Map<String,Object>> list =xlfPartTimeJobDAO.selectDetails("3");
+//        List<Map<String,Object>> list =xlfPartTimeJobDAO.selectDetails("3");
         System.out.println();
     }
 
@@ -62,15 +65,17 @@ public class PtjTest {
             in.add(Integer.valueOf(Arrays.asList(string.split(",")).get(i)));
         }
         xlfPartTimeJob.setAreaIds(in);
-<<<<<<< .mine
-//        xlfPartTimeJob.setJobTypes(Arrays.asList(jobType.split(",")));
-=======
-        //xlfPartTimeJob.setJobTypes(Arrays.asList(jobType.split(",")));
->>>>>>> .theirs
-        xlfPartTimeJob.setTimeTypes(Arrays.asList(timeType.split(",")));
-        List<XlfPartTimeJob> ss =xlfPartTimeJobDAO.findList(xlfPartTimeJob);
-
         System.out.println();
     }
 
+
+    @Test
+    public void timeTest() throws ParseException {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date1=simpleDateFormat.parse("2017-11-30 23:53:54");
+        Date date2=simpleDateFormat.parse("2017-12-05 23:09:36");
+        TimeUtil.differentDaysByMillisecond(date2,date1);
+
+
+    }
 }

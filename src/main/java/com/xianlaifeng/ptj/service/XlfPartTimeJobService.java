@@ -12,5 +12,5 @@ public interface XlfPartTimeJobService {
 
     public PageInfo<XlfPartTimeJob> findList(XlfPartTimeJob xlfPartTimeJob,int pageNum,int pageSize);
 
-    List<Map<String,Object>> selectDetails(String jobId);
+    List<XlfPartTimeJob> selectDetails(String jobId);
 }
