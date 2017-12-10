@@ -1,6 +1,7 @@
 package com.xianlaifeng.ptj.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.StringUtil;
 import com.xianlaifeng.ptj.entity.XlfPartTimeJob;
 import com.xianlaifeng.ptj.service.Impl.XlfPartTimeJobServiceImpl;
 import com.xianlaifeng.ptj.service.Impl.XlfPtjTypeServiceImpl;
@@ -12,6 +13,7 @@ import com.xianlaifeng.utils.TimeUtil;
 import net.sf.ezmorph.object.DateMorpher;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,33 +82,39 @@ public class XlfPartTimeJobController {
     public AjaxJSON findList(@RequestParam Map<String, Object> param, @RequestBody AjaxJSON ajax) {
         AjaxJSON json =new AjaxJSON();
         try{
+            JSONObject obj=JSONObject.fromObject(ajax.getObj());
+
             String pageNum = (String)param.get("pageNum");
             String pageSize = (String)param.get("pageSize");
-            String areaId = (String) param.get("areaId");
-            String jobTypeId = (String)param.get("jobTypeId");
-            String timeType =(String)param.get("timeType");
-            String jobName = (String)param.get("jobName");
+
+            pageNum = pageNum == null?"0":pageNum;
+            pageSize = pageSize == null?"0":pageSize;
+
+            String areaId = (String)obj.get("areaId");
+            String jobTypeId = (String)obj.get("jobTypeId");
+            String timeType =(String)obj.get("timeType");
+            String jobName = (String)obj.get("jobName");
             XlfPartTimeJob xlfPartTimeJob =new XlfPartTimeJob();
             xlfPartTimeJob.setJobName(jobName);
-            if(null != areaId ){ //区域多选
+            if(StringUtils.isNotBlank(areaId)){ //区域多选
                 List<Integer> intAreaList = new ArrayList<Integer>();
                 for(int i=0; i<Arrays.asList(areaId.split(",")).size();i++){
                     intAreaList.add(Integer.valueOf(Arrays.asList(areaId.split(",")).get(i)));
                 }
                 xlfPartTimeJob.setAreaIds(intAreaList);
             }
-            if(null != jobTypeId){//兼职类型多选
+            if(StringUtils.isNotBlank(jobTypeId)){//兼职类型多选
                 List<Integer> intTypeList = new ArrayList<Integer>();
                 for(int i=0; i<Arrays.asList(jobTypeId.split(",")).size();i++){
                     intTypeList.add(Integer.valueOf(Arrays.asList(jobTypeId.split(",")).get(i)));
                 }
                 xlfPartTimeJob.setJobTypeIds(intTypeList);
             }
-            if(null != timeType){//时间类型多选
+            if(StringUtils.isNotBlank(timeType)){//时间类型多选
                 xlfPartTimeJob.setTimeTypes(Arrays.asList(timeType.split(",")));
             }
             PageInfo<XlfPartTimeJob> pageInfos=xlfPartTimeJobServiceImpl.findList(xlfPartTimeJob,
-                    Integer.valueOf(pageNum==null?"0":pageNum),Integer.valueOf(pageNum==null?"0":pageSize));
+                    Integer.valueOf(pageNum),Integer.valueOf(pageNum));
             json.setObj(pageInfos.getList());
             json.setSuccess(true);
         }catch(Exception e){

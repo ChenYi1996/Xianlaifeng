@@ -37,7 +37,7 @@
 
     </select>
 
-    <select id="findList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob" resultType="com.xianlaifeng.ptj.entity.XlfPartTimeJob">
+    <select id="findList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob" resultMap="BaseResultMap">
         select p.*,a.district as district
         from xlf_part_time_job p
         left join xlf_area a
