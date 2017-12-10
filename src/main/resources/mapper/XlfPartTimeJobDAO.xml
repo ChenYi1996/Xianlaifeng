@@ -44,22 +44,22 @@
         on p.area_id = a.area_id
         <where>
             <if test="jobName != null and jobName != ''">
-                job_Name  like '%${jobName}%' or  job_content like  '%${jobName}%'
+                p.job_Name  like '%${jobName}%' or  p.job_content like  '%${jobName}%'
             </if>
             <if test="areaIds != null and areaIds.size != 0 ">
-                and area_id  in
+                and p.area_id  in
                 <foreach item="item" index="index" collection="areaIds" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
             <if test="jobTypeIds != null and jobTypeIds.size != 0">
-                and job_type_id  IN
+                and p.job_type_id  IN
                 <foreach collection="jobTypeIds" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
             <if test="timeTypes != null and timeTypes.size != ''">
-                and time_type IN
+                and p.time_type IN
                 <foreach collection="timeTypes" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
