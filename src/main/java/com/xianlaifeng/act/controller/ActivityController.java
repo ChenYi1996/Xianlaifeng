@@ -8,12 +8,18 @@ import com.xianlaifeng.act.service.JoinActService;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.AjaxJSON;
+import com.xianlaifeng.utils.CommonUtils;
+import net.sf.ezmorph.object.DateMorpher;
 import net.sf.json.JSONObject;
+import net.sf.json.util.JSONUtils;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -70,7 +76,6 @@ public class ActivityController {
             pageNum = pageNum == null?"0":pageNum;
             pageSize = pageSize == null?"0":pageSize;
             XLF_Activity activity = (XLF_Activity) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Activity.class);
-            System.out.println(activity);
             //用户查看过的信息收集
             if(trd_session!=null){
 
@@ -95,15 +100,20 @@ public class ActivityController {
         try {
             String openid =(String)request.getAttribute("openid");
             Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
-
             //用户信息检查
             if(u_info.get("user_phone")==null||u_info.get("user_name")==null||u_info.get("user_phone").equals("")||u_info.get("user_name").equals("")){
                 res.setSuccess(false);
                 res.setMsg("请完善用户信息");
             }
             else {
+
+                JSONUtils.getMorpherRegistry().registerMorpher(new DateMorpher(new String[] {"yyyy-MM-dd HH:mm:ss"}) );
+
                 XLF_Activity activity = (XLF_Activity) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Activity.class);
                 activity.setActivityCreateUser((Integer) u_info.get("id"));
+                //图片处理url处理
+                activity.setActivityPic(CommonUtils.getFileNameFromHttp(activity.getActivityPic()));
+
                 activity.setActivityCreateTime(new Date());
                 activityService.insertActivity(activity);
             }

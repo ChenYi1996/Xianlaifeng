@@ -65,6 +65,8 @@ public class IUserTest {
 
     @Test
     public void testinsert() {
+        XLF_Activity activity = new XLF_Activity();
+        System.out.println(CommonUtils.add(activity));
 
     }
 

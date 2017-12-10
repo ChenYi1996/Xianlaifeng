@@ -25,6 +25,10 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/pict")
+
+/**
+ * 负责处理图片相关的接口
+ */
 public class PicController {
 
     public static final String BASE_PATH = "/usr//local//pic//xianlaifeng//";

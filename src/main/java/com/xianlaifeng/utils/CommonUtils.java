@@ -84,8 +84,14 @@ public class CommonUtils {
                 }
                 else if(fields[i].getGenericType().toString().equals(
                         "class java.util.Date")){
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-                    paraMap.put(fields[i].getName(), "'"+sdf.format(new Date().getTime())+"'");
+                    if(fields[i].get(object)==null) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        paraMap.put(fields[i].getName(), "'" + sdf.format(new Date().getTime()) + "'");
+                    }
+                    else {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        paraMap.put(fields[i].getName(), "'" + sdf.format(fields[i].get(object)) + "'");
+                    }
                 }
                 //如果属性名为id，即在数据库中自增长，不用插入id字段入数据库，进行空操作
                 else if(fields[i].getName().equals("id")){
