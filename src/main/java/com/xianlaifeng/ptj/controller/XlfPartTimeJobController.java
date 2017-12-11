@@ -114,7 +114,8 @@ public class XlfPartTimeJobController {
                 xlfPartTimeJob.setTimeTypes(Arrays.asList(timeType.split(",")));
             }
             PageInfo<XlfPartTimeJob> pageInfos=xlfPartTimeJobServiceImpl.findList(xlfPartTimeJob,
-                    Integer.valueOf(pageNum),Integer.valueOf(pageNum));
+                    Integer.valueOf(pageNum),Integer.valueOf(pageSize));
+            json.setTotal(pageInfos.getTotal());
             json.setObj(pageInfos.getList());
             json.setSuccess(true);
         }catch(Exception e){
