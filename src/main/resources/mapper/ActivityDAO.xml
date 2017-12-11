@@ -37,8 +37,11 @@
             <if test="activityCity!=null and activityCity!=''">
                 and activityCity=#{activityCity}
             </if>
-            <if test="activityDistrict!=null and activityDistrict!=''">
-                and activityDistrict=#{activityDistrict}
+            <if test="activityDistricts != null and activityDistricts.size != 0 ">
+                and activityDistrict  in
+                <foreach item="item" index="index" collection="activityDistricts" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
             <if test="activityStatus != 3">
                 and activityStatus=#{activityStatus}

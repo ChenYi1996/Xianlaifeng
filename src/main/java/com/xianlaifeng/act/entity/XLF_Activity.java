@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class XLF_Activity {
 
@@ -28,6 +29,10 @@ public class XLF_Activity {
 
     private int activityCreateUser;
     private int activityStatus;
+
+
+    private List<String> activityDistricts;
+
 
     public XLF_Activity(int id, String activityName, String activityDetails, int activityIfSchool, String activityPic, String activityProvince, String activityCity, String activityDistrict, String activityLocation, Double activityLatitude, Double activityLongitude, int activityPerson, Date activityStartTime, Date activityCreateTime, int activityCreateUser, int activityStatus) {
         this.id = id;
@@ -181,6 +186,21 @@ public class XLF_Activity {
         this.activityLongitude = activityLongitude;
     }
 
+    public void setActivityLatitude(double activityLatitude) {
+        this.activityLatitude = activityLatitude;
+    }
+
+    public void setActivityLongitude(double activityLongitude) {
+        this.activityLongitude = activityLongitude;
+    }
+
+    public List<String> getActivityDistricts() {
+        return activityDistricts;
+    }
+
+    public void setActivityDistricts(List<String> activityDistricts) {
+        this.activityDistricts = activityDistricts;
+    }
 
     @Override
     public String toString() {
