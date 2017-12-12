@@ -35,9 +35,23 @@ public class XlfPartTimeJob {
     private  double latitude;
     private double longitude;
 
+    private String jobType;
+    private String userCompany;
+    private String userName;
     private String district;
     private int days;
 
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
+    }
+
+    public void setUserCompany(String userCompany) {
+        this.userCompany = userCompany;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     private List<Integer> areaIds;
     private List<Integer> jobTypeIds;
@@ -258,5 +272,17 @@ public class XlfPartTimeJob {
 
     public String getDistrict() {
         return district;
+    }
+
+    public String getJobType() {
+        return jobType;
+    }
+
+    public String getUserCompany() {
+        return userCompany;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 }

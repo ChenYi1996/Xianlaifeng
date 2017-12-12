@@ -28,12 +28,18 @@
         <result column="longitude" property="longitude" jdbcType="DOUBLE"/>
     </resultMap>
     <select id="selectDetails" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        p.* ,a.area_id,a.city,a.province,a.district
-        from xlf_part_time_job AS  p
-        left join xlf_area AS  a
-        ON  p.area_id  = a.area_id
-        where p.job_id = #{jobId}
+            select
+            p.* ,a.area_id,a.city,a.province,a.district,
+            u.user_name AS userName, u.user_company AS  userCompany,
+            t.job_type AS  jobType
+            from xlf_part_time_job AS  p
+            left join xlf_area AS  a
+            ON  p.area_id  = a.area_id
+            left join xlf_user AS  u
+            ON  p.user_id = u.id
+            left join xlf_ptj_type t
+            ON  p.job_type_id = t.id
+            where p.job_id = #{jobId}
 
     </select>
 
