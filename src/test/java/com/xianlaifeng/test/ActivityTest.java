@@ -13,7 +13,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-mybatis.xml","classpath:spring-redis.xml"})
@@ -35,8 +37,9 @@ public class ActivityTest {
         activity.setActivityName("aaa");
         activity.setActivityStartTime(new Date());
         activity.setActivityCreateTime(new Date());
+        System.out.println(CommonUtils.getClassValueObj(activity));
         System.out.println(CommonUtils.add(activity));
-        commonDAO.add(CommonUtils.add(activity));
+        //commonDAO.add(CommonUtils.add(activity));
     }
 
     @Test

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.xianlaifeng.sys.dao.PicDAO">
+
+    <sql id='USER_TABLE'>xlf_user</sql>
+
+    <sql id='ACT_TABLE'>xlf_activity</sql>
+
+    <select id="getUserPicList" resultType="java.lang.String">
+        SELECT user_img
+        FROM <include refid="USER_TABLE" />
+    </select>
+
+    <select id="getActPicList" resultType="java.lang.String">
+        SELECT activityPic
+        FROM <include refid="ACT_TABLE" />
+    </select>
+
+
+
+
+</mapper>

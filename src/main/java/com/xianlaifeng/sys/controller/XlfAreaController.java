@@ -22,7 +22,7 @@ public class XlfAreaController {
     @Resource
     private XlfAreaServiceImpl xlfAreaServiceImpl;
 
-    @RequestMapping(value="/selectArea.do",produces = "application/json",method = RequestMethod.GET)
+    @RequestMapping(value="/selectArea.do",produces = "application/json",method = RequestMethod.POST)
     @ResponseBody
     public AjaxJSON selectArea(@RequestParam Map<String,Object> param){
         AjaxJSON json=new AjaxJSON();

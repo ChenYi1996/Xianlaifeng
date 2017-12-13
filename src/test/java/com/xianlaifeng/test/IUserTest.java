@@ -14,15 +14,20 @@ import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.RedisService;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.CommonUtils;
+import com.xianlaifeng.utils.UUIDTool;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-mybatis.xml","classpath:spring-redis.xml"})
@@ -50,16 +55,25 @@ public class IUserTest {
     private RedisService redisService;
 
     @Resource
+    private RedisTemplate redisTemplate;
+
+
+    @Resource
     private ActivityService activityService;
 
 
     @Test
     public void getXLFUser() {
+
         String openid = "oVK4g0Z9EO8Tem1W5DEQJpv2Sqak";
-        XLF_Wechat xw = wechatDAO.ifExist(new XLF_Wechat(openid)).get(0);
-        System.out.println(xw);
-        Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
-        System.out.println(u_info);
+        String session_key = "VRHUFLFpTkvSYb6snyxJdw==";
+        String trd_sessionid = UUIDTool.getUUID(openid+session_key);
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("openid",openid);
+        map.put("session_key",session_key);
+        redisTemplate.opsForHash().putAll("wechat:"+trd_sessionid,map);
+        redisTemplate.expire(trd_sessionid,20, TimeUnit.DAYS);
+
     }
 
 
@@ -73,9 +87,12 @@ public class IUserTest {
 
     @Test
     public void testRedis() {
-        String trd_session  = "3a6645e0c170306fbdc2b247fa7dddc8";
-        String openid = trd_session == null?null:redisService.getOpenid(trd_session);
-        System.out.println(openid);
+//        String trd_session  = "3a6645e0c170306fbdc2b247fa7dddc8";
+//        String openid = trd_session == null?null:redisService.getOpenid(trd_session);
+//        System.out.println(openid);
+        //System.out.println(StringUtils.isEmpty(null));
+        redisTemplate.opsForList().rightPush("keyList","d");
+        System.out.println(redisTemplate.opsForList().range("keyList",0,-1));
     }
 
     @Test

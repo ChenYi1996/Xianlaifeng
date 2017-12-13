@@ -1,7 +1,7 @@
 package com.xianlaifeng.ptj.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.StringUtil;
+
 import com.xianlaifeng.ptj.entity.XlfPartTimeJob;
 import com.xianlaifeng.ptj.service.Impl.XlfPartTimeJobServiceImpl;
 import com.xianlaifeng.ptj.service.Impl.XlfPtjTypeServiceImpl;

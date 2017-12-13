@@ -1,6 +1,7 @@
 package com.xianlaifeng.sys.controller;
 
 
+import com.xianlaifeng.sys.service.PicService;
 import com.xianlaifeng.utils.AjaxJSON;
 import com.xianlaifeng.utils.CommonUtils;
 import org.apache.commons.lang.StringUtils;
@@ -14,14 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/pict")
@@ -32,7 +31,10 @@ import java.util.Map;
 public class PicController {
 
     public static final String BASE_PATH = "/usr//local//pic//xianlaifeng//";
-    public static final String BASE_HTTP_PATH = "https://www.westorehere.shop/img/xianlaifeng/";
+    public static final String BASE_HTTP_PATH = "https://www.xianlaifeng.com/img/xianlaifeng/";
+
+    @Resource
+    private PicService picService;
 
 
     //用户上传图片接口，method表示上传到哪个文件夹
@@ -76,6 +78,34 @@ public class PicController {
             return aj;
         }
         return aj;
+    }
+
+    //删除多余图片文件
+    @RequestMapping(value="/delPic.do" ,produces="application/json" ,method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Object delImg(@RequestParam Map<String,Object> params){
+        AjaxJSON ajax = new AjaxJSON();
+        try {
+            String method = (String)params.get("method");
+            List<String> pic_List_DB = method.equals("user")?picService.getUserPicList():picService.getActPicList();
+            pic_List_DB.removeAll(Collections.singleton(null));
+
+            File file = new File(BASE_PATH + method + "/");
+            File[] fileList = file.listFiles();
+            for (int i = 0; i < fileList.length; i++) {
+                if (fileList[i].isFile()) {
+                    String fileName = fileList[i].getName();
+                    if (!pic_List_DB.contains(fileList[i].getName())){
+                        fileList[i].delete();
+                    }
+                }
+            }
+            ajax.setObj(file.listFiles());
+        }catch (Exception e){
+            ajax.setSuccess(false);
+            ajax.setMsg(e.getMessage());
+        }
+        return ajax;
     }
 
 }

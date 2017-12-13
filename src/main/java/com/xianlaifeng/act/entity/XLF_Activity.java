@@ -1,7 +1,6 @@
 package com.xianlaifeng.act.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +16,7 @@ public class XLF_Activity {
     private String activityCity;
     private String activityDistrict;
     private String activityLocation;
+    private String activityDoor;
 
     private double activityLatitude;
     private double activityLongitude;
@@ -24,6 +24,7 @@ public class XLF_Activity {
     private int activityPerson;
 
     private Date activityStartTime;
+    private Date activityEndTime;
 
     private Date activityCreateTime;
 
@@ -34,7 +35,7 @@ public class XLF_Activity {
     private List<String> activityDistricts;
 
 
-    public XLF_Activity(int id, String activityName, String activityDetails, int activityIfSchool, String activityPic, String activityProvince, String activityCity, String activityDistrict, String activityLocation, Double activityLatitude, Double activityLongitude, int activityPerson, Date activityStartTime, Date activityCreateTime, int activityCreateUser, int activityStatus) {
+    public XLF_Activity(int id, String activityName, String activityDetails, int activityIfSchool, String activityPic, String activityProvince, String activityCity, String activityDistrict, String activityLocation,String activityDoor ,double activityLatitude, double activityLongitude, int activityPerson, Date activityStartTime, Date activityEndTime, Date activityCreateTime, int activityCreateUser, int activityStatus) {
         this.id = id;
         this.activityName = activityName;
         this.activityDetails = activityDetails;
@@ -44,10 +45,12 @@ public class XLF_Activity {
         this.activityCity = activityCity;
         this.activityDistrict = activityDistrict;
         this.activityLocation = activityLocation;
+        this.activityDoor = activityDoor;
         this.activityLatitude = activityLatitude;
         this.activityLongitude = activityLongitude;
         this.activityPerson = activityPerson;
         this.activityStartTime = activityStartTime;
+        this.activityEndTime = activityEndTime;
         this.activityCreateTime = activityCreateTime;
         this.activityCreateUser = activityCreateUser;
         this.activityStatus = activityStatus;
@@ -128,6 +131,14 @@ public class XLF_Activity {
         this.activityLocation = activityLocation;
     }
 
+    public String getActivityDoor() {
+        return activityDoor;
+    }
+
+    public void setActivityDoor(String activityDoor) {
+        this.activityDoor = activityDoor;
+    }
+
     public int getActivityPerson() {
         return activityPerson;
     }
@@ -168,6 +179,15 @@ public class XLF_Activity {
 
     public void setActivityStatus(int activityStatus) {
         this.activityStatus = activityStatus;
+    }
+
+
+    public Date getActivityEndTime() {
+        return activityEndTime;
+    }
+
+    public void setActivityEndTime(Date activityEndTime) {
+        this.activityEndTime = activityEndTime;
     }
 
     public Double getActivityLatitude() {

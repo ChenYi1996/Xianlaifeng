@@ -8,9 +8,12 @@
 
     <sql id='LEFT_TABLE_NAME'>xlf_user</sql>
 
+    <sql id='ACT_IMG_PATH'>'https://www.xianlaifeng.com/img/xianlaifeng/activity/'</sql>
+
     <select id="getActivityDetails" resultType="java.util.Map"  parameterType="int">
         SELECT
-        a.*,u.user_name,u.user_company,u.user_phone,u.user_sex
+        a.id, a.activityName, a.activityIfSchool, CONCAT(<include refid="ACT_IMG_PATH" />,activityPic) AS activityPic, a.activityProvince, a.activityCity,  a.activityDistrict,  a.activityLocation,a.activityDoor,a.activityPerson, a.activityStartTime,a.activityEndTime,a.activityStatus,a.activityDetails,
+        u.user_name,u.user_company,u.user_phone,u.user_sex
         FROM <include refid="TABLE_NAME" /> as a
         LEFT JOIN <include refid="LEFT_TABLE_NAME" /> as u
         ON a.activityCreateUser = u.id
@@ -22,7 +25,7 @@
 
     <select id="getActivityShow" resultType="com.xianlaifeng.act.entity.XLF_Activity"  parameterType="com.xianlaifeng.act.entity.XLF_Activity">
         SELECT
-        id, activityName, activityIfSchool, activityPic, activityProvince, activityCity,  activityDistrict,  activityLocation, activityPerson, activityStartTime,activityStatus
+        id, activityName, activityIfSchool, CONCAT(<include refid="ACT_IMG_PATH" />,activityPic) AS activityPic, activityProvince, activityCity,  activityDistrict,  activityLocation, activityPerson, activityStartTime,activityEndTime,activityStatus
         FROM <include refid="TABLE_NAME" />
         <where>
             <if test="activityName!=null">

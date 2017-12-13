@@ -6,12 +6,14 @@ import com.xianlaifeng.act.entity.XLF_Activity;
 import com.xianlaifeng.act.service.ActivityService;
 import com.xianlaifeng.act.service.JoinActService;
 import com.xianlaifeng.user.entity.XLF_Wechat;
+import com.xianlaifeng.user.service.RedisService;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.AjaxJSON;
 import com.xianlaifeng.utils.CommonUtils;
 import net.sf.ezmorph.object.DateMorpher;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -38,6 +40,9 @@ public class ActivityController {
 
     @Resource
     private JoinActService joinActService;
+
+    @Resource
+    private RedisService redisService;
 
 
 
@@ -77,8 +82,8 @@ public class ActivityController {
             pageSize = pageSize == null?"0":pageSize;
             XLF_Activity activity = (XLF_Activity) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Activity.class);
             //用户查看过的信息收集
-            if(trd_session!=null){
-
+            if(!StringUtils.isEmpty(trd_session)&&!StringUtils.isEmpty(activity.getActivityName())){
+                redisService.insertHistory(trd_session,"activity",activity.getActivityName());
             }
             PageInfo<XLF_Activity> p_list = activityService.getActivityShow(activity,Integer.parseInt(pageNum),Integer.parseInt(pageSize));
             res.setObj(p_list.getList());

@@ -77,7 +77,7 @@ public class CommonUtils {
                 boolean isAccess = fields[i].isAccessible();
                 if (!isAccess) fields[i].setAccessible(true);
 
-
+                //System.out.println(fields[i].getName()+"----"+fields[i].getGenericType().toString());
                 if(fields[i].getGenericType().toString().equals("class java.lang.String")){
                     paraMap.put(fields[i].getName(), fields[i].get(object)==null?null:"'"+fields[i].get(object)+"'");
 
@@ -95,6 +95,10 @@ public class CommonUtils {
                 }
                 //如果属性名为id，即在数据库中自增长，不用插入id字段入数据库，进行空操作
                 else if(fields[i].getName().equals("id")){
+
+                }
+                else if(fields[i].getGenericType().toString().equals(
+                        "java.util.List<java.lang.String>")){
 
                 }
                 else {
