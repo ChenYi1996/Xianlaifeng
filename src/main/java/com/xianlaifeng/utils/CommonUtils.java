@@ -50,6 +50,30 @@ public class CommonUtils {
 
     }
 
+    public static List<String>  setList(String arrayString) {
+        List<String> list = new ArrayList<String>();
+        if(arrayString != null) {
+            String[] array = arrayString.split(",");
+            int length = array.length;
+            for (int i = 0; i < length; i++) {
+                list.add(array[i]);
+            }
+        }
+        return list;
+    }
+
+    public static List<Integer>  setIntList(String arrayString) {
+        List<Integer> list = new ArrayList<Integer>();
+        if(arrayString != null) {
+            String[] array = arrayString.split(",");
+            int length = array.length;
+            for (int i = 0; i < length; i++) {
+                list.add(Integer.parseInt(array[i]));
+            }
+        }
+        return list;
+    }
+
 
     public static String delete(Object object) {
 

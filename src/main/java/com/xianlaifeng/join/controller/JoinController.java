@@ -1,6 +1,7 @@
 package com.xianlaifeng.join.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.join.entity.XLF_Join;
 import com.xianlaifeng.join.service.JoinService;
 import com.xianlaifeng.user.entity.XLF_Wechat;
@@ -49,6 +50,37 @@ public class JoinController {
             String result = joinService.addJoin(join);
             res.setMsg(result);
             res.setSuccess(result.equals("success")?true:false);
+
+        }
+        catch (Exception e){
+            res.setSuccess(false);
+            res.setMsg(e.getMessage());
+        }
+        return res;
+    }
+
+
+    //查看个人报名记录接口
+    @RequestMapping(value="/getMyJoin.do",method = {RequestMethod.GET,RequestMethod.POST},produces = "application/json")
+    @ResponseBody
+    public AjaxJSON getMyJoin(@RequestParam Map<String,Object> params, @RequestBody AjaxJSON ajax){
+        AjaxJSON res = new AjaxJSON();
+        String pageNum = (String)params.get("pageNum");
+        String pageSize = (String)params.get("pageSize");
+        try{
+            pageNum = pageNum == null?"0":pageNum;
+            pageSize = pageSize == null?"0":pageSize;
+            String openid =(String)request.getAttribute("openid");
+            Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
+
+            XLF_Join join = (XLF_Join) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Join.class);
+            join.setUserId((Integer) u_info.get("id"));
+
+            PageInfo<Map<String,Object>> pageInfo = joinService.getMyJoin(join,Integer.parseInt(pageNum),Integer.parseInt(pageSize));
+            res.setObj(pageInfo.getList());
+            res.setTotal(pageInfo.getTotal());
+            res.setMsg("查询成功");
+            res.setSuccess(true);
 
         }
         catch (Exception e){

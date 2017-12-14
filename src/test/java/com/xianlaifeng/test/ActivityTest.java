@@ -5,6 +5,8 @@ import com.xianlaifeng.act.dao.ActivityDAO;
 import com.xianlaifeng.act.dao.JoinActDAO;
 import com.xianlaifeng.act.entity.XLF_Activity;
 import com.xianlaifeng.act.entity.XLF_Join_Act;
+import com.xianlaifeng.join.dao.JoinDAO;
+import com.xianlaifeng.join.entity.XLF_Join;
 import com.xianlaifeng.sys.dao.CommonDAO;
 import com.xianlaifeng.utils.CommonUtils;
 import org.junit.Test;
@@ -31,6 +33,10 @@ public class ActivityTest {
     private ActivityDAO activityDAO;
 
 
+    @Resource
+    private JoinDAO joinDAO;
+
+
     @Test
     public void testInsert(){
         XLF_Activity activity = new XLF_Activity();
@@ -54,9 +60,10 @@ public class ActivityTest {
 
     @Test
     public void testGetMyjoin(){
-        XLF_Join_Act join_act = new XLF_Join_Act();
-        join_act.setUserId(10007);
-        System.out.println(joinActDAO.getMyJoin(join_act));
+        XLF_Join join = new XLF_Join();
+        join.setMethodId(1);
+        join.setUserId(10010);
+        System.out.println(joinDAO.getMyJoin(join));
     }
 
 

@@ -11,6 +11,9 @@
         <result column="job_type_id" property="jobTypeId" jdbcType="INTEGER"/>
         <result column="wage" property="wage" jdbcType="DECIMAL"/>
         <result column="wage_type" property="wageType" jdbcType="VARCHAR"/>
+        <result column="work_province" property="workProvince" jdbcType="VARCHAR"/>
+        <result column="work_city" property="workCity" jdbcType="VARCHAR"/>
+        <result column="work_district" property="workDistrict" jdbcType="VARCHAR"/>
         <result column="work_street" property="workStreet" jdbcType="VARCHAR"/>
         <result column="calculate_money_type" property="calculateMoneyType" jdbcType="VARCHAR"/>
         <result column="calculate_money_date" property="calculateMoneyDate" jdbcType="VARCHAR"/>
@@ -29,12 +32,10 @@
     </resultMap>
     <select id="selectDetails" parameterType="java.lang.String" resultMap="BaseResultMap">
             select
-            p.* ,a.area_id,a.city,a.province,a.district,
+            p.*
             u.user_name AS userName, u.user_company AS  userCompany,
             t.job_type AS  jobType
             from xlf_part_time_job AS  p
-            left join xlf_area AS  a
-            ON  p.area_id  = a.area_id
             left join xlf_user AS  u
             ON  p.user_id = u.id
             left join xlf_ptj_type t
@@ -44,17 +45,15 @@
     </select>
 
     <select id="findList" parameterType="com.xianlaifeng.ptj.entity.XlfPartTimeJob" resultMap="BaseResultMap">
-        select p.*,a.district as district
+        select p.*
         from xlf_part_time_job p
-        left join xlf_area a
-        on p.area_id = a.area_id
         <where>
             <if test="jobName != null and jobName != ''">
                 p.job_Name  like '%${jobName}%' or  p.job_content like  '%${jobName}%'
             </if>
-            <if test="areaIds != null and areaIds.size != 0 ">
-                and p.area_id  in
-                <foreach item="item" index="index" collection="areaIds" open="(" separator="," close=")">
+            <if test="workDistricts != null and workDistricts.size != 0 ">
+                and p.work_district  in
+                <foreach item="item" index="index" collection="workDistricts" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
@@ -126,6 +125,15 @@
             </if>
             <if test="calculateMoneyDate != null">
                 calculate_money_date,
+            </if>
+            <if test="workProvince != null">
+                work_province,
+            </if>
+            <if test="workCity != null">
+                work_city,
+            </if>
+            <if test="workDistrict != null">
+                work_district,
             </if>
             <if test="workStreet != null">
                 work_street,

@@ -19,6 +19,9 @@ public class XlfPartTimeJob {
     private String wageType;
     private String calculateMoneyType;
     private String calculateMoneyDate;
+    private String workProvince;
+    private String workCity;
+    private String workDistrict;
     private String workStreet;
     private Date releaseTime;
     private Date startWorkDate;
@@ -54,9 +57,28 @@ public class XlfPartTimeJob {
     }
 
     private List<Integer> areaIds;
+    private List<String> workDistricts;
     private List<Integer> jobTypeIds;
-    private List<String> timeTypes;
+    private List<Integer> timeTypes;
 
+    private String jobTypeIds_String;
+    private String timeTypes_String;
+
+    public String getJobTypeIds_String() {
+        return jobTypeIds_String;
+    }
+
+    public void setJobTypeIds_String(String jobTypeIds_String) {
+        this.jobTypeIds_String = jobTypeIds_String;
+    }
+
+    public String getTimeTypes_String() {
+        return timeTypes_String;
+    }
+
+    public void setTimeTypes_String(String timeTypes_String) {
+        this.timeTypes_String = timeTypes_String;
+    }
 
     public void setDistrict(String district) {
         this.district = district;
@@ -162,9 +184,7 @@ public class XlfPartTimeJob {
         this.jobTypeIds = jobTypeIds;
     }
 
-    public void setTimeTypes(List<String> timeTypes) {
-        this.timeTypes = timeTypes;
-    }
+
 
     public int getJobId() {
         return jobId;
@@ -262,8 +282,12 @@ public class XlfPartTimeJob {
         return jobTypeIds;
     }
 
-    public List<String> getTimeTypes() {
+    public List<Integer> getTimeTypes() {
         return timeTypes;
+    }
+
+    public void setTimeTypes(List<Integer> timeTypes) {
+        this.timeTypes = timeTypes;
     }
 
     public int getDays() {
@@ -284,5 +308,76 @@ public class XlfPartTimeJob {
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getWorkProvince() {
+        return workProvince;
+    }
+
+    public void setWorkProvince(String workProvince) {
+        this.workProvince = workProvince;
+    }
+
+    public String getWorkCity() {
+        return workCity;
+    }
+
+    public void setWorkCity(String workCity) {
+        this.workCity = workCity;
+    }
+
+    public String getWorkDistrict() {
+        return workDistrict;
+    }
+
+    public void setWorkDistrict(String workDistrict) {
+        this.workDistrict = workDistrict;
+    }
+
+    public List<String> getWorkDistricts() {
+        return workDistricts;
+    }
+
+    public void setWorkDistricts(List<String> workDistricts) {
+        this.workDistricts = workDistricts;
+    }
+
+    @Override
+    public String toString() {
+        return "XlfPartTimeJob{" +
+                "jobId=" + jobId +
+                ", jobName='" + jobName + '\'' +
+                ", limitNumber=" + limitNumber +
+                ", jobTypeId=" + jobTypeId +
+                ", wage=" + wage +
+                ", wageType='" + wageType + '\'' +
+                ", calculateMoneyType='" + calculateMoneyType + '\'' +
+                ", calculateMoneyDate='" + calculateMoneyDate + '\'' +
+                ", workProvince='" + workProvince + '\'' +
+                ", workCity='" + workCity + '\'' +
+                ", workDistrict='" + workDistrict + '\'' +
+                ", workStreet='" + workStreet + '\'' +
+                ", releaseTime=" + releaseTime +
+                ", startWorkDate=" + startWorkDate +
+                ", endWorkDate=" + endWorkDate +
+                ", jobContent='" + jobContent + '\'' +
+                ", auditStatus='" + auditStatus + '\'' +
+                ", userId=" + userId +
+                ", delFlag='" + delFlag + '\'' +
+                ", areaId=" + areaId +
+                ", timeType='" + timeType + '\'' +
+                ", sexDemand='" + sexDemand + '\'' +
+                ", workTime='" + workTime + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", jobType='" + jobType + '\'' +
+                ", userCompany='" + userCompany + '\'' +
+                ", userName='" + userName + '\'' +
+                ", district='" + district + '\'' +
+                ", days=" + days +
+                ", areaIds=" + areaIds +
+                ", jobTypeIds=" + jobTypeIds +
+                ", timeTypes=" + timeTypes +
+                '}';
     }
 }
