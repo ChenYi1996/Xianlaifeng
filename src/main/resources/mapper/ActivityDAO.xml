@@ -95,8 +95,17 @@
             <if test="activityPerson!=0">activityPerson=#{activityPerson},</if>
             <if test="activityStatus!=0">activityStatus=#{activityStatus},</if>
             <if test="activityStartTime!=null">activityStartTime=#{activityStartTime},</if>
+            <if test="activityEndTime!=null">activityStartTime=#{activityStartTime},</if>
         </trim>
         WHERE id = #{id}
+    </update>
+
+
+    <update id="updateActivityStatusByTime" parameterType="com.xianlaifeng.user.entity.XLF_Wechat">
+        UPDATE <include refid="TABLE_NAME" />
+        SET activityStatus = 2
+        WHERE activityStatus = #{0}
+        <![CDATA[and activityEndTime<=#{1}]]>
     </update>
 
 </mapper>

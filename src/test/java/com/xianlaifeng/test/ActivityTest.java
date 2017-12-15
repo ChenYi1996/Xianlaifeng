@@ -15,6 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,10 +63,7 @@ public class ActivityTest {
 
     @Test
     public void testGetMyjoin(){
-        XLF_Join join = new XLF_Join();
-        join.setMethodId(1);
-        join.setUserId(10010);
-        System.out.println(joinDAO.getMyJoin(join));
+        activityDAO.updateActivityStatusByTime(1,new Date());
     }
 
 

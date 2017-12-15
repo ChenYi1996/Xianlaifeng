@@ -109,6 +109,7 @@ public class ActivityController {
             if(u_info.get("user_phone")==null||u_info.get("user_name")==null||u_info.get("user_phone").equals("")||u_info.get("user_name").equals("")){
                 res.setSuccess(false);
                 res.setMsg("请完善用户信息");
+                return res;
             }
             else {
 

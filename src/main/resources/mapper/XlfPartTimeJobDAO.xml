@@ -17,7 +17,7 @@
         <result column="work_street" property="workStreet" jdbcType="VARCHAR"/>
         <result column="calculate_money_type" property="calculateMoneyType" jdbcType="VARCHAR"/>
         <result column="calculate_money_date" property="calculateMoneyDate" jdbcType="VARCHAR"/>
-        <result column="time_type" property="workStreet" jdbcType="VARCHAR"/>
+        <result column="time_type" property="timeType" jdbcType="VARCHAR"/>
         <result column="release_time" property="releaseTime" jdbcType="TIMESTAMP"/>
         <result column="end_work_date" property="endWorkDate" jdbcType="TIMESTAMP"/>
         <result column="start_work_date" property="startWorkDate" jdbcType="TIMESTAMP"/>
@@ -32,7 +32,7 @@
     </resultMap>
     <select id="selectDetails" parameterType="java.lang.String" resultMap="BaseResultMap">
             select
-            p.*
+            p.* ,
             u.user_name AS userName, u.user_company AS  userCompany,
             t.job_type AS  jobType
             from xlf_part_time_job AS  p
@@ -49,7 +49,10 @@
         from xlf_part_time_job p
         <where>
             <if test="jobName != null and jobName != ''">
-                p.job_Name  like '%${jobName}%' or  p.job_content like  '%${jobName}%'
+                AND  p.job_Name  like '%${jobName}%' or  p.job_content like  '%${jobName}%'
+            </if>
+            <if test="auditStatus != 3">
+                and p.audit_status = #{auditStatus}
             </if>
             <if test="workDistricts != null and workDistricts.size != 0 ">
                 and p.work_district  in
@@ -156,9 +159,6 @@
             <if test="userId != 0">
                 user_id,
             </if>
-            <if test="areaId != 0">
-                area_id,
-            </if>
             <if test="delFlag != null">
                 del_flag,
             </if>
@@ -167,6 +167,9 @@
             </if>
             <if test="workTime != null">
                 work_time ,
+            </if>
+            <if test="timeType != null">
+                time_type ,
             </if>
             <if test="latitude != null">
                 latitude,
@@ -197,6 +200,15 @@
             <if test="calculateMoneyDate != null">
                 #{calculateMoneyDate},
             </if>
+            <if test="workProvince != null">
+                #{workProvince},
+            </if>
+            <if test="workCity != null">
+                #{workCity},
+            </if>
+            <if test="workDistrict != null">
+                #{workDistrict},
+            </if>
             <if test="workStreet != null">
                 #{workStreet},
             </if>
@@ -218,9 +230,6 @@
             <if test="userId != 0">
                 #{userId},
             </if>
-            <if test="areaId != 0">
-                #{areaId},
-            </if>
             <if test="delFlag != null">
                 #{delFlag},
             </if>
@@ -229,6 +238,9 @@
             </if>
             <if test="workTime != null">
                 #{workTime},
+            </if>
+            <if test="timeType != null">
+                #{timeType} ,
             </if>
             <if test="latitude != null">
                 #{latitude},

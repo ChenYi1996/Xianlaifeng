@@ -29,7 +29,8 @@ public class XlfPartTimeJobServiceImpl implements XlfPartTimeJobService{
         }
         if(null != xlfPartTimeJob.getStartWorkDate() &&  null != xlfPartTimeJob.getEndWorkDate()){
             //获取两个日期的相差时间，包含最后一天
-           int days = TimeUtil.differentDaysByMillisecond(xlfPartTimeJob.getEndWorkDate(),xlfPartTimeJob.getStartWorkDate());
+           int days = TimeUtil.differentDaysByMillisecond(xlfPartTimeJob.getStartWorkDate(),xlfPartTimeJob.getEndWorkDate());
+           System.out.println(days);
            if(days < 5){
                xlfPartTimeJob.setTimeType("1");
                Calendar calendar=Calendar.getInstance();
@@ -61,6 +62,7 @@ public class XlfPartTimeJobServiceImpl implements XlfPartTimeJobService{
            }
 
         }
+        System.out.println(xlfPartTimeJob);
         xlfPartTimeJob.setReleaseTime(new Date());
         return xlfPartTimeJobDAO.add(xlfPartTimeJob);
     }

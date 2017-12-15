@@ -64,6 +64,7 @@ public class XlfPartTimeJobController {
             XlfPartTimeJob xlfPartTimeJob = (XlfPartTimeJob) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XlfPartTimeJob.class);
 //
             //添加兼职信息
+            xlfPartTimeJob.setUserId((Integer) u_info.get("id"));
             int result = xlfPartTimeJobServiceImpl.add(xlfPartTimeJob);
             json.setSuccess(true);
             json.setMsg("添加成功");
@@ -71,7 +72,7 @@ public class XlfPartTimeJobController {
 
         }catch(Exception e) {
             json.setSuccess(false);
-            json.setMsg("添加失败");
+            json.setMsg(e.getMessage());
         }
         return  json;
     }
@@ -136,7 +137,7 @@ public class XlfPartTimeJobController {
            json.setTotal(pageInfos.getTotal());
             json.setObj(pageInfos.getList());
             json.setSuccess(true);
-            json.setObj(xlfPartTimeJob);
+//            json.setObj(xlfPartTimeJob);
         }catch(Exception e){
             json.setSuccess(false);
             json.setMsg(e.getMessage());
@@ -147,9 +148,9 @@ public class XlfPartTimeJobController {
     /*
     兼职详情
      */
-    @RequestMapping(value="/details.do",produces="application/json",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value="/details.do",produces="application/json",method = RequestMethod.GET)
     @ResponseBody
-    public AjaxJSON details(@RequestParam Map<String,Object>param,@RequestBody AjaxJSON ajax){
+    public AjaxJSON details(@RequestParam Map<String,Object>param){
         AjaxJSON json=new AjaxJSON();
         try{
             String jobId =(String)param.get("jobId");
@@ -168,7 +169,7 @@ public class XlfPartTimeJobController {
             json.setSuccess(true);
         }catch(Exception e){
             json.setSuccess(false);
-            json.setMsg("查询失败");
+            json.setMsg(e.getMessage());
         }
         return json;
     }

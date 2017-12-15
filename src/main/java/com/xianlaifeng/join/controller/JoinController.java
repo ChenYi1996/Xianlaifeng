@@ -7,12 +7,15 @@ import com.xianlaifeng.join.service.JoinService;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.AjaxJSON;
+import net.sf.ezmorph.object.DateMorpher;
 import net.sf.json.JSONObject;
+import net.sf.json.util.JSONUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -43,9 +46,18 @@ public class JoinController {
             //用户信息检查
             if(u_info.get("user_phone")==null||u_info.get("user_name")==null||u_info.get("user_phone").equals("")||u_info.get("user_name").equals("")){
                 res.setSuccess(false);
-                res.setMsg("请完善用户信息");
+                res.setMsg("请完善用户信息再进行报名");
+                return res;
             }
+            JSONUtils.getMorpherRegistry().registerMorpher(new DateMorpher(new String[] {"yyyy-MM-dd HH:mm:ss"}) );
             XLF_Join join = (XLF_Join) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Join.class);
+            System.out.println(join.getJoinTime());
+            if((join.getJoinTime().compareTo(new Date()))!=1){
+                res.setSuccess(false);
+                res.setMsg("活动已结束报名");
+                return res;
+            }
+            join.setJoinTime(null);
             join.setUserId((Integer) u_info.get("id"));
             String result = joinService.addJoin(join);
             res.setMsg(result);
