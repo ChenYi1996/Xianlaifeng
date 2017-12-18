@@ -61,7 +61,6 @@ public class UserController {
     @RequestMapping(value="/getWeChatUserInfo.do",produces="application/json" ,method = RequestMethod.GET)
     @ResponseBody
     public AjaxJSON getWeChatUserInfo(@RequestParam Map<String,Object> params){
-        String trd_session = (String)params.get("trd_session");
         AjaxJSON res = new AjaxJSON();
         try {
             String openid =(String)request.getAttribute("openid");

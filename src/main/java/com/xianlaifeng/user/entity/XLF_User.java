@@ -10,25 +10,27 @@ public class XLF_User {
     private String user_company; //用户公司（企业用户）
     private int user_age;
     private int user_high;
+    private int user_weigh;
     private int user_school_id; //用户学校
     private String user_phone;  //用户电话
     private String user_details; //用户简历
     private String user_img;  //用户头像
 
-    public XLF_User(String user_name, int user_sex, int user_role, String user_company, int user_age, int user_high, int user_school_id, String user_phone, String user_details,String user_img) {
+    public XLF_User(String user_name, int user_sex, int user_role, String user_company, int user_age, int user_high, int user_weigh, int user_school_id, String user_phone, String user_details, String user_img) {
         this.user_name = user_name;
         this.user_sex = user_sex;
         this.user_role = user_role;
         this.user_company = user_company;
         this.user_age = user_age;
         this.user_high = user_high;
+        this.user_weigh = user_weigh;
         this.user_school_id = user_school_id;
         this.user_phone = user_phone;
         this.user_details = user_details;
         this.user_img = user_img;
     }
 
-    public XLF_User(int id, String user_name, int user_sex, int user_role, String user_company, int user_age, int user_high, int user_school_id, String user_phone, String user_details,String user_img) {
+    public XLF_User(int id, String user_name, int user_sex, int user_role, String user_company, int user_age, int user_high, int user_school_id, String user_phone, String user_details, String user_img) {
         this.id = id;
         this.user_name = user_name;
         this.user_sex = user_sex;
@@ -46,6 +48,14 @@ public class XLF_User {
 
 
 
+    }
+
+    public int getUser_weigh() {
+        return user_weigh;
+    }
+
+    public void setUser_weigh(int user_weigh) {
+        this.user_weigh = user_weigh;
     }
 
     public int getId() {

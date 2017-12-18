@@ -5,7 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.act.entity.XLF_Activity;
 import com.xianlaifeng.act.service.ActivityService;
 import com.xianlaifeng.act.service.JoinActService;
+import com.xianlaifeng.user.entity.XLF_Collection;
 import com.xianlaifeng.user.entity.XLF_Wechat;
+import com.xianlaifeng.user.service.CollectionService;
 import com.xianlaifeng.user.service.RedisService;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.utils.AjaxJSON;
@@ -28,6 +30,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/atc")
 public class ActivityController {
+    public static final int METHOD_ACT = 1;
 
     @Resource
     private HttpServletRequest request;
@@ -38,11 +41,12 @@ public class ActivityController {
     @Resource
     private UserService userService;
 
-    @Resource
-    private JoinActService joinActService;
 
     @Resource
     private RedisService redisService;
+
+    @Resource
+    private CollectionService collectionService;
 
 
 
@@ -56,9 +60,11 @@ public class ActivityController {
         try {
             Map<String,Object> resultMap = activityService.getActivityDetails(id==null?0:Integer.parseInt(id));
             //用户查看过的信息收集
-            if(trd_session!=null){
-
+            int collect = 0;
+            if(!StringUtils.isEmpty(trd_session)){
+                collect = collectionService.ifCollection(trd_session,METHOD_ACT,Integer.parseInt(id));
             }
+            resultMap.put("collect",collect);
             res.setObj(resultMap);
             res.setSuccess(resultMap==null?false:true);
         }catch (Exception e){

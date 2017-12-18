@@ -37,6 +37,30 @@ public class CommonUtils {
     }
 
 
+    public static  List<Map<String,Object>> putCityIntoChar(List<Map<String,Object>> list){
+        List<Map<String,Object>> return_list = new ArrayList<Map<String,Object>>();
+        for(int i=(int)'A';i<'A'+26;i++)
+        {
+            Map<String,Object> city_list_name = new HashMap<String,Object>();
+            List<Map<String,Object>> city_list = new ArrayList<Map<String,Object>>();
+            for (Map<String,Object> m:list){
+                if(m.get("city_first").equals(""+(char)i)){
+                    Map<String,Object> map = new HashMap<String,Object>();
+                    map.put("city_name",m.get("city"));
+                    city_list.add(map);
+                }
+            }
+            city_list_name.put("FirstLetter",""+(char)i);
+            if(city_list.size()!=0){
+                city_list_name.put("city_list",city_list);
+            }
+            return_list.add(city_list_name);
+
+        }
+        //System.out.println(city_list_name);
+        return return_list;
+    }
+
     public static String add(Object object) {
 
         String className = object.getClass().getSimpleName();

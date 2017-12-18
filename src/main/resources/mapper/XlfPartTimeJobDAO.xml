@@ -33,7 +33,7 @@
     <select id="selectDetails" parameterType="java.lang.String" resultMap="BaseResultMap">
             select
             p.* ,
-            u.user_name AS userName, u.user_company AS  userCompany,
+            u.user_name AS userName, u.user_company AS  userCompany,u.user_phone AS userPhone,
             t.job_type AS  jobType
             from xlf_part_time_job AS  p
             left join xlf_user AS  u
@@ -53,6 +53,9 @@
             </if>
             <if test="auditStatus != 3">
                 and p.audit_status = #{auditStatus}
+            </if>
+            <if test="workCity != null and workCity!=''">
+                and p.work_city = #{workCity}
             </if>
             <if test="workDistricts != null and workDistricts.size != 0 ">
                 and p.work_district  in

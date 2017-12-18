@@ -1,5 +1,7 @@
 package com.xianlaifeng.user.entity;
 
+import java.util.List;
+
 public class XLF_School {
 
     private int id;
@@ -7,6 +9,8 @@ public class XLF_School {
     private String school_place;
     private String school_type;
     private String school_properties;
+
+    private List<String> school_string;
 
     public XLF_School() {
     }
@@ -19,6 +23,13 @@ public class XLF_School {
         this.school_properties = school_properties;
     }
 
+    public List<String> getSchool_string() {
+        return school_string;
+    }
+
+    public void setSchool_string(List<String> school_string) {
+        this.school_string = school_string;
+    }
 
     public int getId() {
         return id;
@@ -59,6 +70,10 @@ public class XLF_School {
     public void setSchool_properties(String school_properties) {
         this.school_properties = school_properties;
     }
+
+
+
+
 
     @Override
     public String toString() {

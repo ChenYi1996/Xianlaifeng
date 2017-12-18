@@ -43,6 +43,22 @@ public class SearchHistoryController {
         return aj;
     }
 
+    @RequestMapping(value = "/clearSearch.do" ,produces="application/json" ,method = RequestMethod.GET)
+    @ResponseBody
+    public Object clearSearch(@RequestParam Map<String,Object> params){
+        String trd_session = (String)params.get("trd_session");
+        String method = (String)params.get("method");
+        AjaxJSON aj = new AjaxJSON();
+        try {
+            int res = redisService.clearSearch(trd_session,method);
+            aj.setSuccess(res == 0?false:true);
+        }catch (Exception e){
+            aj.setSuccess(false);
+            aj.setMsg(e.getMessage());
+            return aj;
+        }
+        return aj;
+    }
 
 
 }

@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,10 +132,33 @@ public class IUserTest {
 
     @Test
     public void ecHTTP(){
-        String url = "https://www.westorehere.shop/img/xianlaifeng/user/user_924905714ufPD_444.png";
-        String null_url = null;
-        System.out.println(CommonUtils.getFileNameFromHttp(null_url));
+        //redisService.insertHistory("bc574c35c27a3ea2b4aedfff4998eb0a","job","文员");
+        redisService.clearSearch("bc574c35c27a3ea2b4aedfff4998eb0a","job");
     }
+
+    @Test
+    public void testList(){
+        List<String> list = new ArrayList<String>();
+        list.add("aa");
+        list.add("bb");
+        list.add("cc");
+        list.add("dd");
+        list.add("ee");
+        list.add("abc");
+        System.out.println(list);
+        String item = "abc";
+        System.out.println(list.contains(item));
+        for (String s : list) {
+            if (s.equals(item)) {
+                list.remove(s);
+                break;
+            }
+        }
+        System.out.println(list);
+    }
+
+
+
 
 
 }

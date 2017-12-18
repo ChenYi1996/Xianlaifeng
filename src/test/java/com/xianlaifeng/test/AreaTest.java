@@ -2,6 +2,7 @@ package com.xianlaifeng.test;
 
 import com.xianlaifeng.sys.dao.XlfAreaDAO;
 import com.xianlaifeng.sys.entity.XlfArea;
+import com.xianlaifeng.utils.CommonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,8 +30,7 @@ public class AreaTest {
 
     @Test
     public void selectCityTest(){
-        List<Map<String,Object>> list=xlfAreaDAO.selectHotCity();
         List<Map<String,Object>> list1 = xlfAreaDAO.selectByCityFirst();
-        System.out.println();
+        CommonUtils.putCityIntoChar(list1);
     }
 }

@@ -10,4 +10,6 @@ public interface RedisService {
 
     public int insertHistory(String trd_session, String method,String title);
 
+    public int clearSearch(String trd_session,String method);
+
 }

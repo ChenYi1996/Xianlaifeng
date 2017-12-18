@@ -4,6 +4,7 @@ import com.github.pagehelper.StringUtil;
 import com.xianlaifeng.sys.entity.XlfArea;
 import com.xianlaifeng.sys.service.Impl.XlfAreaServiceImpl;
 import com.xianlaifeng.utils.AjaxJSON;
+import com.xianlaifeng.utils.CommonUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,12 +51,13 @@ public class XlfAreaController {
         List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
         if("1".equals(type)){
            list = xlfAreaServiceImpl.selectByCityFirst();
+            json.setObj(CommonUtils.putCityIntoChar(list));
         }
         if("2".equals(type)){
             list = xlfAreaServiceImpl.selectHotCity();
+            json.setObj(list);
         }
         json.setSuccess(true);
-        json.setObj(list);
 
         }catch (Exception e){
             json.setSuccess(false);

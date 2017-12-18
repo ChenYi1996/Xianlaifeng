@@ -46,21 +46,28 @@ public class QueueList{
         if(list.size() == 0){
             list.add(item);
         }
-        else if(!list.contains(item)){
-            int size = list.size();
-            if(size < max){
-                list.add(item);
-            }
-            else{
-                List<String> temp= new ArrayList<String>();
-                for(int i = 0;i < max-1;i++){
-                    temp.add(list.get(size-max+i+1));
+        if(list.contains(item)){
+            for (String s : list) {
+                if (s.equals(item)) {
+                    list.remove(s);
+                    break;
                 }
-                temp.add(item);
-                list = temp;
             }
         }
+        int size = list.size();
+        if(size < max){
+            list.add(item);
+        }
+        else{
+            List<String> temp= new ArrayList<String>();
+            for(int i = 0;i < max-1;i++){
+                temp.add(list.get(size-max+i+1));
+            }
+            temp.add(item);
+            list = temp;
+        }
     }
+
 
     @Override
     public String toString() {

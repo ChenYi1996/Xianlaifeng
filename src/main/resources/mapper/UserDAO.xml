@@ -9,12 +9,12 @@
     <sql id='LEFT_TABLE_NAME'>xlf_school</sql>
 
     <!-- 用户图片储存路径 -->
-    <sql id='USER_IMG_PATH'>'https://www.westorehere.shop/img/xianlaifeng/user/'</sql>
+    <sql id='USER_IMG_PATH'>'https://www.xianlaifeng.com/img/xianlaifeng/user/'</sql>
 
 
     <select id="getUser" resultType="java.util.Map" parameterType="com.xianlaifeng.user.entity.XLF_User">
         SELECT
-        u.id,u.user_name,u.user_sex,u.user_role,u.user_company,u.user_age,u.user_high,u.user_school_id,u.user_details,u.user_phone,s.school_name AS school_name ,CONCAT(<include refid="USER_IMG_PATH" />,u.user_img) AS user_img
+        u.id,u.user_name,u.user_sex,u.user_role,u.user_company,u.user_age,u.user_high,u.user_weigh,u.user_school_id,u.user_details,u.user_phone,s.school_name AS school_name ,CONCAT(<include refid="USER_IMG_PATH" />,u.user_img) AS user_img
         FROM <include refid="TABLE_NAME" /> AS u LEFT JOIN <include refid="LEFT_TABLE_NAME" /> AS s
         ON u.user_school_id = s.id
         <where>
@@ -49,6 +49,7 @@
           </if>
           user_age,
           user_high,
+          user_weigh,
           user_school_id,
           <if test='user_phone != null and user_phone != "" '>
               user_phone,
@@ -56,6 +57,9 @@
           <if test='user_details != null and user_details != "" '>
               user_details,
           </if>
+            <if test='user_img != null and user_img != "" '>
+                user_img,
+            </if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -69,6 +73,7 @@
           </if>
           #{user_age},
           #{user_high},
+          #{user_weigh},
           #{user_school_id},
           <if test='user_phone != null and user_phone != "" '>
               #{user_phone},
@@ -76,6 +81,9 @@
           <if test='user_details != null and user_details != "" '>
              #{user_details},
           </if>
+            <if test='user_img != null and user_img != "" '>
+                #{user_img},
+            </if>
         </trim>
     </insert>
 
@@ -88,6 +96,7 @@
             user_sex=#{user_sex},
             <if test="user_role!=0">user_role=#{user_role},</if>
             <if test="user_age!=0">user_age=#{user_age},</if>
+            <if test="user_weigh!=0">user_weigh=#{user_weigh},</if>
             <if test="user_high!=0">user_high=#{user_high},</if>
             <if test="user_school_id!=0">user_school_id=#{user_school_id},</if>
             <if test="user_phone!=null">user_phone=#{user_phone},</if>

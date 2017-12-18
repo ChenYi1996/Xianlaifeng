@@ -31,7 +31,7 @@
         j.*,
         <choose>
             <when test="methodId ==1" >
-                a.id ,a.activityName
+                a.id ,a.activityName,a.activityStartTime
             </when>
             <when test="methodId ==2">
                 p.job_id,p.job_name

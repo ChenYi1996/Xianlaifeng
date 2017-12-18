@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.xianlaifeng.user.dao.CollectionDAO">
+
+    <sql id='TABLE_NAME'>xlf_collection</sql>
+
+    <sql id='LEFT_TABLE_NAME'>xlf_user</sql>
+
+
+    <sql id='LEFT_TABLE_NAME_ACT'>xlf_activity</sql>
+
+    <sql id='LEFT_TABLE_NAME_PTJ'>xlf_part_time_job</sql>
+
+
+
+    <select id="ifExist" resultType="com.xianlaifeng.user.entity.XLF_Collection"  parameterType="com.xianlaifeng.user.entity.XLF_Collection">
+        SELECT
+        *
+        FROM <include refid="TABLE_NAME" />
+        WHERE
+        methodId = #{methodId}
+        AND
+        actId = #{actId}
+        AND
+        userId = #{userId}
+    </select>
+
+
+    <delete id="delCollection"  parameterType="com.xianlaifeng.user.entity.XLF_Collection">
+        DELETE
+        FROM <include refid="TABLE_NAME" />
+        WHERE
+        methodId = #{methodId}
+        AND
+        actId = #{actId}
+        AND
+        userId = #{userId}
+    </delete>
+
+
+    <select id="getUserCollection" resultType="java.util.Map"  parameterType="com.xianlaifeng.join.entity.XLF_Join">
+        SELECT
+        c.*,
+        <choose>
+            <when test="methodId ==1" >
+                a.id ,a.activityName,a.activityStatus
+            </when>
+            <when test="methodId ==2">
+                p.job_id,p.job_name,p.audit_status
+            </when>
+        </choose>
+        FROM <include refid="TABLE_NAME" /> AS c
+        LEFT JOIN
+        <choose>
+            <when test="methodId ==1" >
+                <include refid="LEFT_TABLE_NAME_ACT" /> AS a ON c.actId = a.id
+            </when>
+            <when test="methodId ==2">
+                <include refid="LEFT_TABLE_NAME_PTJ" /> AS p ON c.actId = p.job_id
+            </when>
+        </choose>
+        WHERE
+        c.userId = #{userId}
+        AND
+        c.methodId = #{methodId}
+    </select>
+
+
+
+
+
+
+
+
+</mapper>

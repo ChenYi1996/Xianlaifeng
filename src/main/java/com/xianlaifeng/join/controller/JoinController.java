@@ -41,7 +41,6 @@ public class JoinController {
         AjaxJSON res = new AjaxJSON();
         try{
             String openid =(String)request.getAttribute("openid");
-            String actId =(String)params.get("actId");
             Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
             //用户信息检查
             if(u_info.get("user_phone")==null||u_info.get("user_name")==null||u_info.get("user_phone").equals("")||u_info.get("user_name").equals("")){
@@ -51,7 +50,7 @@ public class JoinController {
             }
             JSONUtils.getMorpherRegistry().registerMorpher(new DateMorpher(new String[] {"yyyy-MM-dd HH:mm:ss"}) );
             XLF_Join join = (XLF_Join) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Join.class);
-            System.out.println(join.getJoinTime());
+            //System.out.println(join.getJoinTime());
             if((join.getJoinTime().compareTo(new Date()))!=1){
                 res.setSuccess(false);
                 res.setMsg("活动已结束报名");

@@ -61,4 +61,14 @@ public class RedisServiceImpl implements RedisService{
             return (ql.toString());
         }
     }
+
+    public int clearSearch(String trd_session,String method) {
+        if(redisTemplate.opsForHash().entries("wechat:"+trd_session).isEmpty()){
+            return 0;
+        }
+        else {
+            redisTemplate.opsForHash().put("wechat:" + trd_session,method + ":search","");
+            return 1;
+        }
+    }
 }

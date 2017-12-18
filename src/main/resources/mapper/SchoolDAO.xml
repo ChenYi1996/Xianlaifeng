@@ -15,8 +15,11 @@
             <if test="id!=0">
                 and id=#{id}
             </if>
-            <if test="school_name!=null and school_name!=''">
-                and school_name like '%${school_name}%'
+            <if test="school_string != null and school_string.size != 0 ">
+                AND
+                <foreach collection="school_string" item="item"  separator="AND">
+                    `school_name` LIKE CONCAT('%',#{item},'%')
+                </foreach>
             </if>
             <if test="school_place!=null and school_place!=''">
                 and school_place = #{school_place}

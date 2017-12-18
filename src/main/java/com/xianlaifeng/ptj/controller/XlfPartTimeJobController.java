@@ -6,14 +6,15 @@ import com.xianlaifeng.ptj.entity.XlfPartTimeJob;
 import com.xianlaifeng.ptj.service.Impl.XlfPartTimeJobServiceImpl;
 import com.xianlaifeng.ptj.service.Impl.XlfPtjTypeServiceImpl;
 import com.xianlaifeng.sys.service.Impl.XlfAreaServiceImpl;
+import com.xianlaifeng.user.entity.XLF_Collection;
 import com.xianlaifeng.user.entity.XLF_Wechat;
+import com.xianlaifeng.user.service.CollectionService;
+import com.xianlaifeng.user.service.RedisService;
 import com.xianlaifeng.user.service.UserService;
-import com.xianlaifeng.utils.AjaxJSON;
-import com.xianlaifeng.utils.CommonUtils;
-import com.xianlaifeng.utils.QueueList;
-import com.xianlaifeng.utils.TimeUtil;
+import com.xianlaifeng.utils.*;
 import net.sf.ezmorph.object.DateMorpher;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import net.sf.json.util.JSONUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/ptj")
 public class XlfPartTimeJobController {
+    public static final int METHOD_PTJ = 2;
 
     @Resource
     private XlfPartTimeJobServiceImpl xlfPartTimeJobServiceImpl;
@@ -34,10 +36,16 @@ public class XlfPartTimeJobController {
     private HttpServletRequest request;
 
     @Resource
+    private RedisService redisService;
+
+    @Resource
     private UserService userService;
 
     @Resource
     private XlfAreaServiceImpl xlfAreaServiceImpl;
+
+    @Resource
+    private CollectionService collectionService;
 
     @Resource
     private XlfPtjTypeServiceImpl xlfPtjTypeServiceImpl;
@@ -88,6 +96,7 @@ public class XlfPartTimeJobController {
 
             JSONObject obj=JSONObject.fromObject(ajax.getObj());
 
+            String trd_session = (String)param.get("trd_session");
             String pageNum = (String)param.get("pageNum");
             String pageSize = (String)param.get("pageSize");
 
@@ -103,6 +112,10 @@ public class XlfPartTimeJobController {
             }
             if(!StringUtils.isEmpty(xlfPartTimeJob.getTimeTypes_String())){
                 xlfPartTimeJob.setTimeTypes(CommonUtils.setIntList(xlfPartTimeJob.getTimeTypes_String()));
+            }
+            //用户查看过的信息收集
+            if(!StringUtils.isEmpty(trd_session)&&!StringUtils.isEmpty(xlfPartTimeJob.getJobName())){
+                redisService.insertHistory(trd_session,"job",xlfPartTimeJob.getJobName());
             }
 
 //            String workDistricts = (String)obj.get("workDistricts");
@@ -152,16 +165,28 @@ public class XlfPartTimeJobController {
     @ResponseBody
     public AjaxJSON details(@RequestParam Map<String,Object>param){
         AjaxJSON json=new AjaxJSON();
+        String trd_session = (String)param.get("trd_session");
         try{
             String jobId =(String)param.get("jobId");
             List<XlfPartTimeJob> list=xlfPartTimeJobServiceImpl.selectDetails(jobId);
+            int collect = 0;
+
             if(!list.isEmpty()) {
                 if (null != list.get(0).getStartWorkDate() && !"".equals(list.get(0).getStartWorkDate())
                         && null != list.get(0).getEndWorkDate() && !"".equals(list.get(0).getEndWorkDate())) {
                     int days = TimeUtil.differentDaysByMillisecond(list.get(0).getEndWorkDate(), list.get(0).getStartWorkDate());
                     list.get(0).setDays(days);
                 }
-                json.setObj(list.get(0));
+                if(!StringUtils.isEmpty(trd_session)){
+                    collect = collectionService.ifCollection(trd_session,METHOD_PTJ,Integer.parseInt(jobId));
+                }
+
+                //Json时间格式化
+                JsonConfig jsonConfig = new JsonConfig();
+                jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+                JSONObject resObj = JSONObject.fromObject(list.get(0),jsonConfig);
+                resObj.put("collect",collect);
+                json.setObj(resObj);
 
             }else{
                 json.setMsg("查询不到数据");
