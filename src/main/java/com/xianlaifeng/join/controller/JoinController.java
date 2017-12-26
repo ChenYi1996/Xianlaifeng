@@ -102,4 +102,30 @@ public class JoinController {
     }
 
 
+    //查看报名用户接口
+    @RequestMapping(value="/getJoinUser.do",method = {RequestMethod.GET,RequestMethod.POST},produces = "application/json")
+    @ResponseBody
+    public AjaxJSON getJoinUser(@RequestParam Map<String,Object> params, @RequestBody AjaxJSON ajax){
+        AjaxJSON res = new AjaxJSON();
+        String pageNum = (String)params.get("pageNum");
+        String pageSize = (String)params.get("pageSize");
+        try{
+            pageNum = pageNum == null?"0":pageNum;
+            pageSize = pageSize == null?"0":pageSize;
+            XLF_Join join = (XLF_Join) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Join.class);
+
+            PageInfo<Map<String,Object>> pageInfo = joinService.getJoinUser(join,Integer.parseInt(pageNum),Integer.parseInt(pageSize));
+            res.setObj(pageInfo.getList());
+            res.setTotal(pageInfo.getTotal());
+            res.setMsg("查询成功");
+            res.setSuccess(true);
+        }
+        catch (Exception e){
+            res.setSuccess(false);
+            res.setMsg(e.getMessage());
+        }
+        return res;
+    }
+
+
 }

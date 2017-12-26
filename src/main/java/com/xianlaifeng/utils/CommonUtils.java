@@ -1,5 +1,9 @@
 package com.xianlaifeng.utils;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.cglib.beans.BeanMap;
 
 import java.lang.reflect.Field;
@@ -59,6 +63,25 @@ public class CommonUtils {
         }
         //System.out.println(city_list_name);
         return return_list;
+    }
+
+    public static String parseHttp(String text,String domain){
+        String result;
+        if (!text.contains("<p>")){
+            result = text;
+        }
+        else {
+            Document doc = Jsoup.parse(text);
+            Elements imgs = doc.select("img");
+            for (Element img : imgs) {
+                StringBuilder sb = new StringBuilder(img.attr("src"));
+                if (!(sb.indexOf("https://")!=-1)&&!(sb.indexOf("http://")!=-1)){
+                    img.attr("src", sb.insert(sb.indexOf("/"), domain).toString());
+                }
+            }
+            result=doc.toString();
+        }
+        return result;
     }
 
     public static String add(Object object) {

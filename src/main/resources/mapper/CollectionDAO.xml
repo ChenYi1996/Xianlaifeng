@@ -45,10 +45,10 @@
         c.*,
         <choose>
             <when test="methodId ==1" >
-                a.id ,a.activityName,a.activityStatus
+                a.id AS act_id,IFNULL(a.activityName,'活动已删除') AS activityName ,a.activityStatus
             </when>
             <when test="methodId ==2">
-                p.job_id,p.job_name,p.audit_status
+                p.job_id,IFNULL(p.job_name,'兼职已删除') AS job_name,p.audit_status
             </when>
         </choose>
         FROM <include refid="TABLE_NAME" /> AS c

@@ -37,4 +37,11 @@ public class JoinServiceImpl implements JoinService{
         PageInfo<Map<String,Object>> p_list = new PageInfo<Map<String,Object>>(joinDAO.getMyJoin(xlf_join));
         return p_list;
     }
+
+    public PageInfo<Map<String, Object>> getJoinUser(XLF_Join xlf_join, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        PageInfo<Map<String,Object>> p_list = new PageInfo<Map<String,Object>>(joinDAO.getJoinUser(xlf_join));
+        return p_list;
+
+    }
 }

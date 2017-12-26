@@ -6,11 +6,15 @@
 
     <sql id='TABLE_NAME'>xlf_join</sql>
 
-    <sql id='LEFT_TABLE_NAME'>xlf_user</sql>
+    <sql id='LEFT_TABLE_USER'>xlf_user</sql>
 
     <sql id='LEFT_TABLE_NAME_ACT'>xlf_activity</sql>
 
     <sql id='LEFT_TABLE_NAME_PTJ'>xlf_part_time_job</sql>
+
+    <sql id='LEFT_TABLE_NAME_SCHOOL'>xlf_school</sql>
+
+    <sql id='USER_IMG_PATH'>'https://www.xianlaifeng.com/img/xianlaifeng/user/'</sql>
 
 
 
@@ -53,7 +57,53 @@
         j.methodId = #{methodId}
     </select>
 
+    <select id="getNotice" resultType="java.util.Map"  >
+        SELECT
+	      activityName,TIMESTAMPDIFF(MINUTE,Now(),activityStartTime) AS prepareTime, userId,user_phone
+        FROM
+          <include refid="TABLE_NAME" /> AS j
+        LEFT JOIN
+          <include refid="LEFT_TABLE_NAME_ACT" /> as a
+	    ON j.actId = a.id
+        LEFT JOIN
+          <include refid="LEFT_TABLE_USER" /> AS u
+	    ON u.id = j.userId
+        WHERE
+	      j.methodId = 1
+        AND
+	      TIMESTAMPDIFF(MINUTE,Now(),activityStartTime)between 0 and 60
+        AND
+          j.ifNotice = 0
+    </select>
 
+    <select id="getJoinUser" resultType="java.util.Map" parameterType="com.xianlaifeng.join.entity.XLF_Join">
+        SELECT
+            j.id ,j.joinStatus,j.joinTime,j.userId ,u.user_name,u.user_sex,u.user_age,u.user_high,
+            u.user_phone,u.user_weigh,u.user_school_id, CONCAT(<include refid="USER_IMG_PATH" />,u.user_img) AS user_img,
+            s.school_name AS school_name
+        FROM
+            <include refid="TABLE_NAME" /> AS j
+        LEFT JOIN
+            <include refid="LEFT_TABLE_USER" /> AS u
+        ON u.id = j.userId
+        LEFT JOIN
+            <include refid="LEFT_TABLE_NAME_SCHOOL" />AS s
+        ON u.user_school_id = s.id
+        WHERE
+            j.methodId = #{methodId}
+        AND
+            j.actId = #{actId}
+
+    </select>
+
+    <update id="updateStatus" parameterType="com.xianlaifeng.join.entity.XLF_Join">
+        UPDATE
+            <include refid="TABLE_NAME" />
+        SET
+            joinStatus = #{joinStatus}
+        WHERE
+            id = #{id}
+    </update>
 
 
 

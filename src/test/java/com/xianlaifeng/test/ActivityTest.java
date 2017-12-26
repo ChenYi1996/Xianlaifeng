@@ -8,7 +8,12 @@ import com.xianlaifeng.act.entity.XLF_Join_Act;
 import com.xianlaifeng.join.dao.JoinDAO;
 import com.xianlaifeng.join.entity.XLF_Join;
 import com.xianlaifeng.sys.dao.CommonDAO;
+import com.xianlaifeng.sys.service.PicService;
 import com.xianlaifeng.utils.CommonUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-mybatis.xml","classpath:spring-redis.xml"})
@@ -35,6 +41,9 @@ public class ActivityTest {
     @Resource
     private ActivityDAO activityDAO;
 
+    @Resource
+    private PicService picService;
+
 
     @Resource
     private JoinDAO joinDAO;
@@ -42,22 +51,25 @@ public class ActivityTest {
 
     @Test
     public void testInsert(){
-        XLF_Activity activity = new XLF_Activity();
-        activity.setActivityName("aaa");
-        activity.setActivityStartTime(new Date());
-        activity.setActivityCreateTime(new Date());
-        System.out.println(CommonUtils.getClassValueObj(activity));
-        System.out.println(CommonUtils.add(activity));
-        //commonDAO.add(CommonUtils.add(activity));
+        List<Map<String,Object>> list = activityDAO.getActivityDetails(87);
+        Map<String,Object> details = list.get(0);
+        //System.out.println(details);
+        String word = (String)details.get("activityDetails");
+        System.out.println(word);
+        System.out.println(word.length());
+        //word.replace("https://www.xianlaifeng.com","");
+        //System.out.println(word.replace("https://www.xianlaifeng.com",""));
+        System.out.println(CommonUtils.parseHttp(word,"https://www.xianlaifeng.com"));
     }
 
     @Test
     public void printInit(){
         XLF_Activity activity = new XLF_Activity();
-        activity.setActivityName("");
-        activity.setActivityStatus(1);
-        activity.setActivityLatitude(23.0999);
-        activity.setActivityLongitude(113.3851);
+//        activity.setActivityName("");
+//        activity.setActivityStatus(1);
+//        activity.setActivityLatitude(23.0999);
+//        activity.setActivityLongitude(113.3851);
+        activity.setActivityCreateUser(10010);
         System.out.println(activityDAO.getActivityShow(activity));
     }
 
@@ -67,6 +79,10 @@ public class ActivityTest {
     }
 
 
+    @Test
+    public void testGetPic(){
+        System.out.println(picService.getActPic());
+    }
 
 
 }

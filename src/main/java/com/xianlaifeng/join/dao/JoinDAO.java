@@ -15,5 +15,8 @@ public interface JoinDAO {
     //查看个人报名记录
     public List<Map<String,Object>> getMyJoin(XLF_Join xlf_join);
 
+    //获取报名用户信息
+    public List<Map<String,Object>> getJoinUser(XLF_Join xlf_join);
+
 
 }

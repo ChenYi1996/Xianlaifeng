@@ -138,23 +138,7 @@ public class IUserTest {
 
     @Test
     public void testList(){
-        List<String> list = new ArrayList<String>();
-        list.add("aa");
-        list.add("bb");
-        list.add("cc");
-        list.add("dd");
-        list.add("ee");
-        list.add("abc");
-        System.out.println(list);
-        String item = "abc";
-        System.out.println(list.contains(item));
-        for (String s : list) {
-            if (s.equals(item)) {
-                list.remove(s);
-                break;
-            }
-        }
-        System.out.println(list);
+        System.out.println(userDAO.getMyPub(10010,1));
     }
 
 

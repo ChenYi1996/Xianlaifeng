@@ -1,6 +1,7 @@
 package com.xianlaifeng.user.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.user.entity.XLF_School;
 import com.xianlaifeng.user.entity.XLF_User;
 import com.xianlaifeng.user.entity.XLF_Wechat;
@@ -111,6 +112,30 @@ public class UserController {
             userService.updateWechat(wechat);
             res.setSuccess(true);
             res.setMsg("微信信息更新成功");
+        }catch (Exception e){
+            res.setSuccess(false);
+            res.setMsg(e.getMessage());
+        }
+        return res;
+    }
+
+
+    //获取用户发布
+    @RequestMapping(value="/getMyPublish.do",produces="application/json" ,method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJSON getMyPublish(@RequestParam Map<String,Object> params){
+        AjaxJSON res = new AjaxJSON();
+        String pageNum = (String)params.get("pageNum");
+        String pageSize = (String)params.get("pageSize");
+        try {
+            String openid =(String)request.getAttribute("openid");
+            String methodId = (String)params.get("methodId");
+            pageNum = pageNum == null?"0":pageNum;
+            pageSize = pageSize == null?"0":pageSize;
+            Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
+            PageInfo<Map<String,Object>> p_list = userService.getUserPub((Integer) u_info.get("id"),Integer.parseInt(methodId),Integer.parseInt(pageNum),Integer.parseInt(pageSize));
+            res.setObj(p_list.getList());
+            res.setTotal(p_list.getTotal());
         }catch (Exception e){
             res.setSuccess(false);
             res.setMsg(e.getMessage());

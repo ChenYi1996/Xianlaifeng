@@ -11,4 +11,6 @@ public interface JoinService {
 
     public PageInfo<Map<String,Object>> getMyJoin(XLF_Join xlf_join, int pageNum, int pageSize);
 
+    public PageInfo<Map<String,Object>> getJoinUser(XLF_Join xlf_join, int pageNum, int pageSize);
+
 }

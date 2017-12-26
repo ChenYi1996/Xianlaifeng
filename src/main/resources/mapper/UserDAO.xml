@@ -8,14 +8,25 @@
 
     <sql id='LEFT_TABLE_NAME'>xlf_school</sql>
 
+    <sql id='TABLE_NAME_ACT'>xlf_activity</sql>
+
+    <sql id='TABLE_NAME_PTJ'>xlf_part_time_job</sql>
+
+    <sql id='TABLE_NAME_JOIN'>xlf_join</sql>
+
+
     <!-- 用户图片储存路径 -->
     <sql id='USER_IMG_PATH'>'https://www.xianlaifeng.com/img/xianlaifeng/user/'</sql>
 
 
     <select id="getUser" resultType="java.util.Map" parameterType="com.xianlaifeng.user.entity.XLF_User">
         SELECT
-        u.id,u.user_name,u.user_sex,u.user_role,u.user_company,u.user_age,u.user_high,u.user_weigh,u.user_school_id,u.user_details,u.user_phone,s.school_name AS school_name ,CONCAT(<include refid="USER_IMG_PATH" />,u.user_img) AS user_img
-        FROM <include refid="TABLE_NAME" /> AS u LEFT JOIN <include refid="LEFT_TABLE_NAME" /> AS s
+        u.id,u.user_name,u.user_sex,u.user_role,u.user_company,u.user_age,u.user_high,u.user_weigh,
+        u.user_school_id,u.user_details,u.user_phone,s.school_name AS school_name ,
+        CONCAT(<include refid="USER_IMG_PATH" />,u.user_img) AS user_img
+        FROM <include refid="TABLE_NAME" /> AS u
+        LEFT JOIN
+          <include refid="LEFT_TABLE_NAME" />AS s
         ON u.user_school_id = s.id
         <where>
             <if test="id!=null and id!=0">
@@ -104,5 +115,43 @@
         </trim>
         WHERE id = #{id}
     </update>
+
+    <select id="getMyPub" resultType="java.util.Map">
+        SELECT
+        <choose>
+            <when test="methodId ==1" >
+              t.id ,t.activityName,t.activityCreateTime,t.activityStatus ,IFNULL(joinNum,0) AS joinNum  FROM <include refid="TABLE_NAME_ACT" /> as t
+            </when>
+            <when test="methodId ==2">
+              t.job_id,t.job_name,t.release_time,t.audit_status,IFNULL(joinNum,0) AS joinNum FROM <include refid="TABLE_NAME_PTJ" /> as t
+            </when>
+        </choose>
+        LEFT JOIN
+        (
+          SELECT actId,COUNT(userId) AS joinNum
+          FROM <include refid="TABLE_NAME_JOIN" />
+          WHERE methodId = #{methodId}
+          GROUP BY actId
+        ) AS j
+        ON
+        <choose>
+            <when test="methodId ==1" >
+                t.id = j.actId
+            </when>
+            <when test="methodId ==2">
+                t.job_id = j.actId
+            </when>
+        </choose>
+        WHERE
+        <choose>
+            <when test="methodId ==1" >
+                t.activityCreateUser = #{userId}
+            </when>
+            <when test="methodId ==2">
+                t.user_id = #{userId}
+            </when>
+        </choose>
+
+    </select>
 
 </mapper>

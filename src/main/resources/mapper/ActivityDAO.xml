@@ -8,11 +8,11 @@
 
     <sql id='LEFT_TABLE_NAME'>xlf_user</sql>
 
-    <sql id='ACT_IMG_PATH'>'https://www.xianlaifeng.com/img/xianlaifeng/activity/'</sql>
+    <sql id='ACT_IMG_PATH'>'https://www.xianlaifeng.com'</sql>
 
     <select id="getActivityDetails" resultType="java.util.Map"  parameterType="int">
         SELECT
-        a.id, a.activityName, a.activityIfSchool, CONCAT(<include refid="ACT_IMG_PATH" />,activityPic) AS activityPic, a.activityProvince, a.activityCity,  a.activityDistrict,  a.activityLocation,a.activityDoor,a.activityPerson, a.activityStartTime,a.activityEndTime,a.activityStatus,a.activityDetails,
+        a.id, a.activityName, a.activityIfSchool, CONCAT(<include refid="ACT_IMG_PATH" />,activityPic) AS activityPic, a.activityProvince, a.activityCity,  a.activityDistrict,  a.activityLocation,a.activityDoor,a.activityPerson, a.activityStartTime,a.activityEndTime,a.activityStatus,a.activityDetails,a.activityLatitude,a.activityLongitude,
         u.user_name,u.user_company,u.user_phone,u.user_sex
         FROM <include refid="TABLE_NAME" /> as a
         LEFT JOIN <include refid="LEFT_TABLE_NAME" /> as u

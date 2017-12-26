@@ -1,9 +1,12 @@
 package com.xianlaifeng.user.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.sys.dao.CommonDAO;
 import com.xianlaifeng.user.dao.SchoolDAO;
 import com.xianlaifeng.user.dao.WechatDAO;
+import com.xianlaifeng.user.entity.XLF_School;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.UserService;
 import com.xianlaifeng.user.dao.UserDAO;
@@ -125,6 +128,13 @@ public class UserServiceImpl implements UserService{
         List<Map<String, Object>> u_info_list = userDAO.getUser(new XLF_User(xw.getUser_id()));
         Map<String, Object> u_info  = u_info_list.size()==0?null:u_info_list.get(0);
         return u_info;
+    }
+
+
+    public  PageInfo<Map<String,Object>> getUserPub(int userId,int methodId,int pageNum,int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        PageInfo<Map<String,Object>> p_list = new PageInfo<Map<String,Object>>(userDAO.getMyPub(userId,methodId));
+        return p_list;
     }
 
 //    public Object getWechatUserInfo(XLF_Wechat we) {

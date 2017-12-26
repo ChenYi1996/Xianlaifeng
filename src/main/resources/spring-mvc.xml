@@ -74,11 +74,13 @@
             <mvc:mapping path="/usc/getWeChatUserInfo.do" />
             <mvc:mapping path="/usc/updateWeChatUserInfo.do" />
             <mvc:mapping path="/usc/updateWeChat.do" />
+            <mvc:mapping path="/usc/getMyPublish.do" />
             <mvc:mapping path="/atc/insertActWechat.do" />
             <mvc:mapping path="/ptj/add.do" />
             <mvc:mapping path="/jct/add.do" />
             <mvc:mapping path="/jct/getMyJoin.do" />
             <mvc:mapping path="/cc/getCollection.do" />
+            <mvc:mapping path="/cc/delCollection.do" />
             <mvc:mapping path="/cc/addCollection.do" />
             <mvc:mapping path="/cc/getMyCollection.do" />
             <bean class="com.xianlaifeng.user.interceptor.LoginInterceptor"></bean>

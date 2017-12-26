@@ -76,16 +76,23 @@ public class CollectionController {
     }
 
 
+    //取消个人收藏
     @RequestMapping(value = "/delCollection.do" ,produces="application/json" ,method ={RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public Object delCollection(@RequestParam Map<String,Object> params, @RequestBody AjaxJSON ajax){
         AjaxJSON aj = new AjaxJSON();
+        String get = (String)params.get("get");
         try {
             String openid =(String)request.getAttribute("openid");
             Map<String, Object> u_info = (Map<String, Object>)userService.getWechatUserInfo(new XLF_Wechat(openid));
             XLF_Collection collection = (XLF_Collection) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Collection.class);
             collection.setUserId((Integer) u_info.get("id"));
             String result = collectionService.delCollection(collection);
+            if(!StringUtils.isEmpty(get)&&get.equals("1")){
+                PageInfo<Map<String,Object>> p_list = collectionService.getMyCollection(collection,Integer.parseInt("0"),Integer.parseInt("0"));
+                aj.setObj(p_list.getList());
+                aj.setTotal(p_list.getTotal());
+            }
             aj.setMsg(result.equals("success")?"删除成功":"删除失败");
             aj.setSuccess(result.equals("success")?true:false);
         }catch (Exception e){

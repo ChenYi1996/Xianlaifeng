@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.xianlaifeng.act.entity.XLF_Activity;
 import com.xianlaifeng.act.service.ActivityService;
 import com.xianlaifeng.act.service.JoinActService;
+import com.xianlaifeng.sys.service.PicService;
 import com.xianlaifeng.user.entity.XLF_Collection;
 import com.xianlaifeng.user.entity.XLF_Wechat;
 import com.xianlaifeng.user.service.CollectionService;
@@ -25,12 +26,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/atc")
 public class ActivityController {
     public static final int METHOD_ACT = 1;
+    public static final String DOMAIN_NAME = "https://www.xianlaifeng.com";
 
     @Resource
     private HttpServletRequest request;
@@ -41,6 +44,8 @@ public class ActivityController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private PicService picService;
 
     @Resource
     private RedisService redisService;
@@ -121,10 +126,11 @@ public class ActivityController {
 
                 JSONUtils.getMorpherRegistry().registerMorpher(new DateMorpher(new String[] {"yyyy-MM-dd HH:mm:ss"}) );
 
+
                 XLF_Activity activity = (XLF_Activity) JSONObject.toBean(JSONObject.fromObject(ajax.getObj()), XLF_Activity.class);
                 activity.setActivityCreateUser((Integer) u_info.get("id"));
                 //图片处理url处理
-                activity.setActivityPic(CommonUtils.getFileNameFromHttp(activity.getActivityPic()));
+                activity.setActivityPic(activity.getActivityPic().replace(DOMAIN_NAME,""));
 
                 activity.setActivityCreateTime(new Date());
                 activityService.insertActivity(activity);
@@ -154,7 +160,20 @@ public class ActivityController {
         return res;
     }
 
-
+    //显示活动模板图片接口
+    @RequestMapping(value="/getActPic.do",produces="application/json" ,method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJSON getActPic(@RequestParam Map<String,Object> params){
+        AjaxJSON res = new AjaxJSON();
+        try {
+            res.setObj(picService.getActPic());
+            res.setSuccess(true);
+        }catch (Exception e){
+            res.setSuccess(false);
+            res.setMsg(e.getMessage());
+        }
+        return res;
+    }
 
 
 

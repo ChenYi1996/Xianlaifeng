@@ -8,6 +8,12 @@
 
     <sql id='ACT_TABLE'>xlf_activity</sql>
 
+    <sql id='ACT_PIC_TABLE'>xlf_act_pic</sql>
+
+    <sql id='ACT_PIC_TYPE_TABLE'>xlf_act_pic_type</sql>
+
+    <sql id='ACT_IMG_PATH'>'https://www.xianlaifeng.com'</sql>
+
     <select id="getUserPicList" resultType="java.lang.String">
         SELECT user_img
         FROM <include refid="USER_TABLE" />
@@ -19,6 +25,25 @@
     </select>
 
 
+    <select id="getActPic" resultType="java.util.Map">
+        SELECT
+        CONCAT(<include refid="ACT_IMG_PATH" />,picName) AS picName,p.picType,t.typeName
+        FROM
+          <include refid="ACT_PIC_TABLE" /> AS p
+        LEFT JOIN
+          <include refid="ACT_PIC_TYPE_TABLE" /> AS t
+        ON
+          p.picType = t.id
+        ORDER BY
+          picType
+    </select>
+
+    <select id="getActPicType" resultType="java.lang.String">
+        SELECT
+        typeName
+        FROM
+        <include refid="ACT_PIC_TYPE_TABLE" />
+    </select>
 
 
 </mapper>

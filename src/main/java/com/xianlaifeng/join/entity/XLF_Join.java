@@ -10,6 +10,7 @@ public class XLF_Join {
     private int userId;
     private Date joinTime;
     private int joinStatus;
+    private int ifNotice;
 
     public XLF_Join(int id, int methodId, int actId, int userId, Date joinTime, int joinStatus) {
         this.id = id;
@@ -22,6 +23,14 @@ public class XLF_Join {
 
 
     public XLF_Join() {
+    }
+
+    public int getIfNotice() {
+        return ifNotice;
+    }
+
+    public void setIfNotice(int ifNotice) {
+        this.ifNotice = ifNotice;
     }
 
     public int getId() {
